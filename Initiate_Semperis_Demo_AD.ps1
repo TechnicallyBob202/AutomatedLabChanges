@@ -7,9 +7,9 @@
 #>
 
 param(
-    [string]$OUsCSV = "C:\Temp\AD_OU_Structure.csv",
-    [string]$AccountsCSV = "C:\Temp\AD_Accounts.csv",
-    [string]$GroupsCSV = "C:\Temp\AD_Groups.csv",
+    [string]$OUsCSV = "C:\ProgramData\Semperis_Community\AutomatedLabChanges\Lists\AD_OU_Structure.csv",
+    [string]$AccountsCSV = "C:\ProgramData\Semperis_Community\AutomatedLabChanges\Lists\AD_Accounts.csv",
+    [string]$GroupsCSV = "C:\ProgramData\Semperis_Community\AutomatedLabChanges\Lists\AD_Groups.csv",
     [switch]$WhatIf
 )
 
