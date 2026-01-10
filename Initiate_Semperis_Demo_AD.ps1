@@ -4,6 +4,7 @@
 .DESCRIPTION
     Creates OUs, accounts, and groups needed before running the population script
     Includes existence checks and error handling for all object types
+    Domain-agnostic - strips DC components from CSV and uses current domain
 #>
 
 param(
@@ -30,8 +31,10 @@ Write-Host "==============================================================`n" -F
 # ============================================================
 try {
     $domain = Get-ADDomain
+    $domainDN = $domain.DistinguishedName
     $domainSuffix = $domain.DNSRoot
     Write-Host "Connected to domain: $domainSuffix" -ForegroundColor Green
+    Write-Host "Domain DN: $domainDN" -ForegroundColor Green
 }
 catch {
     Write-Host "Could not connect to domain" -ForegroundColor Red
@@ -79,6 +82,25 @@ catch {
 }
 
 # ============================================================
+# HELPER FUNCTION - Convert DN to current domain
+# ============================================================
+function ConvertTo-CurrentDomainDN {
+    param(
+        [string]$DN,
+        [string]$CurrentDomainDN
+    )
+    
+    # Strip any existing DC components and append current domain DN
+    $relativeDN = $DN -replace ',DC=.*$', ''
+    if ($relativeDN) {
+        return "$relativeDN,$CurrentDomainDN"
+    }
+    else {
+        return $CurrentDomainDN
+    }
+}
+
+# ============================================================
 # STATISTICS
 # ============================================================
 $stats = @{
@@ -103,12 +125,16 @@ Write-Host "==============================================================`n" -F
 
 foreach ($ou in $ous) {
     
+    # Convert DNs to current domain
+    $ouDN = ConvertTo-CurrentDomainDN -DN $ou.DistinguishedName -CurrentDomainDN $domainDN
+    $parentDN = ConvertTo-CurrentDomainDN -DN $ou.ParentPath -CurrentDomainDN $domainDN
+    
     Write-Host "Processing: $($ou.Name)" -ForegroundColor White
-    Write-Host "  Path: $($ou.DistinguishedName)" -ForegroundColor Gray
+    Write-Host "  Path: $ouDN" -ForegroundColor Gray
     
     # Check if OU already exists
     try {
-        Get-ADOrganizationalUnit -Identity $ou.DistinguishedName -ErrorAction Stop | Out-Null
+        Get-ADOrganizationalUnit -Identity $ouDN -ErrorAction Stop | Out-Null
         Write-Host "  OU already exists, skipping" -ForegroundColor Yellow
         $stats.OUsSkipped++
         continue
@@ -125,10 +151,10 @@ foreach ($ou in $ous) {
     
     # Verify parent path exists
     try {
-        Get-ADObject -Identity $ou.ParentPath -ErrorAction Stop | Out-Null
+        Get-ADObject -Identity $parentDN -ErrorAction Stop | Out-Null
     }
     catch {
-        Write-Host "  Parent path does not exist: $($ou.ParentPath)" -ForegroundColor Red
+        Write-Host "  Parent path does not exist: $parentDN" -ForegroundColor Red
         Write-Host "    This OU will be created once its parent exists" -ForegroundColor Yellow
         $stats.OUsFailed++
         continue
@@ -139,7 +165,7 @@ foreach ($ou in $ous) {
         try {
             $ouParams = @{
                 Name = $ou.Name
-                Path = $ou.ParentPath
+                Path = $parentDN
                 ProtectedFromAccidentalDeletion = $false
             }
             
@@ -182,6 +208,12 @@ Write-Host "==============================================================`n" -F
 
 foreach ($account in $accounts) {
     
+    # Convert OU path to current domain
+    $accountOU = ConvertTo-CurrentDomainDN -DN $account.OU -CurrentDomainDN $domainDN
+    
+    # Update UPN to current domain
+    $accountUPN = "$($account.SamAccountName)@$domainSuffix"
+    
     Write-Host "Processing: $($account.Name) [$($account.SamAccountName)]" -ForegroundColor White
     
     # Check if account already exists
@@ -203,10 +235,10 @@ foreach ($account in $accounts) {
     
     # Verify OU exists
     try {
-        Get-ADOrganizationalUnit -Identity $account.OU -ErrorAction Stop | Out-Null
+        Get-ADOrganizationalUnit -Identity $accountOU -ErrorAction Stop | Out-Null
     }
     catch {
-        Write-Host "  Target OU does not exist: $($account.OU)" -ForegroundColor Red
+        Write-Host "  Target OU does not exist: $accountOU" -ForegroundColor Red
         Write-Host "    Create OUs first or fix the OU path" -ForegroundColor Yellow
         $stats.AccountsFailed++
         continue
@@ -220,9 +252,9 @@ foreach ($account in $accounts) {
             $userParams = @{
                 Name = $account.Name
                 SamAccountName = $account.SamAccountName
-                UserPrincipalName = $account.UserPrincipalName
+                UserPrincipalName = $accountUPN
                 Description = $account.Description
-                Path = $account.OU
+                Path = $accountOU
                 AccountPassword = $passwordSecure
                 Enabled = $true
                 ChangePasswordAtLogon = $false
@@ -258,6 +290,9 @@ Write-Host "==============================================================`n" -F
 
 foreach ($group in $groups) {
     
+    # Convert OU path to current domain
+    $groupOU = ConvertTo-CurrentDomainDN -DN $group.OU -CurrentDomainDN $domainDN
+    
     Write-Host "Processing: $($group.Name)" -ForegroundColor White
     
     # Check if group already exists
@@ -279,10 +314,10 @@ foreach ($group in $groups) {
     
     # Verify OU exists
     try {
-        Get-ADOrganizationalUnit -Identity $group.OU -ErrorAction Stop | Out-Null
+        Get-ADOrganizationalUnit -Identity $groupOU -ErrorAction Stop | Out-Null
     }
     catch {
-        Write-Host "  Target OU does not exist: $($group.OU)" -ForegroundColor Red
+        Write-Host "  Target OU does not exist: $groupOU" -ForegroundColor Red
         Write-Host "    Create OUs first or fix the OU path" -ForegroundColor Yellow
         $stats.GroupsFailed++
         continue
@@ -297,7 +332,7 @@ foreach ($group in $groups) {
                 Description = $group.Description
                 GroupScope = $group.Scope
                 GroupCategory = $group.Category
-                Path = $group.OU
+                Path = $groupOU
             }
             
             New-ADGroup @groupParams
