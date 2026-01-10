@@ -90,13 +90,19 @@ function ConvertTo-CurrentDomainDN {
         [string]$CurrentDomainDN
     )
     
-    # Strip any existing DC components and append current domain DN
-    $relativeDN = $DN -replace ',DC=.*$', ''
-    if ($relativeDN) {
+    # Strip DC components (everything from first ,DC= to end) and append current domain DN
+    if ($DN -match '^(.+?),DC=') {
+        # Has DC components - strip them and use the OU part
+        $relativeDN = $matches[1]
         return "$relativeDN,$CurrentDomainDN"
     }
-    else {
+    elseif ($DN -match '^DC=') {
+        # DN is just the domain root
         return $CurrentDomainDN
+    }
+    else {
+        # No DC components, append domain DN
+        return "$DN,$CurrentDomainDN"
     }
 }
 
