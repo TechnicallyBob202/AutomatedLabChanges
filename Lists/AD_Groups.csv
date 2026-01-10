@@ -1,332 +1,326 @@
 Name,SamAccountName,Description,Scope,Category,OU,GroupType
-T0_Admins_Global_RG,T0_Admins_Global_RG,Tier 0 Global Administrators Role Group,Global,Security,"OU=Role,OU=Groups,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Administrative
-T1_NetworkAdmin_Global_RG,T1_NetworkAdmin_Global_RG,Tier 1 Network Administrators Role Group,Global,Security,"OU=Role,OU=Groups,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Administrative
-T1_ServerAdmin_Global_RG,T1_ServerAdmin_Global_RG,Tier 1 Server Administrators Role Group,Global,Security,"OU=Role,OU=Groups,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Administrative
-T2_DesktopSupport_Global_RG,T2_DesktopSupport_Global_RG,Tier 2 Desktop Support Role Group,Global,Security,"OU=Role,OU=Groups,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Administrative
-T2_HelpDesk_RG,T2_HelpDesk_RG,Tier 2 Help Desk Role Group,Global,Security,"OU=Role,OU=Groups,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Administrative
-T2_VIP_Support_RG,T2_VIP_Support_RG,Tier 2 VIP Support Role Group,Global,Security,"OU=Role,OU=Groups,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Administrative
-TC_CloudAdmins_RG,TC_CloudAdmins_RG,Tier Cloud Administrators Role Group,Global,Security,"OU=Role,OU=Groups,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Administrative
-TLP - Red,TLP-Red,Traffic Light Protocol - Red (Restricted),Global,Security,"OU=Confidential,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Confidential
-TLP - Amber,TLP-Amber,Traffic Light Protocol - Amber (Limited),Global,Security,"OU=Confidential,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Confidential
-TLP - Green,TLP-Green,Traffic Light Protocol - Green (Community),Global,Security,"OU=Confidential,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Confidential
-TLP - Clear,TLP-Clear,Traffic Light Protocol - Clear (Public),Global,Security,"OU=Confidential,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Confidential
-Accounting - Accounting Manager,Accounting-AccountingManager,Accounting Department - Accounting Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Accounting - Accounts Clerk,Accounting-AccountsClerk,Accounting Department - Accounts Clerk Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Accounting - Data Entry,Accounting-DataEntry,Accounting Department - Data Entry Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Accounting - Cost Accountant,Accounting-CostAccountant,Accounting Department - Cost Accountant Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Accounting - Management Accountant,Accounting-ManagementAccountant,Accounting Department - Management Accountant Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Administration - Administration Manager,Administration-AdministrationManager,Administration Department - Administration Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Administration - Administrator,Administration-Administrator,Administration Department - Administrator Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Administration - Administration Assistant,Administration-AdministrationAssistant,Administration Department - Administration Assistant Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Administration - Administration Coordinator,Administration-AdministrationCoordinator,Administration Department - Administration Coordinator Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Business Development - Business Development Manager,BusinessDevelopment-BusinessDevelopmentManager,Business Development Department - Business Development Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Business Development - Business Development Strategist,BusinessDevelopment-BusinessDevelopmentStrategist,Business Development Department - Business Development Strategist Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Business Development - Business Development Consultant,BusinessDevelopment-BusinessDevelopmentConsultant,Business Development Department - Business Development Consultant Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Cloud Services - Cloud Services Manager,CloudServices-CloudServicesManager,Cloud Services Department - Cloud Services Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Cloud Services - Cloud Engineer,CloudServices-CloudEngineer,Cloud Services Department - Cloud Engineer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Cloud Services - Cloud Architect,CloudServices-CloudArchitect,Cloud Services Department - Cloud Architect Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Cloud Services - Cloud Consultant,CloudServices-CloudConsultant,Cloud Services Department - Cloud Consultant Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Community Relations - Community Relations Coordinator,CommunityRelations-CommunityRelationsCoordinator,Community Relations Department - Community Relations Coordinator Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Community Relations - Community Relations Officer,CommunityRelations-CommunityRelationsOfficer,Community Relations Department - Community Relations Officer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Compliance - Compliance Officer,Compliance-ComplianceOfficer,Compliance Department - Compliance Officer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Compliance - Risk Analyst,Compliance-RiskAnalyst,Compliance Department - Risk Analyst Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Compliance - Auditor,Compliance-Auditor,Compliance Department - Auditor Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Consulting - Consulting Manager,Consulting-ConsultingManager,Consulting Department - Consulting Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Consulting - Consultant,Consulting-Consultant,Consulting Department - Consultant Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Contracts - Contracts Manager,Contracts-ContractsManager,Contracts Department - Contracts Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Contracts - Contracts Coordinator,Contracts-ContractsCoordinator,Contracts Department - Contracts Coordinator Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Contracts - Contracts Clerk,Contracts-ContractsClerk,Contracts Department - Contracts Clerk Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Corporate Development - Corporate Development Leader,CorporateDevelopment-CorporateDevelopmentLeader,Corporate Development Department - Corporate Development Leader Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Corporate Development - Corporate Development Strategist,CorporateDevelopment-CorporateDevelopmentStrategist,Corporate Development Department - Corporate Development Strategist Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-C-Suite - CIO,C-Suite-CIO,C-Suite - Chief Information Officer,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-C-Suite - CEO,C-Suite-CEO,C-Suite - Chief Executive Officer,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-C-Suite - CFO,C-Suite-CFO,C-Suite - Chief Financial Officer,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-C-Suite - CPO,C-Suite-CPO,C-Suite - Chief Product Officer,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-C-Suite - COO,C-Suite-COO,C-Suite - Chief Operating Officer,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-C-Suite - CISO,C-Suite-CISO,C-Suite - Chief Information Security Officer,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-C-Suite - CDPO,C-Suite-CDPO,C-Suite - Chief Data Protection Officer,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-C-Suite - CTO,C-Suite-CTO,C-Suite - Chief Technology Officer,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Customer Support - Support Specialist,CustomerSupport-SupportSpecialist,Customer Support Department - Support Specialist Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Customer Support - Customer Service Rep,CustomerSupport-CustomerServiceRep,Customer Support Department - Customer Service Rep Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Customer Support - Technical Support,CustomerSupport-TechnicalSupport,Customer Support Department - Technical Support Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Data Science - Data Science Manager,DataScience-DataScienceManager,Data Science Department - Data Science Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Data Science - Data Scientist,DataScience-DataScientist,Data Science Department - Data Scientist Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Data Science - Data Analyst,DataScience-DataAnalyst,Data Science Department - Data Analyst Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Data Science - Data Engineer,DataScience-DataEngineer,Data Science Department - Data Engineer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Design - Design Manager,Design-DesignManager,Design Department - Design Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Design - UX Designer,Design-UXDesigner,Design Department - UX Designer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Design - Design Engineer,Design-DesignEngineer,Design Department - Design Engineer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Design - Tester,Design-Tester,Design Department - Tester Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-DevOps - DevOps Engineer,DevOps-DevOpsEngineer,DevOps Department - DevOps Engineer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-DevOps - DevOps Specialist,DevOps-DevOpsSpecialist,DevOps Department - DevOps Specialist Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Engineering - Engineering Manager,Engineering-EngineeringManager,Engineering Department - Engineering Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Engineering - Engineer,Engineering-Engineer,Engineering Department - Engineer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Engineering - Data Scientist,Engineering-DataScientist,Engineering Department - Data Scientist Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Engineering - Draughtsperson,Engineering-Draughtsperson,Engineering Department - Draughtsperson Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Engineering - Design Engineer,Engineering-DesignEngineer,Engineering Department - Design Engineer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Event Management - Event Coordinator,EventManagement-EventCoordinator,Event Management Department - Event Coordinator Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Event Management - Event Management Manager,EventManagement-EventManagementManager,Event Management Department - Event Management Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Facilities - Facilities Manager,Facilities-FacilitiesManager,Facilities Department - Facilities Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Facilities - Facilities Engineer,Facilities-FacilitiesEngineer,Facilities Department - Facilities Engineer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Facilities - Facilities Technician,Facilities-FacilitiesTechnician,Facilities Department - Facilities Technician Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Field Services - Field Services Manager,FieldServices-FieldServicesManager,Field Services Department - Field Services Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Field Services - Field Technician,FieldServices-FieldTechnician,Field Services Department - Field Technician Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Field Services - Field Engineer,FieldServices-FieldEngineer,Field Services Department - Field Engineer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Government Affairs - Government Affairs Liaison,GovernmentAffairs-GovernmentAffairsLiaison,Government Affairs Department - Government Affairs Liaison Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Government Affairs - Government Relations Officer,GovernmentAffairs-GovernmentRelationsOfficer,Government Affairs Department - Government Relations Officer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-HSE - HSE Manager,HSE-HSEManager,HSE Department - HSE Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-HSE - Safety Inspector,HSE-SafetyInspector,HSE Department - Safety Inspector Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-HSE - Environmental Health Officer,HSE-EnvironmentalHealthOfficer,HSE Department - Environmental Health Officer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-HSE - HSE Advisor,HSE-HSEAdvisor,HSE Department - HSE Advisor Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-HSE - HSE Analyst,HSE-HSEAnalyst,HSE Department - HSE Analyst Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Human Resources - Human Resources Manager,HumanResources-HumanResourcesManager,Human Resources Department - Human Resources Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Human Resources - Payroll,HumanResources-Payroll,Human Resources Department - Payroll Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Human Resources - Business Partner,HumanResources-BusinessPartner,Human Resources Department - Business Partner Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Human Resources - HR Coordinator,HumanResources-HRCoordinator,Human Resources Department - HR Coordinator Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Innovation - Innovation Strategist,Innovation-InnovationStrategist,Innovation Department - Innovation Strategist Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Innovation - Innovation Researcher,Innovation-InnovationResearcher,Innovation Department - Innovation Researcher Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Internal Audit - Internal Audit Manager,InternalAudit-InternalAuditManager,Internal Audit Department - Internal Audit Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Internal Audit - Auditor,InternalAudit-Auditor,Internal Audit Department - Auditor Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Internal Audit - Compliance Analyst,InternalAudit-ComplianceAnalyst,Internal Audit Department - Compliance Analyst Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Investor Relations - Investor Relations Officer,InvestorRelations-InvestorRelationsOfficer,Investor Relations Department - Investor Relations Officer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Investor Relations - Communications Strategist,InvestorRelations-CommunicationsStrategist,Investor Relations Department - Communications Strategist Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-IT - Manager,IT-Manager,IT Department - Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-IT - Support Tech,IT-SupportTech,IT Department - Support Tech Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-IT - Technician,IT-Technician,IT Department - Technician Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-IT - Architect,IT-Architect,IT Department - Architect Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-IT - HelpDesk,IT-HelpDesk,IT Department - HelpDesk Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-IT - Systems Admin,IT-SystemsAdmin,IT Department - Systems Admin Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-IT - Service Delivery,IT-ServiceDelivery,IT Department - Service Delivery Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-IT - Network Admin,IT-NetworkAdmin,IT Department - Network Admin Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-IT - Server Admin,IT-ServerAdmin,IT Department - Server Admin Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-IT - Customer Success,IT-CustomerSuccess,IT Department - Customer Success Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Legal - Legal Manager,Legal-LegalManager,Legal Department - Legal Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Legal - Legal Advisor,Legal-LegalAdvisor,Legal Department - Legal Advisor Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Legal - Paralegal,Legal-Paralegal,Legal Department - Paralegal Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Legal - Legal Counsel,Legal-LegalCounsel,Legal Department - Legal Counsel Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Learning & Development - Learning & Development Manager,LearningDevelopment-LearningDevelopmentManager,Learning & Development Department - Learning & Development Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Learning & Development - L&D Trainer,LearningDevelopment-LDTrainer,Learning & Development Department - L&D Trainer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Logistics - Logistics Coordinator,Logistics-LogisticsCoordinator,Logistics Department - Logistics Coordinator Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Logistics - Logistics Manager,Logistics-LogisticsManager,Logistics Department - Logistics Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Marketing - Marketing Manager,Marketing-MarketingManager,Marketing Department - Marketing Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Marketing - Marketing Coordinator,Marketing-MarketingCoordinator,Marketing Department - Marketing Coordinator Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Marketing - Marketing Assistant,Marketing-MarketingAssistant,Marketing Department - Marketing Assistant Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Marketing - Marketing Specialist,Marketing-MarketingSpecialist,Marketing Department - Marketing Specialist Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Medical Affairs - Medical Officer,MedicalAffairs-MedicalOfficer,Medical Affairs Department - Medical Officer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Medical Affairs - Compliance,MedicalAffairs-Compliance,Medical Affairs Department - Compliance Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Operations - Operations Manager,Operations-OperationsManager,Operations Department - Operations Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Operations - Operations Analyst,Operations-OperationsAnalyst,Operations Department - Operations Analyst Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Payroll - Payroll Officer,Payroll-PayrollOfficer,Payroll Department - Payroll Officer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Payroll - Payroll Analyst,Payroll-PayrollAnalyst,Payroll Department - Payroll Analyst Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Planning - Planning Manager,Planning-PlanningManager,Planning Department - Planning Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Planning - Planning Engineer,Planning-PlanningEngineer,Planning Department - Planning Engineer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Planning - Planning Project Manager,Planning-PlanningProjectManager,Planning Department - Planning Project Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Product Management - Product Management Manager,ProductManagement-ProductManagementManager,Product Management Department - Product Management Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Product Management - Product Owner,ProductManagement-ProductOwner,Product Management Department - Product Owner Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Procurement - Procurement Manager,Procurement-ProcurementManager,Procurement Department - Procurement Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Procurement - Procurement Officer,Procurement-ProcurementOfficer,Procurement Department - Procurement Officer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Procurement - Buyer,Procurement-Buyer,Procurement Department - Buyer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Project Management - Project Management Manager,ProjectManagement-ProjectManagementManager,Project Management Department - Project Management Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Project Management - Project Engineer,ProjectManagement-ProjectEngineer,Project Management Department - Project Engineer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Public Relations - Public Relations Manager,PublicRelations-PublicRelationsManager,Public Relations Department - Public Relations Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Public Relations - PR,PublicRelations-PR,Public Relations Department - PR Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Public Relations - Communications Officer,PublicRelations-CommunicationsOfficer,Public Relations Department - Communications Officer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Publishing - Publishing Manager,Publishing-PublishingManager,Publishing Department - Publishing Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Publishing - Editor,Publishing-Editor,Publishing Department - Editor Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Publishing - Content Coordinator,Publishing-ContentCoordinator,Publishing Department - Content Coordinator Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Purchasing - Purchasing Manager,Purchasing-PurchasingManager,Purchasing Department - Purchasing Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Purchasing - Purchasing Coordinator,Purchasing-PurchasingCoordinator,Purchasing Department - Purchasing Coordinator Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Purchasing - Buyer,Purchasing-Buyer,Purchasing Department - Buyer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-QA - QA Manager,QA-QAManager,QA Department - QA Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-QA - QA Engineer,QA-QAEngineer,QA Department - QA Engineer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-QA - QA Analyst,QA-QAAnalyst,QA Department - QA Analyst Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Quality Control - Quality Control Manager,QualityControl-QualityControlManager,Quality Control Department - Quality Control Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Quality Control - QC Inspector,QualityControl-QCInspector,Quality Control Department - QC Inspector Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Quality Control - Quality Assurance Officer,QualityControl-QualityAssuranceOfficer,Quality Control Department - Quality Assurance Officer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Recruiting - Recruiting Manager,Recruiting-RecruitingManager,Recruiting Department - Recruiting Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Recruiting - Recruiter,Recruiting-Recruiter,Recruiting Department - Recruiter Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Recruiting - Talent Scout,Recruiting-TalentScout,Recruiting Department - Talent Scout Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-R&D - R&D Manager,RD-RDManager,R&D Department - R&D Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-R&D - Researcher,RD-Researcher,R&D Department - Researcher Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-R&D - Developer,RD-Developer,R&D Department - Developer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Risk Management - Risk Management Manager,RiskManagement-RiskManagementManager,Risk Management Department - Risk Management Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Risk Management - Risk Analyst,RiskManagement-RiskAnalyst,Risk Management Department - Risk Analyst Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Risk Management - Compliance Officer,RiskManagement-ComplianceOfficer,Risk Management Department - Compliance Officer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Sales - Sales Manager,Sales-SalesManager,Sales Department - Sales Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Sales - Sales Representative,Sales-SalesRepresentative,Sales Department - Sales Representative Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Sales - Sales Consultant,Sales-SalesConsultant,Sales Department - Sales Consultant Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Security - Security Manager,Security-SecurityManager,Security Department - Security Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Security - Security Officer,Security-SecurityOfficer,Security Department - Security Officer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Security - Security Analyst,Security-SecurityAnalyst,Security Department - Security Analyst Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Strategy - Strategy Manager,Strategy-StrategyManager,Strategy Department - Strategy Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Strategy - Strategy Analyst,Strategy-StrategyAnalyst,Strategy Department - Strategy Analyst Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Strategy - Strategy Consultant,Strategy-StrategyConsultant,Strategy Department - Strategy Consultant Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Systems Administration - Systems Administration Manager,SystemsAdministration-SystemsAdministrationManager,Systems Administration Department - Systems Administration Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Systems Administration - SysAdmin,SystemsAdministration-SysAdmin,Systems Administration Department - SysAdmin Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Systems Administration - Systems Engineer,SystemsAdministration-SystemsEngineer,Systems Administration Department - Systems Engineer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Talent Acquisition - Talent Acquisition Manager,TalentAcquisition-TalentAcquisitionManager,Talent Acquisition Department - Talent Acquisition Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Talent Acquisition - Recruiter,TalentAcquisition-Recruiter,Talent Acquisition Department - Recruiter Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Technical Support - Technical Support Manager,TechnicalSupport-TechnicalSupportManager,Technical Support Department - Technical Support Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Technical Support - Support Technician,TechnicalSupport-SupportTechnician,Technical Support Department - Support Technician Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Technical Support - Helpdesk Analyst,TechnicalSupport-HelpdeskAnalyst,Technical Support Department - Helpdesk Analyst Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Training - Training Manager,Training-TrainingManager,Training Department - Training Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Training - Trainer,Training-Trainer,Training Department - Trainer Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Training - Training Coordinator,Training-TrainingCoordinator,Training Department - Training Coordinator Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Workplace Services - Workplace Services Manager,WorkplaceServices-WorkplaceServicesManager,Workplace Services Department - Workplace Services Manager Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Workplace Services - Workplace Services Coordinator,WorkplaceServices-WorkplaceServicesCoordinator,Workplace Services Department - Workplace Services Coordinator Role,Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
-Application Server-DEV-Servers,ApplicationServer-DEV-Servers,Application Server Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Application Server-QA-Servers,ApplicationServer-QA-Servers,Application Server QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Application Server-PRD-Servers,ApplicationServer-PRD-Servers,Application Server Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Application Server-DEV-Users,ApplicationServer-DEV-Users,Application Server Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Application Server-QA-Users,ApplicationServer-QA-Users,Application Server QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Application Server-PRD-Users,ApplicationServer-PRD-Users,Application Server Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Backup-DEV-Servers,Backup-DEV-Servers,Backup Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Backup-QA-Servers,Backup-QA-Servers,Backup QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Backup-PRD-Servers,Backup-PRD-Servers,Backup Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Backup-DEV-Users,Backup-DEV-Users,Backup Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Backup-QA-Users,Backup-QA-Users,Backup QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Backup-PRD-Users,Backup-PRD-Users,Backup Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Business Intelligence-DEV-Servers,BusinessIntelligence-DEV-Servers,Business Intelligence Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Business Intelligence-QA-Servers,BusinessIntelligence-QA-Servers,Business Intelligence QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Business Intelligence-PRD-Servers,BusinessIntelligence-PRD-Servers,Business Intelligence Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Business Intelligence-DEV-Users,BusinessIntelligence-DEV-Users,Business Intelligence Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Business Intelligence-QA-Users,BusinessIntelligence-QA-Users,Business Intelligence QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Business Intelligence-PRD-Users,BusinessIntelligence-PRD-Users,Business Intelligence Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Collaboration-DEV-Servers,Collaboration-DEV-Servers,Collaboration Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Collaboration-QA-Servers,Collaboration-QA-Servers,Collaboration QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Collaboration-PRD-Servers,Collaboration-PRD-Servers,Collaboration Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Collaboration-DEV-Users,Collaboration-DEV-Users,Collaboration Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Collaboration-QA-Users,Collaboration-QA-Users,Collaboration QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Collaboration-PRD-Users,Collaboration-PRD-Users,Collaboration Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Configuration Management-DEV-Servers,ConfigurationManagement-DEV-Servers,Configuration Management Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Configuration Management-QA-Servers,ConfigurationManagement-QA-Servers,Configuration Management QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Configuration Management-PRD-Servers,ConfigurationManagement-PRD-Servers,Configuration Management Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Configuration Management-DEV-Users,ConfigurationManagement-DEV-Users,Configuration Management Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Configuration Management-QA-Users,ConfigurationManagement-QA-Users,Configuration Management QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Configuration Management-PRD-Users,ConfigurationManagement-PRD-Users,Configuration Management Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-CRM-DEV-Servers,CRM-DEV-Servers,CRM Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-CRM-QA-Servers,CRM-QA-Servers,CRM QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-CRM-PRD-Servers,CRM-PRD-Servers,CRM Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-CRM-DEV-Users,CRM-DEV-Users,CRM Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-CRM-QA-Users,CRM-QA-Users,CRM QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-CRM-PRD-Users,CRM-PRD-Users,CRM Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Database-DEV-Servers,Database-DEV-Servers,Database Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Database-QA-Servers,Database-QA-Servers,Database QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Database-PRD-Servers,Database-PRD-Servers,Database Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Database-DEV-Users,Database-DEV-Users,Database Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Database-QA-Users,Database-QA-Users,Database QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Database-PRD-Users,Database-PRD-Users,Database Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-DHCP-DEV-Servers,DHCP-DEV-Servers,DHCP Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-DHCP-QA-Servers,DHCP-QA-Servers,DHCP QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-DHCP-PRD-Servers,DHCP-PRD-Servers,DHCP Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-DHCP-DEV-Users,DHCP-DEV-Users,DHCP Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-DHCP-QA-Users,DHCP-QA-Users,DHCP QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-DHCP-PRD-Users,DHCP-PRD-Users,DHCP Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Endpoint Management-DEV-Servers,EndpointManagement-DEV-Servers,Endpoint Management Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Endpoint Management-QA-Servers,EndpointManagement-QA-Servers,Endpoint Management QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Endpoint Management-PRD-Servers,EndpointManagement-PRD-Servers,Endpoint Management Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Endpoint Management-DEV-Users,EndpointManagement-DEV-Users,Endpoint Management Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Endpoint Management-QA-Users,EndpointManagement-QA-Users,Endpoint Management QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Endpoint Management-PRD-Users,EndpointManagement-PRD-Users,Endpoint Management Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Engineering Systems-DEV-Servers,EngineeringSystems-DEV-Servers,Engineering Systems Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Engineering Systems-QA-Servers,EngineeringSystems-QA-Servers,Engineering Systems QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Engineering Systems-PRD-Servers,EngineeringSystems-PRD-Servers,Engineering Systems Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Engineering Systems-DEV-Users,EngineeringSystems-DEV-Users,Engineering Systems Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Engineering Systems-QA-Users,EngineeringSystems-QA-Users,Engineering Systems QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Engineering Systems-PRD-Users,EngineeringSystems-PRD-Users,Engineering Systems Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Enterprise Resource Planning-DEV-Servers,EnterpriseResourcePlanning-DEV-Servers,Enterprise Resource Planning Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Enterprise Resource Planning-QA-Servers,EnterpriseResourcePlanning-QA-Servers,Enterprise Resource Planning QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Enterprise Resource Planning-PRD-Servers,EnterpriseResourcePlanning-PRD-Servers,Enterprise Resource Planning Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Enterprise Resource Planning-DEV-Users,EnterpriseResourcePlanning-DEV-Users,Enterprise Resource Planning Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Enterprise Resource Planning-QA-Users,EnterpriseResourcePlanning-QA-Users,Enterprise Resource Planning QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Enterprise Resource Planning-PRD-Users,EnterpriseResourcePlanning-PRD-Users,Enterprise Resource Planning Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-FTP-DEV-Servers,FTP-DEV-Servers,FTP Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-FTP-QA-Servers,FTP-QA-Servers,FTP QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-FTP-PRD-Servers,FTP-PRD-Servers,FTP Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-FTP-DEV-Users,FTP-DEV-Users,FTP Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-FTP-QA-Users,FTP-QA-Users,FTP QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-FTP-PRD-Users,FTP-PRD-Users,FTP Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Hyper-V-DEV-Servers,Hyper-V-DEV-Servers,Hyper-V Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Hyper-V-QA-Servers,Hyper-V-QA-Servers,Hyper-V QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Hyper-V-PRD-Servers,Hyper-V-PRD-Servers,Hyper-V Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Hyper-V-DEV-Users,Hyper-V-DEV-Users,Hyper-V Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Hyper-V-QA-Users,Hyper-V-QA-Users,Hyper-V QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Hyper-V-PRD-Users,Hyper-V-PRD-Users,Hyper-V Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Email-DEV-Servers,Email-DEV-Servers,Email Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Email-QA-Servers,Email-QA-Servers,Email QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Email-PRD-Servers,Email-PRD-Servers,Email Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Email-DEV-Users,Email-DEV-Users,Email Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Email-QA-Users,Email-QA-Users,Email QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Email-PRD-Users,Email-PRD-Users,Email Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-File Server-DEV-Servers,FileServer-DEV-Servers,File Server Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-File Server-QA-Servers,FileServer-QA-Servers,File Server QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-File Server-PRD-Servers,FileServer-PRD-Servers,File Server Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-File Server-DEV-Users,FileServer-DEV-Users,File Server Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-File Server-QA-Users,FileServer-QA-Users,File Server QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-File Server-PRD-Users,FileServer-PRD-Users,File Server Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-HRMS-DEV-Servers,HRMS-DEV-Servers,HRMS Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-HRMS-QA-Servers,HRMS-QA-Servers,HRMS QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-HRMS-PRD-Servers,HRMS-PRD-Servers,HRMS Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-HRMS-DEV-Users,HRMS-DEV-Users,HRMS Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-HRMS-QA-Users,HRMS-QA-Users,HRMS QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-HRMS-PRD-Users,HRMS-PRD-Users,HRMS Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-License Server-DEV-Servers,LicenseServer-DEV-Servers,License Server Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-License Server-QA-Servers,LicenseServer-QA-Servers,License Server QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-License Server-PRD-Servers,LicenseServer-PRD-Servers,License Server Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-License Server-DEV-Users,LicenseServer-DEV-Users,License Server Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-License Server-QA-Users,LicenseServer-QA-Users,License Server QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-License Server-PRD-Users,LicenseServer-PRD-Users,License Server Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Linux-DEV-Servers,Linux-DEV-Servers,Linux Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Linux-QA-Servers,Linux-QA-Servers,Linux QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Linux-PRD-Servers,Linux-PRD-Servers,Linux Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Linux-DEV-Users,Linux-DEV-Users,Linux Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Linux-QA-Users,Linux-QA-Users,Linux QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Linux-PRD-Users,Linux-PRD-Users,Linux Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Monitoring-DEV-Servers,Monitoring-DEV-Servers,Monitoring Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Monitoring-QA-Servers,Monitoring-QA-Servers,Monitoring QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Monitoring-PRD-Servers,Monitoring-PRD-Servers,Monitoring Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Monitoring-DEV-Users,Monitoring-DEV-Users,Monitoring Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Monitoring-QA-Users,Monitoring-QA-Users,Monitoring QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Monitoring-PRD-Users,Monitoring-PRD-Users,Monitoring Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Print-DEV-Servers,Print-DEV-Servers,Print Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Print-QA-Servers,Print-QA-Servers,Print QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Print-PRD-Servers,Print-PRD-Servers,Print Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Print-DEV-Users,Print-DEV-Users,Print Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Print-QA-Users,Print-QA-Users,Print QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Print-PRD-Users,Print-PRD-Users,Print Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Remote Desktop Services-DEV-Servers,RemoteDesktopServices-DEV-Servers,Remote Desktop Services Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Remote Desktop Services-QA-Servers,RemoteDesktopServices-QA-Servers,Remote Desktop Services QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Remote Desktop Services-PRD-Servers,RemoteDesktopServices-PRD-Servers,Remote Desktop Services Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Remote Desktop Services-DEV-Users,RemoteDesktopServices-DEV-Users,Remote Desktop Services Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Remote Desktop Services-QA-Users,RemoteDesktopServices-QA-Users,Remote Desktop Services QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Remote Desktop Services-PRD-Users,RemoteDesktopServices-PRD-Users,Remote Desktop Services Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Reporting-DEV-Servers,Reporting-DEV-Servers,Reporting Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Reporting-QA-Servers,Reporting-QA-Servers,Reporting QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Reporting-PRD-Servers,Reporting-PRD-Servers,Reporting Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Reporting-DEV-Users,Reporting-DEV-Users,Reporting Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Reporting-QA-Users,Reporting-QA-Users,Reporting QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Reporting-PRD-Users,Reporting-PRD-Users,Reporting Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-SharePoint-DEV-Servers,SharePoint-DEV-Servers,SharePoint Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-SharePoint-QA-Servers,SharePoint-QA-Servers,SharePoint QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-SharePoint-PRD-Servers,SharePoint-PRD-Servers,SharePoint Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-SharePoint-DEV-Users,SharePoint-DEV-Users,SharePoint Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-SharePoint-QA-Users,SharePoint-QA-Users,SharePoint QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-SharePoint-PRD-Users,SharePoint-PRD-Users,SharePoint Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Virtual Desktop-DEV-Servers,VirtualDesktop-DEV-Servers,Virtual Desktop Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Virtual Desktop-QA-Servers,VirtualDesktop-QA-Servers,Virtual Desktop QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Virtual Desktop-PRD-Servers,VirtualDesktop-PRD-Servers,Virtual Desktop Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Virtual Desktop-DEV-Users,VirtualDesktop-DEV-Users,Virtual Desktop Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Virtual Desktop-QA-Users,VirtualDesktop-QA-Users,Virtual Desktop QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Virtual Desktop-PRD-Users,VirtualDesktop-PRD-Users,Virtual Desktop Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-VMware-DEV-Servers,VMware-DEV-Servers,VMware Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-VMware-QA-Servers,VMware-QA-Servers,VMware QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-VMware-PRD-Servers,VMware-PRD-Servers,VMware Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-VMware-DEV-Users,VMware-DEV-Users,VMware Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-VMware-QA-Users,VMware-QA-Users,VMware QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-VMware-PRD-Users,VMware-PRD-Users,VMware Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Webserver-DEV-Servers,Webserver-DEV-Servers,Webserver Development Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Webserver-QA-Servers,Webserver-QA-Servers,Webserver QA Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Webserver-PRD-Servers,Webserver-PRD-Servers,Webserver Production Servers Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Webserver-DEV-Users,Webserver-DEV-Users,Webserver Development Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Webserver-QA-Users,Webserver-QA-Users,Webserver QA Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
-Webserver-PRD-Users,Webserver-PRD-Users,Webserver Production Users Group,Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+T0_Admins_Global_RG,T0_Admins_Global_RG,"Tier 0 Global Administrators Role Group",Global,Security,"OU=Role,OU=Groups,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Administrative
+T1_NetworkAdmin_Global_RG,T1_NetworkAdmin_Global_RG,"Tier 1 Network Administrators Role Group",Global,Security,"OU=Role,OU=Groups,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Administrative
+T1_ServerAdmin_Global_RG,T1_ServerAdmin_Global_RG,"Tier 1 Server Administrators Role Group",Global,Security,"OU=Role,OU=Groups,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Administrative
+T2_DesktopSupport_Global_RG,T2_DesktopSupport_Global_RG,"Tier 2 Desktop Support Role Group",Global,Security,"OU=Role,OU=Groups,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Administrative
+T2_HelpDesk_RG,T2_HelpDesk_RG,"Tier 2 Help Desk Role Group",Global,Security,"OU=Role,OU=Groups,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Administrative
+T2_VIP_Support_RG,T2_VIP_Support_RG,"Tier 2 VIP Support Role Group",Global,Security,"OU=Role,OU=Groups,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Administrative
+TC_CloudAdmins_RG,TC_CloudAdmins_RG,"Tier Cloud Administrators Role Group",Global,Security,"OU=Role,OU=Groups,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Administrative
+"TLP - Red","TLP - Red","Traffic Light Protocol - Red (Restricted)",Global,Security,"OU=Confidential,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Confidential
+"TLP - Amber","TLP - Amber","Traffic Light Protocol - Amber (Limited)",Global,Security,"OU=Confidential,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Confidential
+"TLP - Green","TLP - Green","Traffic Light Protocol - Green (Community)",Global,Security,"OU=Confidential,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Confidential
+"TLP - Clear","TLP - Clear","Traffic Light Protocol - Clear (Public)",Global,Security,"OU=Confidential,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Confidential
+"Accounting - Accounting Manager","Accounting - Accounting Manager","Accounting Department - Accounting Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Accounting - Accounts Clerk","Accounting - Accounts Clerk","Accounting Department - Accounts Clerk Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Accounting - Data Entry","Accounting - Data Entry","Accounting Department - Data Entry Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Accounting - Cost Accountant","Accounting - Cost Accountant","Accounting Department - Cost Accountant Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Accounting - Management Accountant","Accounting - Management Accountant","Accounting Department - Management Accountant Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Administration - Administration Manager","Administration - Administration Manager","Administration Department - Administration Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Administration - Administrator","Administration - Administrator","Administration Department - Administrator Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Administration - Administration Assistant","Administration - Administration Assistant","Administration Department - Administration Assistant Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Administration - Administration Coordinator","Administration - Administration Coordinator","Administration Department - Administration Coordinator Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Business Development - Business Development Manager","Business Development - Business Development Manager","Business Development Department - Business Development Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Business Development - Business Development Strategist","Business Development - Business Development Strategist","Business Development Department - Business Development Strategist Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Business Development - Business Development Consultant","Business Development - Business Development Consultant","Business Development Department - Business Development Consultant Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Cloud Services - Cloud Services Manager","Cloud Services - Cloud Services Manager","Cloud Services Department - Cloud Services Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Cloud Services - Cloud Engineer","Cloud Services - Cloud Engineer","Cloud Services Department - Cloud Engineer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Cloud Services - Cloud Architect","Cloud Services - Cloud Architect","Cloud Services Department - Cloud Architect Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Cloud Services - Cloud Consultant","Cloud Services - Cloud Consultant","Cloud Services Department - Cloud Consultant Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Community Relations - Community Relations Coordinator","Community Relations - Community Relations Coordinator","Community Relations Department - Community Relations Coordinator Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Community Relations - Community Relations Officer","Community Relations - Community Relations Officer","Community Relations Department - Community Relations Officer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Compliance - Compliance Officer","Compliance - Compliance Officer","Compliance Department - Compliance Officer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Compliance - Risk Analyst","Compliance - Risk Analyst","Compliance Department - Risk Analyst Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Compliance - Auditor","Compliance - Auditor","Compliance Department - Auditor Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Consulting - Consulting Manager","Consulting - Consulting Manager","Consulting Department - Consulting Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Consulting - Consultant","Consulting - Consultant","Consulting Department - Consultant Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Contracts - Contracts Manager","Contracts - Contracts Manager","Contracts Department - Contracts Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Contracts - Contracts Coordinator","Contracts - Contracts Coordinator","Contracts Department - Contracts Coordinator Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Contracts - Contracts Clerk","Contracts - Contracts Clerk","Contracts Department - Contracts Clerk Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Corporate Development - Corporate Development Leader","Corporate Development - Corporate Development Leader","Corporate Development Department - Corporate Development Leader Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Corporate Development - Corporate Development Strategist","Corporate Development - Corporate Development Strategist","Corporate Development Department - Corporate Development Strategist Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"C-Suite - CIO","C-Suite - CIO","C-Suite - Chief Information Officer",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"C-Suite - CEO","C-Suite - CEO","C-Suite - Chief Executive Officer",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"C-Suite - CFO","C-Suite - CFO","C-Suite - Chief Financial Officer",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"C-Suite - CPO","C-Suite - CPO","C-Suite - Chief Product Officer",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"C-Suite - COO","C-Suite - COO","C-Suite - Chief Operating Officer",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"C-Suite - CISO","C-Suite - CISO","C-Suite - Chief Information Security Officer",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"C-Suite - CDPO","C-Suite - CDPO","C-Suite - Chief Data Protection Officer",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"C-Suite - CTO","C-Suite - CTO","C-Suite - Chief Technology Officer",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Customer Support - Support Specialist","Customer Support - Support Specialist","Customer Support Department - Support Specialist Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Customer Support - Customer Service Rep","Customer Support - Customer Service Rep","Customer Support Department - Customer Service Rep Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Customer Support - Technical Support","Customer Support - Technical Support","Customer Support Department - Technical Support Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Data Science - Data Science Manager","Data Science - Data Science Manager","Data Science Department - Data Science Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Data Science - Data Scientist","Data Science - Data Scientist","Data Science Department - Data Scientist Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Data Science - Data Analyst","Data Science - Data Analyst","Data Science Department - Data Analyst Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Data Science - Data Engineer","Data Science - Data Engineer","Data Science Department - Data Engineer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Design - Design Manager","Design - Design Manager","Design Department - Design Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Design - UX Designer","Design - UX Designer","Design Department - UX Designer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Design - Design Engineer","Design - Design Engineer","Design Department - Design Engineer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Design - Tester","Design - Tester","Design Department - Tester Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"DevOps - DevOps Engineer","DevOps - DevOps Engineer","DevOps Department - DevOps Engineer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"DevOps - DevOps Specialist","DevOps - DevOps Specialist","DevOps Department - DevOps Specialist Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Engineering - Engineering Manager","Engineering - Engineering Manager","Engineering Department - Engineering Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Engineering - Engineer","Engineering - Engineer","Engineering Department - Engineer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Engineering - Data Scientist","Engineering - Data Scientist","Engineering Department - Data Scientist Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Engineering - Draughtsperson","Engineering - Draughtsperson","Engineering Department - Draughtsperson Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Engineering - Design Engineer","Engineering - Design Engineer","Engineering Department - Design Engineer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Event Management - Event Coordinator","Event Management - Event Coordinator","Event Management Department - Event Coordinator Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Event Management - Event Management Manager","Event Management - Event Management Manager","Event Management Department - Event Management Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Facilities - Facilities Manager","Facilities - Facilities Manager","Facilities Department - Facilities Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Facilities - Facilities Engineer","Facilities - Facilities Engineer","Facilities Department - Facilities Engineer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Facilities - Facilities Technician","Facilities - Facilities Technician","Facilities Department - Facilities Technician Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Field Services - Field Services Manager","Field Services - Field Services Manager","Field Services Department - Field Services Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Field Services - Field Technician","Field Services - Field Technician","Field Services Department - Field Technician Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Field Services - Field Engineer","Field Services - Field Engineer","Field Services Department - Field Engineer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Government Affairs - Government Affairs Liaison","Government Affairs - Government Affairs Liaison","Government Affairs Department - Government Affairs Liaison Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Government Affairs - Government Relations Officer","Government Affairs - Government Relations Officer","Government Affairs Department - Government Relations Officer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"HSE - HSE Manager","HSE - HSE Manager","HSE Department - HSE Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"HSE - Safety Inspector","HSE - Safety Inspector","HSE Department - Safety Inspector Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"HSE - Environmental Health Officer","HSE - Environmental Health Officer","HSE Department - Environmental Health Officer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"HSE - HSE Advisor","HSE - HSE Advisor","HSE Department - HSE Advisor Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"HSE - HSE Analyst","HSE - HSE Analyst","HSE Department - HSE Analyst Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Human Resources - Human Resources Manager","Human Resources - Human Resources Manager","Human Resources Department - Human Resources Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Human Resources - Payroll","Human Resources - Payroll","Human Resources Department - Payroll Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Human Resources - Business Partner","Human Resources - Business Partner","Human Resources Department - Business Partner Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Human Resources - HR Coordinator","Human Resources - HR Coordinator","Human Resources Department - HR Coordinator Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Innovation - Innovation Strategist","Innovation - Innovation Strategist","Innovation Department - Innovation Strategist Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Innovation - Innovation Researcher","Innovation - Innovation Researcher","Innovation Department - Innovation Researcher Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Internal Audit - Internal Audit Manager","Internal Audit - Internal Audit Manager","Internal Audit Department - Internal Audit Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Internal Audit - Auditor","Internal Audit - Auditor","Internal Audit Department - Auditor Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Internal Audit - Compliance Analyst","Internal Audit - Compliance Analyst","Internal Audit Department - Compliance Analyst Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Investor Relations - Investor Relations Officer","Investor Relations - Investor Relations Officer","Investor Relations Department - Investor Relations Officer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Investor Relations - Communications Strategist","Investor Relations - Communications Strategist","Investor Relations Department - Communications Strategist Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"IT - Manager","IT - Manager","IT Department - Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"IT - Support Tech","IT - Support Tech","IT Department - Support Tech Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"IT - Technician","IT - Technician","IT Department - Technician Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"IT - Architect","IT - Architect","IT Department - Architect Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"IT - HelpDesk","IT - HelpDesk","IT Department - HelpDesk Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"IT - Systems Admin","IT - Systems Admin","IT Department - Systems Admin Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"IT - Service Delivery","IT - Service Delivery","IT Department - Service Delivery Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"IT - Network Admin","IT - Network Admin","IT Department - Network Admin Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"IT - Server Admin","IT - Server Admin","IT Department - Server Admin Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"IT - Customer Success","IT - Customer Success","IT Department - Customer Success Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Legal - Legal Manager","Legal - Legal Manager","Legal Department - Legal Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Legal - Legal Advisor","Legal - Legal Advisor","Legal Department - Legal Advisor Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Legal - Paralegal","Legal - Paralegal","Legal Department - Paralegal Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Legal - Legal Counsel","Legal - Legal Counsel","Legal Department - Legal Counsel Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Learning & Development - Learning & Development Manager","Learning & Development - Learning & Development Manager","Learning & Development Department - Learning & Development Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Learning & Development - L&D Trainer","Learning & Development - L&D Trainer","Learning & Development Department - L&D Trainer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Logistics - Logistics Coordinator","Logistics - Logistics Coordinator","Logistics Department - Logistics Coordinator Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Logistics - Logistics Manager","Logistics - Logistics Manager","Logistics Department - Logistics Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Marketing - Marketing Manager","Marketing - Marketing Manager","Marketing Department - Marketing Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Marketing - Marketing Coordinator","Marketing - Marketing Coordinator","Marketing Department - Marketing Coordinator Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Marketing - Marketing Assistant","Marketing - Marketing Assistant","Marketing Department - Marketing Assistant Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Marketing - Marketing Specialist","Marketing - Marketing Specialist","Marketing Department - Marketing Specialist Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Medical Affairs - Medical Officer","Medical Affairs - Medical Officer","Medical Affairs Department - Medical Officer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Medical Affairs - Compliance","Medical Affairs - Compliance","Medical Affairs Department - Compliance Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Operations - Operations Manager","Operations - Operations Manager","Operations Department - Operations Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Operations - Operations Analyst","Operations - Operations Analyst","Operations Department - Operations Analyst Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Payroll - Payroll Officer","Payroll - Payroll Officer","Payroll Department - Payroll Officer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Payroll - Payroll Analyst","Payroll - Payroll Analyst","Payroll Department - Payroll Analyst Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Planning - Planning Manager","Planning - Planning Manager","Planning Department - Planning Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Planning - Planning Engineer","Planning - Planning Engineer","Planning Department - Planning Engineer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Planning - Planning Project Manager","Planning - Planning Project Manager","Planning Department - Planning Project Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Product Management - Product Management Manager","Product Management - Product Management Manager","Product Management Department - Product Management Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Product Management - Product Owner","Product Management - Product Owner","Product Management Department - Product Owner Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Procurement - Procurement Manager","Procurement - Procurement Manager","Procurement Department - Procurement Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Procurement - Procurement Officer","Procurement - Procurement Officer","Procurement Department - Procurement Officer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Procurement - Buyer","Procurement - Buyer","Procurement Department - Buyer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Project Management - Project Management Manager","Project Management - Project Management Manager","Project Management Department - Project Management Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Project Management - Project Engineer","Project Management - Project Engineer","Project Management Department - Project Engineer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Public Relations - Public Relations Manager","Public Relations - Public Relations Manager","Public Relations Department - Public Relations Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Public Relations - PR","Public Relations - PR","Public Relations Department - PR Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Public Relations - Communications Officer","Public Relations - Communications Officer","Public Relations Department - Communications Officer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Publishing - Publishing Manager","Publishing - Publishing Manager","Publishing Department - Publishing Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Publishing - Editor","Publishing - Editor","Publishing Department - Editor Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Publishing - Content Coordinator","Publishing - Content Coordinator","Publishing Department - Content Coordinator Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Purchasing - Purchasing Manager","Purchasing - Purchasing Manager","Purchasing Department - Purchasing Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Purchasing - Purchasing Coordinator","Purchasing - Purchasing Coordinator","Purchasing Department - Purchasing Coordinator Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Purchasing - Buyer","Purchasing - Buyer","Purchasing Department - Buyer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"QA - QA Manager","QA - QA Manager","QA Department - QA Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"QA - QA Engineer","QA - QA Engineer","QA Department - QA Engineer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"QA - QA Analyst","QA - QA Analyst","QA Department - QA Analyst Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Quality Control - Quality Control Manager","Quality Control - Quality Control Manager","Quality Control Department - Quality Control Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Quality Control - QC Inspector","Quality Control - QC Inspector","Quality Control Department - QC Inspector Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Quality Control - Quality Assurance Officer","Quality Control - Quality Assurance Officer","Quality Control Department - Quality Assurance Officer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Recruiting - Recruiting Manager","Recruiting - Recruiting Manager","Recruiting Department - Recruiting Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Recruiting - Recruiter","Recruiting - Recruiter","Recruiting Department - Recruiter Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Recruiting - Talent Scout","Recruiting - Talent Scout","Recruiting Department - Talent Scout Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"R&D - R&D Manager","R&D - R&D Manager","R&D Department - R&D Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"R&D - Researcher","R&D - Researcher","R&D Department - Researcher Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"R&D - Developer","R&D - Developer","R&D Department - Developer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Risk Management - Risk Management Manager","Risk Management - Risk Management Manager","Risk Management Department - Risk Management Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Risk Management - Risk Analyst","Risk Management - Risk Analyst","Risk Management Department - Risk Analyst Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Risk Management - Compliance Officer","Risk Management - Compliance Officer","Risk Management Department - Compliance Officer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Sales - Sales Manager","Sales - Sales Manager","Sales Department - Sales Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Sales - Sales Representative","Sales - Sales Representative","Sales Department - Sales Representative Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Sales - Sales Consultant","Sales - Sales Consultant","Sales Department - Sales Consultant Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Security - Security Manager","Security - Security Manager","Security Department - Security Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Security - Security Officer","Security - Security Officer","Security Department - Security Officer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Security - Security Analyst","Security - Security Analyst","Security Department - Security Analyst Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Strategy - Strategy Manager","Strategy - Strategy Manager","Strategy Department - Strategy Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Strategy - Strategy Analyst","Strategy - Strategy Analyst","Strategy Department - Strategy Analyst Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Strategy - Strategy Consultant","Strategy - Strategy Consultant","Strategy Department - Strategy Consultant Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Systems Administration - Systems Administration Manager","Systems Administration - Systems Administration Manager","Systems Administration Department - Systems Administration Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Systems Administration - SysAdmin","Systems Administration - SysAdmin","Systems Administration Department - SysAdmin Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Systems Administration - Systems Engineer","Systems Administration - Systems Engineer","Systems Administration Department - Systems Engineer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Talent Acquisition - Talent Acquisition Manager","Talent Acquisition - Talent Acquisition Manager","Talent Acquisition Department - Talent Acquisition Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Talent Acquisition - Recruiter","Talent Acquisition - Recruiter","Talent Acquisition Department - Recruiter Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Technical Support - Technical Support Manager","Technical Support - Technical Support Manager","Technical Support Department - Technical Support Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Technical Support - Support Technician","Technical Support - Support Technician","Technical Support Department - Support Technician Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Technical Support - Helpdesk Analyst","Technical Support - Helpdesk Analyst","Technical Support Department - Helpdesk Analyst Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Training - Training Manager","Training - Training Manager","Training Department - Training Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Training - Trainer","Training - Trainer","Training Department - Trainer Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Training - Training Coordinator","Training - Training Coordinator","Training Department - Training Coordinator Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Workplace Services - Workplace Services Manager","Workplace Services - Workplace Services Manager","Workplace Services Department - Workplace Services Manager Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Workplace Services - Workplace Services Coordinator","Workplace Services - Workplace Services Coordinator","Workplace Services Department - Workplace Services Coordinator Role",Global,Security,"OU=Departments,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Department
+"Application Server - DEV - Servers","Application Server - DEV - Servers","Application Server Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Application Server - QA - Servers","Application Server - QA - Servers","Application Server QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Application Server - PRD - Servers","Application Server - PRD - Servers","Application Server Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Application Server - DEV - Users","Application Server - DEV - Users","Application Server Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Application Server - QA - Users","Application Server - QA - Users","Application Server QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Application Server - PRD - Users","Application Server - PRD - Users","Application Server Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Backup - DEV - Servers","Backup - DEV - Servers","Backup Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Backup - QA - Servers","Backup - QA - Servers","Backup QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Backup - PRD - Servers","Backup - PRD - Servers","Backup Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Backup - DEV - Users","Backup - DEV - Users","Backup Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Backup - QA - Users","Backup - QA - Users","Backup QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Backup - PRD - Users","Backup - PRD - Users","Backup Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Business Intelligence - DEV - Servers","Business Intelligence - DEV - Servers","Business Intelligence Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Business Intelligence - QA - Servers","Business Intelligence - QA - Servers","Business Intelligence QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Business Intelligence - PRD - Servers","Business Intelligence - PRD - Servers","Business Intelligence Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Business Intelligence - DEV - Users","Business Intelligence - DEV - Users","Business Intelligence Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Business Intelligence - QA - Users","Business Intelligence - QA - Users","Business Intelligence QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Business Intelligence - PRD - Users","Business Intelligence - PRD - Users","Business Intelligence Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Collaboration - DEV - Servers","Collaboration - DEV - Servers","Collaboration Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Collaboration - QA - Servers","Collaboration - QA - Servers","Collaboration QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Collaboration - PRD - Servers","Collaboration - PRD - Servers","Collaboration Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Collaboration - DEV - Users","Collaboration - DEV - Users","Collaboration Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Collaboration - QA - Users","Collaboration - QA - Users","Collaboration QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Collaboration - PRD - Users","Collaboration - PRD - Users","Collaboration Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Configuration Management - DEV - Servers","Configuration Management - DEV - Servers","Configuration Management Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Configuration Management - QA - Servers","Configuration Management - QA - Servers","Configuration Management QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Configuration Management - PRD - Servers","Configuration Management - PRD - Servers","Configuration Management Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Configuration Management - DEV - Users","Configuration Management - DEV - Users","Configuration Management Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Configuration Management - QA - Users","Configuration Management - QA - Users","Configuration Management QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Configuration Management - PRD - Users","Configuration Management - PRD - Users","Configuration Management Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"CRM - DEV - Servers","CRM - DEV - Servers","CRM Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"CRM - QA - Servers","CRM - QA - Servers","CRM QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"CRM - PRD - Servers","CRM - PRD - Servers","CRM Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"CRM - DEV - Users","CRM - DEV - Users","CRM Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"CRM - QA - Users","CRM - QA - Users","CRM QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"CRM - PRD - Users","CRM - PRD - Users","CRM Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Database - DEV - Servers","Database - DEV - Servers","Database Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Database - QA - Servers","Database - QA - Servers","Database QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Database - PRD - Servers","Database - PRD - Servers","Database Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Database - DEV - Users","Database - DEV - Users","Database Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Database - QA - Users","Database - QA - Users","Database QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Database - PRD - Users","Database - PRD - Users","Database Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"DHCP - DEV - Servers","DHCP - DEV - Servers","DHCP Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"DHCP - QA - Servers","DHCP - QA - Servers","DHCP QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"DHCP - PRD - Servers","DHCP - PRD - Servers","DHCP Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"DHCP - DEV - Users","DHCP - DEV - Users","DHCP Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"DHCP - QA - Users","DHCP - QA - Users","DHCP QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"DHCP - PRD - Users","DHCP - PRD - Users","DHCP Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Endpoint Management - DEV - Servers","Endpoint Management - DEV - Servers","Endpoint Management Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Endpoint Management - QA - Servers","Endpoint Management - QA - Servers","Endpoint Management QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Endpoint Management - PRD - Servers","Endpoint Management - PRD - Servers","Endpoint Management Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Endpoint Management - DEV - Users","Endpoint Management - DEV - Users","Endpoint Management Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Endpoint Management - QA - Users","Endpoint Management - QA - Users","Endpoint Management QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Endpoint Management - PRD - Users","Endpoint Management - PRD - Users","Endpoint Management Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Engineering Systems - DEV - Servers","Engineering Systems - DEV - Servers","Engineering Systems Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Engineering Systems - QA - Servers","Engineering Systems - QA - Servers","Engineering Systems QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Engineering Systems - PRD - Servers","Engineering Systems - PRD - Servers","Engineering Systems Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Engineering Systems - DEV - Users","Engineering Systems - DEV - Users","Engineering Systems Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Engineering Systems - QA - Users","Engineering Systems - QA - Users","Engineering Systems QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Engineering Systems - PRD - Users","Engineering Systems - PRD - Users","Engineering Systems Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Enterprise Resource Planning - DEV - Servers","Enterprise Resource Planning - DEV - Servers","Enterprise Resource Planning Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Enterprise Resource Planning - QA - Servers","Enterprise Resource Planning - QA - Servers","Enterprise Resource Planning QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Enterprise Resource Planning - PRD - Servers","Enterprise Resource Planning - PRD - Servers","Enterprise Resource Planning Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Enterprise Resource Planning - DEV - Users","Enterprise Resource Planning - DEV - Users","Enterprise Resource Planning Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Enterprise Resource Planning - QA - Users","Enterprise Resource Planning - QA - Users","Enterprise Resource Planning QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Enterprise Resource Planning - PRD - Users","Enterprise Resource Planning - PRD - Users","Enterprise Resource Planning Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"FTP - DEV - Servers","FTP - DEV - Servers","FTP Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"FTP - QA - Servers","FTP - QA - Servers","FTP QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"FTP - PRD - Servers","FTP - PRD - Servers","FTP Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"FTP - DEV - Users","FTP - DEV - Users","FTP Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"FTP - QA - Users","FTP - QA - Users","FTP QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"FTP - PRD - Users","FTP - PRD - Users","FTP Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Hyper-V - DEV - Servers","Hyper-V - DEV - Servers","Hyper-V Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Hyper-V - QA - Servers","Hyper-V - QA - Servers","Hyper-V QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Hyper-V - PRD - Servers","Hyper-V - PRD - Servers","Hyper-V Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Hyper-V - DEV - Users","Hyper-V - DEV - Users","Hyper-V Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Hyper-V - QA - Users","Hyper-V - QA - Users","Hyper-V QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Hyper-V - PRD - Users","Hyper-V - PRD - Users","Hyper-V Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Email - DEV - Servers","Email - DEV - Servers","Email Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Email - QA - Servers","Email - QA - Servers","Email QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Email - PRD - Servers","Email - PRD - Servers","Email Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Email - DEV - Users","Email - DEV - Users","Email Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Email - QA - Users","Email - QA - Users","Email QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Email - PRD - Users","Email - PRD - Users","Email Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"HRMS - DEV - Servers","HRMS - DEV - Servers","HRMS Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"HRMS - QA - Servers","HRMS - QA - Servers","HRMS QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"HRMS - PRD - Servers","HRMS - PRD - Servers","HRMS Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"HRMS - DEV - Users","HRMS - DEV - Users","HRMS Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"HRMS - QA - Users","HRMS - QA - Users","HRMS QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"HRMS - PRD - Users","HRMS - PRD - Users","HRMS Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"License Server - DEV - Servers","License Server - DEV - Servers","License Server Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"License Server - QA - Servers","License Server - QA - Servers","License Server QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"License Server - PRD - Servers","License Server - PRD - Servers","License Server Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"License Server - DEV - Users","License Server - DEV - Users","License Server Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"License Server - QA - Users","License Server - QA - Users","License Server QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"License Server - PRD - Users","License Server - PRD - Users","License Server Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Linux - DEV - Servers","Linux - DEV - Servers","Linux Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Linux - QA - Servers","Linux - QA - Servers","Linux QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Linux - PRD - Servers","Linux - PRD - Servers","Linux Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Linux - DEV - Users","Linux - DEV - Users","Linux Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Linux - QA - Users","Linux - QA - Users","Linux QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Linux - PRD - Users","Linux - PRD - Users","Linux Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Monitoring - DEV - Servers","Monitoring - DEV - Servers","Monitoring Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Monitoring - QA - Servers","Monitoring - QA - Servers","Monitoring QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Monitoring - PRD - Servers","Monitoring - PRD - Servers","Monitoring Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Monitoring - DEV - Users","Monitoring - DEV - Users","Monitoring Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Monitoring - QA - Users","Monitoring - QA - Users","Monitoring QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Monitoring - PRD - Users","Monitoring - PRD - Users","Monitoring Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Print - DEV - Servers","Print - DEV - Servers","Print Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Print - QA - Servers","Print - QA - Servers","Print QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Print - PRD - Servers","Print - PRD - Servers","Print Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Print - DEV - Users","Print - DEV - Users","Print Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Print - QA - Users","Print - QA - Users","Print QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Print - PRD - Users","Print - PRD - Users","Print Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Remote Desktop Services - DEV - Servers","Remote Desktop Services - DEV - Servers","Remote Desktop Services Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Remote Desktop Services - QA - Servers","Remote Desktop Services - QA - Servers","Remote Desktop Services QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Remote Desktop Services - PRD - Servers","Remote Desktop Services - PRD - Servers","Remote Desktop Services Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Remote Desktop Services - DEV - Users","Remote Desktop Services - DEV - Users","Remote Desktop Services Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Remote Desktop Services - QA - Users","Remote Desktop Services - QA - Users","Remote Desktop Services QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Remote Desktop Services - PRD - Users","Remote Desktop Services - PRD - Users","Remote Desktop Services Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Reporting - DEV - Servers","Reporting - DEV - Servers","Reporting Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Reporting - QA - Servers","Reporting - QA - Servers","Reporting QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Reporting - PRD - Servers","Reporting - PRD - Servers","Reporting Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Reporting - DEV - Users","Reporting - DEV - Users","Reporting Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Reporting - QA - Users","Reporting - QA - Users","Reporting QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Reporting - PRD - Users","Reporting - PRD - Users","Reporting Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"SharePoint - DEV - Servers","SharePoint - DEV - Servers","SharePoint Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"SharePoint - QA - Servers","SharePoint - QA - Servers","SharePoint QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"SharePoint - PRD - Servers","SharePoint - PRD - Servers","SharePoint Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"SharePoint - DEV - Users","SharePoint - DEV - Users","SharePoint Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"SharePoint - QA - Users","SharePoint - QA - Users","SharePoint QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"SharePoint - PRD - Users","SharePoint - PRD - Users","SharePoint Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Virtual Desktop - DEV - Servers","Virtual Desktop - DEV - Servers","Virtual Desktop Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Virtual Desktop - QA - Servers","Virtual Desktop - QA - Servers","Virtual Desktop QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Virtual Desktop - PRD - Servers","Virtual Desktop - PRD - Servers","Virtual Desktop Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Virtual Desktop - DEV - Users","Virtual Desktop - DEV - Users","Virtual Desktop Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Virtual Desktop - QA - Users","Virtual Desktop - QA - Users","Virtual Desktop QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Virtual Desktop - PRD - Users","Virtual Desktop - PRD - Users","Virtual Desktop Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"VMware - DEV - Servers","VMware - DEV - Servers","VMware Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"VMware - QA - Servers","VMware - QA - Servers","VMware QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"VMware - PRD - Servers","VMware - PRD - Servers","VMware Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"VMware - DEV - Users","VMware - DEV - Users","VMware Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"VMware - QA - Users","VMware - QA - Users","VMware QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"VMware - PRD - Users","VMware - PRD - Users","VMware Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Webserver - DEV - Servers","Webserver - DEV - Servers","Webserver Development Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Webserver - QA - Servers","Webserver - QA - Servers","Webserver QA Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Webserver - PRD - Servers","Webserver - PRD - Servers","Webserver Production Servers Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Webserver - DEV - Users","Webserver - DEV - Users","Webserver Development Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Webserver - QA - Users","Webserver - QA - Users","Webserver QA Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
+"Webserver - PRD - Users","Webserver - PRD - Users","Webserver Production Users Group",Global,Security,"OU=Groups,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab",Enterprise
