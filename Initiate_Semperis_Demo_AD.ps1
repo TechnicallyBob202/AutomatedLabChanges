@@ -7,9 +7,9 @@
 #>
 
 param(
-    [string]$OUsCSV = "C:\ProgramData\Semperis_Community\AutomatedLabChanges\Lists\AD_OU_Structure.csv",
-    [string]$AccountsCSV = "C:\ProgramData\Semperis_Community\AutomatedLabChanges\Lists\AD_Accounts.csv",
-    [string]$GroupsCSV = "C:\ProgramData\Semperis_Community\AutomatedLabChanges\Lists\AD_Groups.csv",
+    [string]$OUsCSV = "C:\Temp\AD_OU_Structure.csv",
+    [string]$AccountsCSV = "C:\Temp\AD_Accounts.csv",
+    [string]$GroupsCSV = "C:\Temp\AD_Groups.csv",
     [switch]$WhatIf
 )
 
@@ -30,13 +30,12 @@ Write-Host "==============================================================`n" -F
 # ============================================================
 try {
     $domain = Get-ADDomain
-    $domainDN = $domain.DistinguishedName
     $domainSuffix = $domain.DNSRoot
-    Write-Host "✓ Connected to domain: $domainSuffix" -ForegroundColor Green
+    Write-Host "Connected to domain: $domainSuffix" -ForegroundColor Green
 }
 catch {
-    Write-Host "✗ Could not connect to domain" -ForegroundColor Red
-    Write-Host "  Error: $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "Could not connect to domain" -ForegroundColor Red
+    Write-Host "Error: $($_.Exception.Message)" -ForegroundColor Red
     exit 1
 }
 
@@ -53,10 +52,10 @@ $csvFiles = @(
 
 foreach ($csv in $csvFiles) {
     if (-not (Test-Path $csv.Path)) {
-        Write-Host "✗ $($csv.Name) not found: $($csv.Path)" -ForegroundColor Red
+        Write-Host "$($csv.Name) not found: $($csv.Path)" -ForegroundColor Red
         exit 1
     }
-    Write-Host "  ✓ Found $($csv.Name)" -ForegroundColor Green
+    Write-Host "  Found $($csv.Name)" -ForegroundColor Green
 }
 
 # ============================================================
@@ -69,13 +68,13 @@ try {
     $accounts = Import-Csv -Path $AccountsCSV
     $groups = Import-Csv -Path $GroupsCSV
     
-    Write-Host "  ✓ OUs: $($ous.Count)" -ForegroundColor Green
-    Write-Host "  ✓ Accounts: $($accounts.Count)" -ForegroundColor Green
-    Write-Host "  ✓ Groups: $($groups.Count)" -ForegroundColor Green
+    Write-Host "  OUs: $($ous.Count)" -ForegroundColor Green
+    Write-Host "  Accounts: $($accounts.Count)" -ForegroundColor Green
+    Write-Host "  Groups: $($groups.Count)" -ForegroundColor Green
 }
 catch {
-    Write-Host "✗ Error importing CSV files" -ForegroundColor Red
-    Write-Host "  Error: $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "Error importing CSV files" -ForegroundColor Red
+    Write-Host "Error: $($_.Exception.Message)" -ForegroundColor Red
     exit 1
 }
 
@@ -98,7 +97,8 @@ $stats = @{
 # CREATE OUs
 # ============================================================
 Write-Host "`n=============================================================="  -ForegroundColor Cyan
-Write-Host "Creating OUs ($($ous.Count) total)" -ForegroundColor Cyan
+$ouCount = $ous.Count
+Write-Host "Creating OUs ($ouCount total)" -ForegroundColor Cyan
 Write-Host "==============================================================`n" -ForegroundColor Cyan
 
 foreach ($ou in $ous) {
@@ -108,8 +108,8 @@ foreach ($ou in $ous) {
     
     # Check if OU already exists
     try {
-        $existingOU = Get-ADOrganizationalUnit -Identity $ou.DistinguishedName -ErrorAction Stop
-        Write-Host "  ⊘ OU already exists, skipping" -ForegroundColor Yellow
+        Get-ADOrganizationalUnit -Identity $ou.DistinguishedName -ErrorAction Stop | Out-Null
+        Write-Host "  OU already exists, skipping" -ForegroundColor Yellow
         $stats.OUsSkipped++
         continue
     }
@@ -117,7 +117,7 @@ foreach ($ou in $ous) {
         # OU doesn't exist, continue with creation
     }
     catch {
-        Write-Host "  ✗ Error checking for existing OU" -ForegroundColor Red
+        Write-Host "  Error checking for existing OU" -ForegroundColor Red
         Write-Host "    Error: $($_.Exception.Message)" -ForegroundColor Red
         $stats.OUsFailed++
         continue
@@ -128,7 +128,7 @@ foreach ($ou in $ous) {
         Get-ADObject -Identity $ou.ParentPath -ErrorAction Stop | Out-Null
     }
     catch {
-        Write-Host "  ✗ Parent path does not exist: $($ou.ParentPath)" -ForegroundColor Red
+        Write-Host "  Parent path does not exist: $($ou.ParentPath)" -ForegroundColor Red
         Write-Host "    This OU will be created once its parent exists" -ForegroundColor Yellow
         $stats.OUsFailed++
         continue
@@ -149,11 +149,11 @@ foreach ($ou in $ous) {
             
             New-ADOrganizationalUnit @ouParams
             
-            Write-Host "  ✓ Created OU: $($ou.Name)" -ForegroundColor Green
+            Write-Host "  Created OU: $($ou.Name)" -ForegroundColor Green
             $stats.OUsCreated++
         }
         catch {
-            Write-Host "  ✗ Failed to create OU" -ForegroundColor Red
+            Write-Host "  Failed to create OU" -ForegroundColor Red
             Write-Host "    Error: $($_.Exception.Message)" -ForegroundColor Red
             $stats.OUsFailed++
         }
@@ -168,15 +168,16 @@ Write-Host "`n==============================================================`n" 
 
 # If OUs failed, suggest re-running
 if ($stats.OUsFailed -gt 0 -and -not $WhatIf) {
-    Write-Host "⚠ Some OUs failed to create (possibly due to missing parents)" -ForegroundColor Yellow
-    Write-Host "  Re-run the script to create remaining OUs`n" -ForegroundColor Yellow
+    Write-Host "Some OUs failed to create (possibly due to missing parents)" -ForegroundColor Yellow
+    Write-Host "Re-run the script to create remaining OUs`n" -ForegroundColor Yellow
 }
 
 # ============================================================
 # CREATE ACCOUNTS
 # ============================================================
 Write-Host "=============================================================="  -ForegroundColor Cyan
-Write-Host "Creating Accounts ($($accounts.Count) total)" -ForegroundColor Cyan
+$accountCount = $accounts.Count
+Write-Host "Creating Accounts ($accountCount total)" -ForegroundColor Cyan
 Write-Host "==============================================================`n" -ForegroundColor Cyan
 
 foreach ($account in $accounts) {
@@ -185,8 +186,8 @@ foreach ($account in $accounts) {
     
     # Check if account already exists
     try {
-        $existingUser = Get-ADUser -Identity $account.SamAccountName -ErrorAction Stop
-        Write-Host "  ⊘ Account already exists, skipping" -ForegroundColor Yellow
+        Get-ADUser -Identity $account.SamAccountName -ErrorAction Stop | Out-Null
+        Write-Host "  Account already exists, skipping" -ForegroundColor Yellow
         $stats.AccountsSkipped++
         continue
     }
@@ -194,7 +195,7 @@ foreach ($account in $accounts) {
         # Account doesn't exist, continue with creation
     }
     catch {
-        Write-Host "  ✗ Error checking for existing account" -ForegroundColor Red
+        Write-Host "  Error checking for existing account" -ForegroundColor Red
         Write-Host "    Error: $($_.Exception.Message)" -ForegroundColor Red
         $stats.AccountsFailed++
         continue
@@ -205,7 +206,7 @@ foreach ($account in $accounts) {
         Get-ADOrganizationalUnit -Identity $account.OU -ErrorAction Stop | Out-Null
     }
     catch {
-        Write-Host "  ✗ Target OU does not exist: $($account.OU)" -ForegroundColor Red
+        Write-Host "  Target OU does not exist: $($account.OU)" -ForegroundColor Red
         Write-Host "    Create OUs first or fix the OU path" -ForegroundColor Yellow
         $stats.AccountsFailed++
         continue
@@ -230,11 +231,11 @@ foreach ($account in $accounts) {
             
             New-ADUser @userParams
             
-            Write-Host "  ✓ Created account: $($account.SamAccountName)" -ForegroundColor Green
+            Write-Host "  Created account: $($account.SamAccountName)" -ForegroundColor Green
             $stats.AccountsCreated++
         }
         catch {
-            Write-Host "  ✗ Failed to create account" -ForegroundColor Red
+            Write-Host "  Failed to create account" -ForegroundColor Red
             Write-Host "    Error: $($_.Exception.Message)" -ForegroundColor Red
             $stats.AccountsFailed++
         }
@@ -251,7 +252,8 @@ Write-Host "`n==============================================================`n" 
 # CREATE GROUPS
 # ============================================================
 Write-Host "=============================================================="  -ForegroundColor Cyan
-Write-Host "Creating Groups ($($groups.Count) total)" -ForegroundColor Cyan
+$groupCount = $groups.Count
+Write-Host "Creating Groups ($groupCount total)" -ForegroundColor Cyan
 Write-Host "==============================================================`n" -ForegroundColor Cyan
 
 foreach ($group in $groups) {
@@ -260,8 +262,8 @@ foreach ($group in $groups) {
     
     # Check if group already exists
     try {
-        $existingGroup = Get-ADGroup -Identity $group.SamAccountName -ErrorAction Stop
-        Write-Host "  ⊘ Group already exists, skipping" -ForegroundColor Yellow
+        Get-ADGroup -Identity $group.SamAccountName -ErrorAction Stop | Out-Null
+        Write-Host "  Group already exists, skipping" -ForegroundColor Yellow
         $stats.GroupsSkipped++
         continue
     }
@@ -269,7 +271,7 @@ foreach ($group in $groups) {
         # Group doesn't exist, continue with creation
     }
     catch {
-        Write-Host "  ✗ Error checking for existing group" -ForegroundColor Red
+        Write-Host "  Error checking for existing group" -ForegroundColor Red
         Write-Host "    Error: $($_.Exception.Message)" -ForegroundColor Red
         $stats.GroupsFailed++
         continue
@@ -280,7 +282,7 @@ foreach ($group in $groups) {
         Get-ADOrganizationalUnit -Identity $group.OU -ErrorAction Stop | Out-Null
     }
     catch {
-        Write-Host "  ✗ Target OU does not exist: $($group.OU)" -ForegroundColor Red
+        Write-Host "  Target OU does not exist: $($group.OU)" -ForegroundColor Red
         Write-Host "    Create OUs first or fix the OU path" -ForegroundColor Yellow
         $stats.GroupsFailed++
         continue
@@ -300,11 +302,11 @@ foreach ($group in $groups) {
             
             New-ADGroup @groupParams
             
-            Write-Host "  ✓ Created group: $($group.Name)" -ForegroundColor Green
+            Write-Host "  Created group: $($group.Name)" -ForegroundColor Green
             $stats.GroupsCreated++
         }
         catch {
-            Write-Host "  ✗ Failed to create group" -ForegroundColor Red
+            Write-Host "  Failed to create group" -ForegroundColor Red
             Write-Host "    Error: $($_.Exception.Message)" -ForegroundColor Red
             $stats.GroupsFailed++
         }
@@ -358,23 +360,16 @@ if ($WhatIf) {
     Write-Host "Run without -WhatIf to create objects`n" -ForegroundColor Yellow
 }
 elseif ($totalFailed -eq 0) {
-    Write-Host "✓ All objects created successfully!" -ForegroundColor Green
-    Write-Host "  You can now run the Automated-Lab-Changes.ps1 script`n" -ForegroundColor Green
+    Write-Host "All objects created successfully!" -ForegroundColor Green
+    Write-Host "You can now run the Automated-Lab-Changes.ps1 script`n" -ForegroundColor Green
 }
 elseif ($stats.OUsFailed -gt 0) {
-    Write-Host "⚠ Some OUs failed to create" -ForegroundColor Yellow
-    Write-Host "  This is normal if parent OUs didn't exist yet" -ForegroundColor Yellow
-    Write-Host "  Re-run this script to create remaining OUs" -ForegroundColor Yellow
-    Write-Host "  Then accounts and groups will be created`n" -ForegroundColor Yellow
+    Write-Host "Some OUs failed to create" -ForegroundColor Yellow
+    Write-Host "This is normal if parent OUs didn't exist yet" -ForegroundColor Yellow
+    Write-Host "Re-run this script to create remaining OUs" -ForegroundColor Yellow
+    Write-Host "Then accounts and groups will be created`n" -ForegroundColor Yellow
 }
 else {
-    Write-Host "⚠ Some objects failed to create" -ForegroundColor Yellow
-    Write-Host "  Review errors above and re-run script`n" -ForegroundColor Yellow
-}
-
-# Log file suggestion
-if (-not $WhatIf) {
-    $logSuggestion = ".\New-ADFoundationObjects.ps1 | Tee-Object -FilePath 'C:\Temp\AD-Foundation-$(Get-Date -Format 'yyyyMMdd-HHmmss').log'"
-    Write-Host "TIP: To save output to a log file, run:" -ForegroundColor Cyan
-    Write-Host "  $logSuggestion`n" -ForegroundColor Gray
+    Write-Host "Some objects failed to create" -ForegroundColor Yellow
+    Write-Host "Review errors above and re-run script`n" -ForegroundColor Yellow
 }
