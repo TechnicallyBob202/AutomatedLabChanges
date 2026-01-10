@@ -15,7 +15,7 @@
 #>
 
 param(
-    [int]$UserCount = 100,
+    [int]$UserCount = 0,
     [switch]$CreateServers,
     [switch]$CreateWorkstations,
     [string]$Password = "superSECURE!",
