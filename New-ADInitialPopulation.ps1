@@ -262,21 +262,36 @@ if ($UserCount -gt 0) {
                     PasswordNeverExpires = $true
                 }
                 
-                # Add address if available
+                # Add address if available (with validation)
                 if ($randomUser.location.street.name) {
-                    $userParams['StreetAddress'] = "$($randomUser.location.street.number) $($randomUser.location.street.name)"
+                    $streetAddress = "$($randomUser.location.street.number) $($randomUser.location.street.name)"
+                    if ($streetAddress.Length -le 128) {
+                        $userParams['StreetAddress'] = $streetAddress
+                    }
                 }
                 if ($randomUser.location.city) {
-                    $userParams['City'] = $randomUser.location.city
+                    if ($randomUser.location.city.Length -le 128) {
+                        $userParams['City'] = $randomUser.location.city
+                    }
                 }
                 if ($randomUser.location.state) {
-                    $userParams['State'] = $randomUser.location.state
+                    if ($randomUser.location.state.Length -le 128) {
+                        $userParams['State'] = $randomUser.location.state
+                    }
                 }
                 if ($randomUser.location.postcode) {
-                    $userParams['PostalCode'] = $randomUser.location.postcode.ToString()
+                    # PostalCode must be numeric and under 40 chars
+                    $postalCode = $randomUser.location.postcode.ToString() -replace '[^0-9]', ''
+                    if ($postalCode.Length -gt 0 -and $postalCode.Length -le 40) {
+                        $userParams['PostalCode'] = $postalCode
+                    }
                 }
                 if ($randomUser.location.country) {
-                    $userParams['Country'] = $randomUser.location.country
+                    # Country code should be 2 chars, but some APIs return full names
+                    $country = $randomUser.nat  # Use nationality code instead
+                    if ($country.Length -eq 2) {
+                        $userParams['Country'] = $country
+                    }
                 }
                 
                 New-ADUser @userParams
