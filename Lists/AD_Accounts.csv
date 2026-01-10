@@ -1,0 +1,14 @@
+Name,SamAccountName,UserPrincipalName,Description,Password,OU,AccountType,Tier
+Domain Admin,domain-admin,domain-admin@ad.dsp.lab,Tier 0 Domain Administrator,superSECURE!,OU=Admin,OU=Accounts,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab,Admin,Tier0
+Rogue Admin,rogue-admin,rogue-admin@ad.dsp.lab,Tier 0 Rogue Administrator,superSECURE!,OU=Admin,OU=Accounts,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab,Admin,Tier0
+Network Admin,network-admin,network-admin@ad.dsp.lab,Tier 1 Network Administrator,superSECURE!,OU=Admin,OU=Accounts,OU=Tier1,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab,Admin,Tier1
+Server Admin,server-admin,server-admin@ad.dsp.lab,Tier 1 Server Administrator,superSECURE!,OU=Admin,OU=Accounts,OU=Tier1,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab,Admin,Tier1
+Desktop Admin,desktop-admin,desktop-admin@ad.dsp.lab,Tier 2 Desktop Support Administrator,superSECURE!,OU=Admin,OU=Accounts,OU=Tier2,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab,Admin,Tier2
+Helpdesk Admin,helpdesk-admin,helpdesk-admin@ad.dsp.lab,Tier 2 Helpdesk Administrator,superSECURE!,OU=Admin,OU=Accounts,OU=Tier2,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab,Admin,Tier2
+VIP Admin,vip-admin,vip-admin@ad.dsp.lab,Tier 2 VIP Support Administrator,superSECURE!,OU=Admin,OU=Accounts,OU=Tier2,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab,Admin,Tier2
+Cloud Admin,cloud-admin,cloud-admin@ad.dsp.lab,Tier Cloud Administrator,superSECURE!,OU=Admin,OU=Accounts,OU=TierCloud,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab,Admin,TierCloud
+Service - Call Manager,svc-callmanager,svc-callmanager@ad.dsp.lab,Call Manager Service Account,superSECURE!,OU=Service,OU=Accounts,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab,Service,Tier0
+Service - Onboarding,svc-onboarding,svc-onboarding@ad.dsp.lab,Onboarding Service Account,superSECURE!,OU=Service,OU=Accounts,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab,Service,Tier0
+Service - Offboarding,svc-offboarding,svc-offboarding@ad.dsp.lab,Offboarding Service Account,superSECURE!,OU=Service,OU=Accounts,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab,Service,Tier0
+Service - PAM,svc-pam,svc-pam@ad.dsp.lab,PAM Service Account,superSECURE!,OU=Service,OU=Accounts,OU=Tier0,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab,Service,Tier0
+Service - Monitoring,svc-monitoring,svc-monitoring@ad.dsp.lab,Monitoring Service Account,superSECURE!,OU=Service,OU=Accounts,OU=Tier1,OU=Administrative,OU=_SemperisDSP,DC=ad,DC=dsp,DC=lab,Service,Tier1
