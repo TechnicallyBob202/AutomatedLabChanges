@@ -347,13 +347,16 @@ if ($CreateServers) {
             continue
         }
         
-        # Distribute servers across environments
+# Distribute servers across environments
         $serversPerEnv = [Math]::Floor($count / 3)
         $remainder = $count % 3
         
+        $devExtra = if ($remainder -ge 1) { 1 } else { 0 }
+        $qaExtra = if ($remainder -ge 2) { 1 } else { 0 }
+        
         $envCounts = @{
-            "DEV" = $serversPerEnv + ($remainder -ge 1 ? 1 : 0)
-            "QA" = $serversPerEnv + ($remainder -ge 2 ? 1 : 0)
+            "DEV" = $serversPerEnv + $devExtra
+            "QA" = $serversPerEnv + $qaExtra
             "PRD" = $serversPerEnv
         }
         
