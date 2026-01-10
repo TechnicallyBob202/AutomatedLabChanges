@@ -11,6 +11,7 @@ param(
     [string]$OUsCSV = "C:\ProgramData\Semperis_Community\AutomatedLabChanges\Lists\AD_OU_Structure.csv",
     [string]$AccountsCSV = "C:\ProgramData\Semperis_Community\AutomatedLabChanges\Lists\AD_Accounts.csv",
     [string]$GroupsCSV = "C:\ProgramData\Semperis_Community\AutomatedLabChanges\Lists\AD_Groups.csv",
+    [string]$MembershipsCSV = "C:\ProgramData\Semperis_Community\AutomatedLabChanges\Lists\AD_AdminGroupMemberships.csv",
     [switch]$WhatIf
 )
 
@@ -23,6 +24,7 @@ Write-Host "Date: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
 Write-Host "OUs CSV: $OUsCSV"
 Write-Host "Accounts CSV: $AccountsCSV"
 Write-Host "Groups CSV: $GroupsCSV"
+Write-Host "Memberships CSV: $MembershipsCSV"
 if ($WhatIf) { Write-Host "MODE: WHATIF (no changes will be made)" -ForegroundColor Yellow }
 Write-Host "==============================================================`n" -ForegroundColor Green
 
@@ -48,17 +50,25 @@ catch {
 Write-Host "`nVerifying CSV files..." -ForegroundColor Cyan
 
 $csvFiles = @(
-    @{Path = $OUsCSV; Name = "OUs CSV"}
-    @{Path = $AccountsCSV; Name = "Accounts CSV"}
-    @{Path = $GroupsCSV; Name = "Groups CSV"}
+    @{Path = $OUsCSV; Name = "OUs CSV"; Required = $true}
+    @{Path = $AccountsCSV; Name = "Accounts CSV"; Required = $true}
+    @{Path = $GroupsCSV; Name = "Groups CSV"; Required = $true}
+    @{Path = $MembershipsCSV; Name = "Memberships CSV"; Required = $false}
 )
 
 foreach ($csv in $csvFiles) {
     if (-not (Test-Path $csv.Path)) {
-        Write-Host "$($csv.Name) not found: $($csv.Path)" -ForegroundColor Red
-        exit 1
+        if ($csv.Required) {
+            Write-Host "$($csv.Name) not found: $($csv.Path)" -ForegroundColor Red
+            exit 1
+        }
+        else {
+            Write-Host "  $($csv.Name) not found (optional, skipping)" -ForegroundColor Yellow
+        }
     }
-    Write-Host "  Found $($csv.Name)" -ForegroundColor Green
+    else {
+        Write-Host "  Found $($csv.Name)" -ForegroundColor Green
+    }
 }
 
 # ============================================================
@@ -74,6 +84,16 @@ try {
     Write-Host "  OUs: $($ous.Count)" -ForegroundColor Green
     Write-Host "  Accounts: $($accounts.Count)" -ForegroundColor Green
     Write-Host "  Groups: $($groups.Count)" -ForegroundColor Green
+    
+    # Import memberships if file exists
+    if (Test-Path $MembershipsCSV) {
+        $memberships = Import-Csv -Path $MembershipsCSV
+        Write-Host "  Memberships: $($memberships.Count)" -ForegroundColor Green
+    }
+    else {
+        $memberships = @()
+        Write-Host "  Memberships: 0 (file not found)" -ForegroundColor Yellow
+    }
 }
 catch {
     Write-Host "Error importing CSV files" -ForegroundColor Red
@@ -119,6 +139,9 @@ $stats = @{
     GroupsCreated = 0
     GroupsSkipped = 0
     GroupsFailed = 0
+    MembershipsAdded = 0
+    MembershipsSkipped = 0
+    MembershipsFailed = 0
 }
 
 # ============================================================
@@ -361,6 +384,77 @@ foreach ($group in $groups) {
 Write-Host "`n==============================================================`n" -ForegroundColor Cyan
 
 # ============================================================
+# ADD GROUP MEMBERSHIPS
+# ============================================================
+if ($memberships.Count -gt 0) {
+    Write-Host "=============================================================="  -ForegroundColor Cyan
+    $membershipCount = $memberships.Count
+    Write-Host "Adding Group Memberships ($membershipCount total)" -ForegroundColor Cyan
+    Write-Host "==============================================================`n" -ForegroundColor Cyan
+
+    foreach ($membership in $memberships) {
+        
+        Write-Host "Processing: $($membership.AccountName) -> $($membership.GroupSamAccountName)" -ForegroundColor White
+        
+        # Check if account exists
+        try {
+            $user = Get-ADUser -Identity $membership.AccountName -ErrorAction Stop
+        }
+        catch {
+            Write-Host "  Account not found: $($membership.AccountName)" -ForegroundColor Red
+            $stats.MembershipsFailed++
+            continue
+        }
+        
+        # Check if group exists
+        try {
+            $group = Get-ADGroup -Identity $membership.GroupSamAccountName -ErrorAction Stop
+        }
+        catch {
+            Write-Host "  Group not found: $($membership.GroupSamAccountName)" -ForegroundColor Red
+            $stats.MembershipsFailed++
+            continue
+        }
+        
+        # Check if already a member
+        try {
+            $members = Get-ADGroupMember -Identity $group.SamAccountName -ErrorAction Stop
+            if ($members.SamAccountName -contains $user.SamAccountName) {
+                Write-Host "  Already a member, skipping" -ForegroundColor Yellow
+                $stats.MembershipsSkipped++
+                continue
+            }
+        }
+        catch {
+            Write-Host "  Error checking membership" -ForegroundColor Red
+            Write-Host "    Error: $($_.Exception.Message)" -ForegroundColor Red
+            $stats.MembershipsFailed++
+            continue
+        }
+        
+        # Add to group
+        if (-not $WhatIf) {
+            try {
+                Add-ADGroupMember -Identity $group.SamAccountName -Members $user.SamAccountName -ErrorAction Stop
+                Write-Host "  Added to group" -ForegroundColor Green
+                $stats.MembershipsAdded++
+            }
+            catch {
+                Write-Host "  Failed to add to group" -ForegroundColor Red
+                Write-Host "    Error: $($_.Exception.Message)" -ForegroundColor Red
+                $stats.MembershipsFailed++
+            }
+        }
+        else {
+            Write-Host "  [WHATIF] Would add to group" -ForegroundColor Cyan
+            $stats.MembershipsAdded++
+        }
+    }
+
+    Write-Host "`n==============================================================`n" -ForegroundColor Cyan
+}
+
+# ============================================================
 # SUMMARY
 # ============================================================
 Write-Host "=============================================================="  -ForegroundColor Green
@@ -382,9 +476,16 @@ Write-Host "  Created: $($stats.GroupsCreated)" -ForegroundColor $(if ($stats.Gr
 Write-Host "  Skipped: $($stats.GroupsSkipped)" -ForegroundColor $(if ($stats.GroupsSkipped -gt 0) { "Yellow" } else { "White" })
 Write-Host "  Failed:  $($stats.GroupsFailed)" -ForegroundColor $(if ($stats.GroupsFailed -gt 0) { "Red" } else { "White" })
 
-$totalCreated = $stats.OUsCreated + $stats.AccountsCreated + $stats.GroupsCreated
-$totalSkipped = $stats.OUsSkipped + $stats.AccountsSkipped + $stats.GroupsSkipped
-$totalFailed = $stats.OUsFailed + $stats.AccountsFailed + $stats.GroupsFailed
+if ($memberships.Count -gt 0) {
+    Write-Host "`nMEMBERSHIPS:" -ForegroundColor Cyan
+    Write-Host "  Added:   $($stats.MembershipsAdded)" -ForegroundColor $(if ($stats.MembershipsAdded -gt 0) { "Green" } else { "White" })
+    Write-Host "  Skipped: $($stats.MembershipsSkipped)" -ForegroundColor $(if ($stats.MembershipsSkipped -gt 0) { "Yellow" } else { "White" })
+    Write-Host "  Failed:  $($stats.MembershipsFailed)" -ForegroundColor $(if ($stats.MembershipsFailed -gt 0) { "Red" } else { "White" })
+}
+
+$totalCreated = $stats.OUsCreated + $stats.AccountsCreated + $stats.GroupsCreated + $stats.MembershipsAdded
+$totalSkipped = $stats.OUsSkipped + $stats.AccountsSkipped + $stats.GroupsSkipped + $stats.MembershipsSkipped
+$totalFailed = $stats.OUsFailed + $stats.AccountsFailed + $stats.GroupsFailed + $stats.MembershipsFailed
 
 Write-Host "`nTOTAL:" -ForegroundColor Cyan
 Write-Host "  Objects Created: $totalCreated" -ForegroundColor $(if ($totalCreated -gt 0) { "Green" } else { "White" })
