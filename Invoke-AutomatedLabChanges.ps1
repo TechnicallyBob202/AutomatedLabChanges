@@ -1740,7 +1740,7 @@ $baseOUS = @(
     @{ID = 19; Name = "Workstations"; Path = "OU=Quarantined,$domainBaseLocation"; DN = "OU=Workstations,OU=Quarantined,$domainBaseLocation"; Code = "defWorkstationsQuarantined" },
   
     @{ID = 20; Name = "Servers"; Path = "$domainBaseLocation"; DN = "OU=Servers,$domainBaseLocation"; Code = "defServers" },
-    @{ID = 21; Name = "Workstations"; Path = "$domainBaseLocation"; DN = "OU=Workstations,$domainBaseLocation"; Code = "defWorkstations" }
+    @{ID = 21; Name = "Workstations"; Path = "$domainBaseLocation"; DN = "OU=Workstations,$domainBaseLocation"; Code = "defWorkstations" },
     @{ID = 22; Name = "Engineering"; Path = "OU=Workstations,$domainBaseLocation"; DN = "OU=Engineering,OU=Workstations,$domainBaseLocation"; Code = "defEngineeringWorkstations" },
     @{ID = 23; Name = "Field"; Path = "OU=Workstations,$domainBaseLocation"; DN = "OU=Field,OU=Workstations,$domainBaseLocation"; Code = "defFieldWorkstations" }, 
     @{ID = 24; Name = "Kiosks"; Path = "OU=Workstations,$domainBaseLocation"; DN = "OU=Kiosks,OU=Workstations,$domainBaseLocation"; Code = "defKiosksWorkstations" },
