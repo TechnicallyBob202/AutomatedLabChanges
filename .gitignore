@@ -1,0 +1,16 @@
+# Log files
+*.log
+AutomatedLab-Changes-*.log
+
+# Transcript files
+*.txt
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# PowerShell profiles
+profile.ps1
+
+# Temp files
+*.tmp

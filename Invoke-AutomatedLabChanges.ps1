@@ -1,4 +1,4 @@
- $domainBase = "_SemperisDSP"
+$domainBase = "_SemperisDSP"
   
 #only used if online
 $userCountryCodes = "GB,IE,NZ,US"
@@ -20,7 +20,8 @@ $fLogFile = "$scriptPath\AutomatedLab-Changes-$logFileDate.log"
 #extended action display
 $showAllActions = $true
   
-  
+#import Group Policy Module
+Import-Module GroupPolicy
   
   
 Function Invoke-DesktopAction {
@@ -226,7 +227,7 @@ param(
                     if ($group.Name -like "$($uUser.Department)*") {
   
                         try {
-                            Remove-ADGroupMember -Identity $group.Name -Members $uUser -Confirm:$false                
+                            Remove-ADGroupMember -Identity $group.Name -Members $uUser -Confirm:$false -Credential $desktopCredential                
                         }
                         catch {
                             Write-Host "      - could not remove user from existing department group: $($group.Name)" -ForegroundColor Red
@@ -240,7 +241,7 @@ param(
                 }
   
                 try {
-                    Set-ADUser -Identity $uUser -Title $uJobTitle -Department $uDepartmentName -Description $uJobTitle
+                    Set-ADUser -Identity $uUser -Title $uJobTitle -Department $uDepartmentName -Description $uJobTitle -Credential $desktopCredential
   
                     Write-Host "      + user department updated: $uDepartmentName"     
                     Write-Host "      + user description updated: $uJobTitle"   
@@ -256,7 +257,7 @@ param(
                 }  
   
                 try {
-                    Add-ADGroupMember -Identity $deptRoleGroupName -Members $uUser   
+                    Add-ADGroupMember -Identity $deptRoleGroupName -Members $uUser -Credential $desktopCredential   
         
                     Write-Host "      + user added to new department group: $deptRoleGroupName"     
                 }
@@ -344,7 +345,7 @@ Function Invoke-DomainAdminAction {
   
                 Write-Host "      + creating dns record: $dnsRecordToCreate"
   
-                $result = Invoke-Command -ComputerName localhost -ArgumentList $dnsRecordToCreate, $domainSuffix -Credential $domainAdminCredential -ScriptBlock {
+                $result = Invoke-Command -ComputerName $dcName -ArgumentList $dnsRecordToCreate, $domainSuffix -Credential $domainAdminCredential -ScriptBlock {
   
                     $dnsRecordToCreate = $args[0]
                     $domainSuffix = $args[1]
@@ -428,7 +429,7 @@ Function Invoke-DomainAdminAction {
             }
                         
             if ($null -ne $dnsRecordCheck) {
-                $result = Invoke-Command -ComputerName localhost -ArgumentList $dnsRecordToDelete, $domainSuffix -Credential $domainAdminCredential -ScriptBlock {
+                $result = Invoke-Command -ComputerName $dcName -ArgumentList $dnsRecordToDelete, $domainSuffix -Credential $domainAdminCredential -ScriptBlock {
                     
                     $dnsRecordToDelete = $args[0]
                     $domainSuffix = $args[1]                                        
@@ -478,7 +479,7 @@ Function Invoke-DomainAdminAction {
   
                 $result = @()
                 
-                $result = Invoke-Command -ComputerName localhost -Credential $domainAdminCredential -ArgumentList $ouServers, $gpoServerNL -ScriptBlock {
+                $result = Invoke-Command -ComputerName $dcName -Credential $domainAdminCredential -ArgumentList $ouServers, $gpoServerNL -ScriptBlock {
                     $ouServers = $args[0]
                     $gpoServerNL = $args[1]
   
@@ -521,7 +522,7 @@ Function Invoke-DomainAdminAction {
               
                 if ($null -eq $gpoCheck) {    
                     $result = $null
-                    $result = Invoke-Command -ComputerName localhost -ArgumentList $gpoName -Credential $domainAdminCredential -ScriptBlock {
+                    $result = Invoke-Command -ComputerName $dcName -ArgumentList $gpoName -Credential $domainAdminCredential -ScriptBlock {
                         try {
                             $gpoName = $args[0]
                             New-GPO -Name $gpoName -Comment $gpoName | Out-Null       
@@ -560,7 +561,7 @@ Function Invoke-DomainAdminAction {
                 }
                               
                 $result = $null
-                $result = Invoke-Command -ComputerName localhost -Credential $domainAdminCredential -ArgumentList $ouServers, $gpoServerLinked -ScriptBlock {
+                $result = Invoke-Command -ComputerName $dcName -Credential $domainAdminCredential -ArgumentList $ouServers, $gpoServerLinked -ScriptBlock {
                     $ouServers = $args[0]
                     $gpoServerLinked = $args[1]
   
@@ -1001,7 +1002,20 @@ Function Invoke-ServerAction {
             $appName = $enterpriseApp.Name
             $appCode = $enterpriseApp.Id
             $ouAppPath = "OU=$appName,$ouServers"
-  
+            
+            # Check if OU exists, create if not
+            try {
+                Get-ADOrganizationalUnit -Identity $ouAppPath -ErrorAction Stop | Out-Null
+            }
+            catch {
+                try {
+                    New-ADOrganizationalUnit -Name $appName -Path $ouServers -Credential $serverCredential
+                }
+                catch {
+                    # OU may already exist or other error
+                }
+            }
+
             $serverGroup = "$appName-$appEnv-Servers"
   
             if ($appCode -eq "LNX") {
@@ -1048,7 +1062,19 @@ Function Invoke-ServerAction {
                     Exit         
                 }
             }            
-  
+			
+			try {
+				Get-ADGroup -Identity $serverGroup -ErrorAction Stop | Out-Null
+			}
+			catch {
+				try {
+					New-ADGroup -Name $serverGroup -GroupScope Global -GroupCategory Security -Path $ouGroups -Credential $serverCredential
+				}
+				catch {
+					# Group may already exist or other error
+				}
+			}
+			
             try {
                 Add-ADGroupMember -Identity $serverGroup -Members "$computerName$"  
             }
@@ -1149,7 +1175,7 @@ Function Invoke-ServiceAccountAction {
   
                 try {
                     $userToAction | Set-ADUser -Enabled $False -Credential $serviceAccountCredential 
-                    Move-ADObject -Identity $userToAction -TargetPath $ouEmployeesExpired
+                    Move-ADObject -Identity $userToAction -TargetPath $ouEmployeesExpired -Credential $serviceAccountCredential
                     
                     if ($showAllActions -eq $True) {
                         Write-Host "    + svc-offboarding disabled: $($userToAction.SamAccountName)"
@@ -1627,7 +1653,8 @@ Start-Transcript -Path $fLogFile | Out-Null
 try {
     $domain = Get-ADDomain
     $domainDN = $domain.DistinguishedName
-    $domainSuffix = $domain.DNSRoot    
+    $domainSuffix = $domain.DNSRoot
+    $dcName = (Get-ADDomainController -Discover).HostName
 }
 catch {
     Write-Host " - could not contain domain" -ForegroundColor Red
@@ -1740,7 +1767,7 @@ $baseOUS = @(
     @{ID = 19; Name = "Workstations"; Path = "OU=Quarantined,$domainBaseLocation"; DN = "OU=Workstations,OU=Quarantined,$domainBaseLocation"; Code = "defWorkstationsQuarantined" },
   
     @{ID = 20; Name = "Servers"; Path = "$domainBaseLocation"; DN = "OU=Servers,$domainBaseLocation"; Code = "defServers" },
-    @{ID = 21; Name = "Workstations"; Path = "$domainBaseLocation"; DN = "OU=Workstations,$domainBaseLocation"; Code = "defWorkstations" },
+    @{ID = 21; Name = "Workstations"; Path = "$domainBaseLocation"; DN = "OU=Workstations,$domainBaseLocation"; Code = "defWorkstations" }
     @{ID = 22; Name = "Engineering"; Path = "OU=Workstations,$domainBaseLocation"; DN = "OU=Engineering,OU=Workstations,$domainBaseLocation"; Code = "defEngineeringWorkstations" },
     @{ID = 23; Name = "Field"; Path = "OU=Workstations,$domainBaseLocation"; DN = "OU=Field,OU=Workstations,$domainBaseLocation"; Code = "defFieldWorkstations" }, 
     @{ID = 24; Name = "Kiosks"; Path = "OU=Workstations,$domainBaseLocation"; DN = "OU=Kiosks,OU=Workstations,$domainBaseLocation"; Code = "defKiosksWorkstations" },
@@ -1949,5 +1976,3 @@ $selectedEnterpriseApps = $enterpriseApps
 }
   
 Stop-Transcript
- 
-
