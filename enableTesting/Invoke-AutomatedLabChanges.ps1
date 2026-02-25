@@ -1094,28 +1094,28 @@ Function Invoke-ServerAction {
                 
                 $groupToUpdate = $GroupToUpdate | Get-Random 
   
-                $userToAction = $null
-                $userToAction = Get-ADUser -Filter * -SearchBase $ouEmployees #-SearchScope OneLevel
+                $serverToAction = $null
+                $serverToAction = Get-ADComputer -Filter * -SearchBase $ouServers
   
-                if ($null -ne $userToAction) {
-                    if ($userToAction.Count -gt 1) {
-                        $userToAction = $userToAction | Get-Random      
+                if ($null -ne $serverToAction) {
+                    if ($serverToAction.Count -gt 1) {
+                        $serverToAction = $serverToAction | Get-Random
                     }
                 
                     try {
-                        Add-ADGroupMember -Identity $groupToUpdate -Members $userToAction -Credential $serverCredential 
+                        Add-ADGroupMember -Identity $groupToUpdate -Members $serverToAction -Credential $serverCredential
   
                         if ($showAllActions -eq $True) {
-                            Write-Host "      + added user: $($userToAction.SamAccountName) to $($groupToUpdate.Name)"
+                            Write-Host "      + added server: $($serverToAction.Name) to $($groupToUpdate.Name)"
                         }
                     }
                     catch {
                         #not worth exiting
-                        Write-Host "      - could not add:  $($userToAction.SamAccountName) to $($groupToUpdate.Name)" -ForegroundColor Red
+                        Write-Host "      - could not add:  $($serverToAction.Name) to $($groupToUpdate.Name)" -ForegroundColor Red
                     }
                 }
                 else {
-                    Write-Host "      ~ no users found" -ForegroundColor Yellow
+                    Write-Host "      ~ no servers found" -ForegroundColor Yellow
                 }                            
             }
             else {
