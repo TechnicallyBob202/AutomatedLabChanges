@@ -2,17 +2,15 @@
 # Dot-sources the script to load all functions and variables, without running the main loop.
 # Uncomment the action(s) you want to test and run this script.
 
-Write-Host "DEBUG: starting dot-source..."
 . "$PSScriptRoot\Invoke-AutomatedLabChanges.ps1" -TestOnly
-Write-Host "DEBUG: dot-source complete, running actions..."
 
 # ---------------------------------------------------------------------------
 # Invoke-ServiceAccountAction
 # ---------------------------------------------------------------------------
-Invoke-ServiceAccountAction -serviceAccount "svc-callmanager"
-Invoke-ServiceAccountAction -serviceAccount "svc-offboarding"
-Invoke-ServiceAccountAction -serviceAccount "svc-onboarding"
-Invoke-ServiceAccountAction -serviceAccount "svc-pam"
+#Invoke-ServiceAccountAction -serviceAccount "svc-callmanager"
+#Invoke-ServiceAccountAction -serviceAccount "svc-offboarding"
+#Invoke-ServiceAccountAction -serviceAccount "svc-onboarding"
+#Invoke-ServiceAccountAction -serviceAccount "svc-pam"
 
 # ---------------------------------------------------------------------------
 # Invoke-DesktopAction
@@ -30,13 +28,13 @@ Invoke-ServiceAccountAction -serviceAccount "svc-pam"
 # ---------------------------------------------------------------------------
 # Invoke-DomainAdminAction
 # ---------------------------------------------------------------------------
-# Invoke-DomainAdminAction -domainAdminAction "dnsRecordAdd"
-# Invoke-DomainAdminAction -domainAdminAction "dnsRecordDelete"
-# Invoke-DomainAdminAction -domainAdminAction "gpoLink"
-# Invoke-DomainAdminAction -domainAdminAction "gpoNew"
-# Invoke-DomainAdminAction -domainAdminAction "gpoLinkRemove"
-# Invoke-DomainAdminAction -domainAdminAction "newSubnet"
-# Invoke-DomainAdminAction -domainAdminAction "setServerSPN"
+Invoke-DomainAdminAction -domainAdminAction "dnsRecordAdd"
+Invoke-DomainAdminAction -domainAdminAction "dnsRecordDelete"
+Invoke-DomainAdminAction -domainAdminAction "gpoLink"
+Invoke-DomainAdminAction -domainAdminAction "gpoNew"
+Invoke-DomainAdminAction -domainAdminAction "gpoLinkRemove"
+Invoke-DomainAdminAction -domainAdminAction "newSubnet"
+Invoke-DomainAdminAction -domainAdminAction "setServerSPN"
 
 # ---------------------------------------------------------------------------
 # Invoke-HelpdeskAction
