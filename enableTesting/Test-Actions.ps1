@@ -34,27 +34,27 @@
 #Invoke-DomainAdminAction -domainAdminAction "gpoNew"
 #Invoke-DomainAdminAction -domainAdminAction "gpoLinkRemove"
 #Invoke-DomainAdminAction -domainAdminAction "newSubnet"
-Invoke-DomainAdminAction -domainAdminAction "setServerSPN"
+#Invoke-DomainAdminAction -domainAdminAction "setServerSPN"
 
 # ---------------------------------------------------------------------------
 # Invoke-HelpdeskAction
 # ---------------------------------------------------------------------------
-# Invoke-HelpdeskAction -helpdeskAction "userDisable"
-# Invoke-HelpdeskAction -helpdeskAction "userEnable"
-# Invoke-HelpdeskAction -helpdeskAction "computerDisable"
-# Invoke-HelpdeskAction -helpdeskAction "computerEnable"
-# Invoke-HelpdeskAction -helpdeskAction "passwordAbnormalRefresh"
-# Invoke-HelpdeskAction -helpdeskAction "passwordAtNextLogon"
-# Invoke-HelpdeskAction -helpdeskAction "passwordReset"
-# Invoke-HelpdeskAction -helpdeskAction "passwordResetInDescription"
-# Invoke-HelpdeskAction -helpdeskAction "updateConfidentialGroup"
-# Invoke-HelpdeskAction -helpdeskAction "userUpdateDescription"
+Invoke-HelpdeskAction -helpdeskAction "userDisable"
+Invoke-HelpdeskAction -helpdeskAction "userEnable"
+Invoke-HelpdeskAction -helpdeskAction "computerDisable"
+Invoke-HelpdeskAction -helpdeskAction "computerEnable"
+Invoke-HelpdeskAction -helpdeskAction "passwordAbnormalRefresh"
+Invoke-HelpdeskAction -helpdeskAction "passwordAtNextLogon"
+Invoke-HelpdeskAction -helpdeskAction "passwordReset"
+Invoke-HelpdeskAction -helpdeskAction "passwordResetInDescription"
+Invoke-HelpdeskAction -helpdeskAction "updateConfidentialGroup"
+Invoke-HelpdeskAction -helpdeskAction "userUpdateDescription"
 
 # ---------------------------------------------------------------------------
 # Invoke-ServerAction
 # ---------------------------------------------------------------------------
-# Invoke-ServerAction -serverAction "computerDelete"
-# Invoke-ServerAction -serverAction "computerDisable"
-# Invoke-ServerAction -serverAction "computerEnable"
-# Invoke-ServerAction -serverAction "computerNew"
-# Invoke-ServerAction -serverAction "groupNewMember"
+Invoke-ServerAction -serverAction "computerDelete"
+Invoke-ServerAction -serverAction "computerDisable"
+Invoke-ServerAction -serverAction "computerEnable"
+Invoke-ServerAction -serverAction "computerNew"
+Invoke-ServerAction -serverAction "groupNewMember"
