@@ -2069,7 +2069,7 @@ $selectedEnterpriseApps = $enterpriseApps
 #set $TestOnly = $true before dot-sourcing to load functions/variables without running
 if (-not $TestOnly) { 1..$actionsMax| ForEach-Object {
   
-    $actionDate = Get-Date -Format "yyyy-MM-dd_HH:MM:ss"
+    $actionDate = Get-Date -Format "yyyy-MM-dd_HH:mm:ss"
   
     Write-Host "Action date: $actionDate"
   
