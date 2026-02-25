@@ -139,9 +139,10 @@ param(
                 }  
             }
         }
-        #creates a new user, bypassing the onboarding process, bad
+        #creates a new user, bypassing the onboarding process, bad 
         userNew {
-            New-RealADUser -Credential $desktopCredential
+            $userToAction = $null
+            $userToAction = New-RealADUser -Credential $desktopCredential
         }
         userNewDesEncryption {           
             try {
@@ -505,7 +506,9 @@ Function Invoke-DomainAdminAction {
         #gponew
         gpoNew {            
             $gposToCreate = @("Servers - ALL - Windows Update", "Servers - ALL - Temporary", "Servers - ALL - Legacy", "Servers - ALL - Blank")
-
+            
+            $gpoNAme = $gposToCreate
+  
             foreach ($gpoName in $gposToCreate) {
             
                 $gpoCheck = $null
@@ -1013,6 +1016,8 @@ Function Invoke-ServerAction {
                 }
             }
 
+            $serverGroup = "$appName-$appEnv-Servers"
+  
             if ($appCode -eq "LNX") {
                 $osVersion = Get-Random -InputObject $osVersionsLinux
             }
@@ -1038,11 +1043,12 @@ Function Invoke-ServerAction {
             }
   
             $computerDNS = "$computerName.$domainSuffix"
-            $serverGroup = "$appName-$appEnv-Servers"
-
+            
             try {
-                New-ADComputer -Name $computerName -SAMAccountName $computerName -DNSHostName $computerDNS -Path $ouAppPath -OperatingSystem $osVersion -Description "$appName $appEnvserver"
-
+                New-ADComputer -Name $computerName -SAMAccountName $computerName -DNSHostName $computerDNS -Path $ouAppPath -OperatingSystem $osVersion -Description "$appName $appEnvserver"                                                         
+                
+                $serverGroup = "$appName-$appEnv-Servers"
+                
                 #sleep error
                 Start-Sleep -Milliseconds 500
   
@@ -1183,7 +1189,8 @@ Function Invoke-ServiceAccountAction {
         }
         #create an account
         svc-onboarding {
-            New-RealADUser -Credential $serviceAccountCredential
+            $userToAction = $null
+            $userToAction = New-RealADUser -Credential $serviceAccountCredential           
         }
         svc-pam {
             #select a random department and add the user to that
@@ -1297,11 +1304,14 @@ Function New-RealADUser {
         $uUpnBase = "$uFirstName.$uLastName@$domainSuffix"
         $uUpn = $uUpnBase
         $counter = 1
-
+        $duplicate = $false
+  
         do {
             $existingUser = Get-ADUser -Filter { UserPrincipalName -eq $uUpn }
-
+  
             if ($existingUser) {
+                #found duplicate
+                $duplicate = $true
                 $uUpn = "$uFirstName.$uLastName$counter@$domainSuffix"
                 $counter++
             }
@@ -1339,7 +1349,7 @@ Function New-RealADUser {
             Credential            = $Credential
         }
   
-        if ($counter -gt 1) {
+        if ($duplicate -eq $true) {
             #subtract 1 because counter
             $userParameters["Name"] = "$uLastName($($counter-1)), $uFirstName"
             $userParameters["DisplayName"] = "$uLastName($($counter-1)), $uFirstName"
@@ -1725,6 +1735,9 @@ if ($offlineUserData -eq "") {
   
 #build the naming for the base OU
 $domainBaseLocation = "OU=$domainBase,$domainDN"
+$baseOUAdmin = "OU=Administrative,$domainBaseLocation"
+  
+  
   
   
 $baseOUS = $null
@@ -1839,6 +1852,9 @@ $departments = @(
 #used for job titles i.e. design engineer IV
 $departmentsJobLevels = @("I", "II", "III", "IV", "V")
   
+#used for job titles i.e. design engineer IV
+$departmentsJobLevels = @("I", "II", "III", "IV", "V")
+  
 #used for creating groups and group members
 $enterpriseApps = @(
     @{ID = "APP"; Name = "Application Server"; Description = "Application Server" }    
@@ -1888,14 +1904,26 @@ $confidentialGroups = @(
 )
   
 #ou locations - possibly overkill
+$ouConfidential = ($baseOUs | Where-Object { $_.Code -eq 'defConfidential' }).DN
+$ouDepartments = ($baseOUs | Where-Object { $_.Code -eq 'defDepartments' }).DN
 $ouEmployees = ($baseOUs | Where-Object { ($_.Code -eq 'defEmployees') }).DN
 $ouEmployeesExpired = ($baseOUs | Where-Object { ($_.Code -eq 'defEmployeesExpired') }).DN
+$ouEmployeesQuarantined = ($baseOUs | Where-Object { ($_.Code -eq 'defEmployeesQuarantined') }).DN
+$ouEmployeesVIP = ($baseOUs | Where-Object { $_.Code -eq 'defEmployeesVips' }).DN
 $ouGroups = ($baseOUs | Where-Object { $_.Code -eq 'defGroups' }).DN
+$ouGroupsExpired = ($baseOUs | Where-Object { ($_.Code -eq 'defGroupsExpired') }).DN
+$ouGroupsQuarantined = ($baseOUs | Where-Object { ($_.Code -eq 'defGroupsQuarantined') }).DN
 $ouServers = ($baseOUs | Where-Object { ($_.Code -eq 'defServers') }).DN
 $ouServersExpired = ($baseOUs | Where-Object { ($_.Code -eq 'defServersExpired') }).DN
+$ouServersQuarantined = ($baseOUs | Where-Object { ($_.Code -eq 'defServersQuarantined') }).DN
 $ouWorkstations = ($baseOUs | Where-Object { ($_.Code -eq 'defWorkstations') }).DN
 $ouWorkstationsExpired = ($baseOUs | Where-Object { ($_.Code -eq 'defWorkstationsExpired') }).DN
+$ouWorkstationsQuarantined = ($baseOUs | Where-Object { ($_.Code -eq 'defWorkstationsQuarantined') }).DN
+$ouQuarantine = ($baseOUs | Where-Object { $_.Code -eq 'defQuarantine' }).DN
   
+#new computers and users
+$ouNewComputers = ($baseOUs | Where-Object { ($_.Code -eq 'defNewComputer') }).DN
+$ouNewUsers = ($baseOUs | Where-Object { ($_.Code -eq 'defNewUser') }).DN
   
   
 #all departments and all enterpriseApps

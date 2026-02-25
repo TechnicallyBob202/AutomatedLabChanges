@@ -1,3 +1,5 @@
+param([switch]$TestOnly)
+
 $domainBase = "_SemperisDSP"
   
 #only used if online
@@ -45,11 +47,13 @@ param(
                     $computerToAction = $computerToAction | Get-Random -Count 1
                 }
   
-                try {                    
-                    Remove-ADComputer -Identity $computerToAction -Confirm:$false -Credential $desktopCredential    
-  
+                try {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $desktopCredential -ArgumentList $computerToAction.DistinguishedName -ScriptBlock {
+                        param($dn)
+                        Remove-ADComputer -Identity $dn -Confirm:$false
+                    }
                     if ($showAllActions -eq $True) {
-                        Write-Host "      + deleted computer: $($computerToAction.Name)"    
+                        Write-Host "      + deleted computer: $($computerToAction.Name)"
                     }
                 }
                 catch {
@@ -72,16 +76,18 @@ param(
                 }
   
                 try {
-                    Set-ADComputer -Identity $computerToAction -Enabled $False -Credential $desktopCredential     
-                    Move-ADObject -Identity $computerToAction -TargetPath $ouWorkstationsExpired -Credential $desktopCredential                
-  
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $desktopCredential -ArgumentList $computerToAction.DistinguishedName, $ouWorkstationsExpired -ScriptBlock {
+                        param($dn, $targetPath)
+                        Set-ADComputer -Identity $dn -Enabled $False
+                        Move-ADObject -Identity $dn -TargetPath $targetPath
+                    }
                     if ($showAllActions -eq $True) {
-                        Write-Host "      + disabled computer: $($computerToAction.Name)"  
+                        Write-Host "      + disabled computer: $($computerToAction.Name)"
                     }
                 }
                 catch {
                     #not worth exiting
-                    Write-Host "      - could not disable computer: $($computerToAction.Name)" -ForegroundColor Red 
+                    Write-Host "      - could not disable computer: $($computerToAction.Name)" -ForegroundColor Red
                 }
             }
             else {
@@ -124,19 +130,20 @@ param(
             $computerOSVersion = "10.0 (22621)"
   
             try {
-                New-ADComputer -Name $computerName -DNSHostName $computerDNS -Description $computerDNS -OperatingSystem $computerOS -OperatingSystemVersion $computerOSVersion -Enabled $true -Path $ouWorkstationTarget -Credential $desktopCredential 
-                
+                Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $desktopCredential -ArgumentList $computerName, $computerDNS, $computerOS, $computerOSVersion, $ouWorkstationTarget -ScriptBlock {
+                    param($name, $dns, $os, $osVer, $path)
+                    New-ADComputer -Name $name -DNSHostName $dns -Description $dns -OperatingSystem $os -OperatingSystemVersion $osVer -Enabled $true -Path $path
+                }
                 if ($showAllActions -eq $True) {
-                    Write-Host "  + created computer: $computerName"  
+                    Write-Host "  + created computer: $computerName"
                 }
             }
             catch {
                 Write-Host "  - could not create computer: $computerName" -ForegroundColor Red
-  
                 if ($continueOnError -eq $false) {
-                    Write-Host " - continue on error set to false, exiting" -ForegroundColor Red                    
+                    Write-Host " - continue on error set to false, exiting" -ForegroundColor Red
                     Exit
-                }  
+                }
             }
         }
         #creates a new user, bypassing the onboarding process, bad 
@@ -187,9 +194,11 @@ param(
                 }
   
                 try {
-                    $userToAction | Set-ADUser -Enabled $False -Credential $desktopCredential  
-                    Move-ADObject -Identity $userToAction -TargetPath $ouEmployeesExpired -Credential $desktopCredential 
-                   
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $desktopCredential -ArgumentList $userToAction.DistinguishedName, $ouEmployeesExpired -ScriptBlock {
+                        param($dn, $targetPath)
+                        Set-ADUser -Identity $dn -Enabled $False
+                        Move-ADObject -Identity $dn -TargetPath $targetPath
+                    }
                     if ($showAllActions -eq $True) {
                         Write-Host "    + disabled user: $($userToAction.SamAccountName)"
                     }
@@ -227,7 +236,10 @@ param(
                     if ($group.Name -like "$($uUser.Department)*") {
   
                         try {
-                            Remove-ADGroupMember -Identity $group.Name -Members $uUser -Confirm:$false -Credential $desktopCredential                
+                            Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $desktopCredential -ArgumentList $group.Name, $uUser.DistinguishedName -ScriptBlock {
+                                param($groupName, $userDN)
+                                Remove-ADGroupMember -Identity $groupName -Members $userDN -Confirm:$false
+                            }
                         }
                         catch {
                             Write-Host "      - could not remove user from existing department group: $($group.Name)" -ForegroundColor Red
@@ -241,34 +253,36 @@ param(
                 }
   
                 try {
-                    Set-ADUser -Identity $uUser -Title $uJobTitle -Department $uDepartmentName -Description $uJobTitle -Credential $desktopCredential
-  
-                    Write-Host "      + user department updated: $uDepartmentName"     
-                    Write-Host "      + user description updated: $uJobTitle"   
-                    Write-Host "      + user job title updated: $uJobTitle" 
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $desktopCredential -ArgumentList $uUser.DistinguishedName, $uJobTitle, $uDepartmentName -ScriptBlock {
+                        param($dn, $title, $dept)
+                        Set-ADUser -Identity $dn -Title $title -Department $dept -Description $title
+                    }
+                    Write-Host "      + user department updated: $uDepartmentName"
+                    Write-Host "      + user description updated: $uJobTitle"
+                    Write-Host "      + user job title updated: $uJobTitle"
                 }
                 catch {
                     Write-Host "      - could not update department and job title" -ForegroundColor Red
-  
                     if ($continueOnError -eq $false) {
-                        Write-Host "  - continue on error set to false, exiting" -ForegroundColor Red                    
+                        Write-Host "  - continue on error set to false, exiting" -ForegroundColor Red
                         Exit
-                    }            
-                }  
+                    }
+                }
   
                 try {
-                    Add-ADGroupMember -Identity $deptRoleGroupName -Members $uUser -Credential $desktopCredential   
-        
-                    Write-Host "      + user added to new department group: $deptRoleGroupName"     
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $desktopCredential -ArgumentList $deptRoleGroupName, $uUser.DistinguishedName -ScriptBlock {
+                        param($group, $userDN)
+                        Add-ADGroupMember -Identity $group -Members $userDN
+                    }
+                    Write-Host "      + user added to new department group: $deptRoleGroupName"
                 }
                 catch {
                     Write-Host "      - could not add user to new department group: $deptRoleGroupName" -ForegroundColor Red
-  
                     if ($continueOnError -eq $false) {
-                        Write-Host "      - continue on error set to false, exiting" -ForegroundColor Red                    
+                        Write-Host "      - continue on error set to false, exiting" -ForegroundColor Red
                         Exit
-                    }            
-                } 
+                    }
+                }
   
             }
             else {
@@ -345,7 +359,7 @@ Function Invoke-DomainAdminAction {
   
                 Write-Host "      + creating dns record: $dnsRecordToCreate"
   
-                $result = Invoke-Command -ComputerName $dcName -ArgumentList $dnsRecordToCreate, $domainSuffix -Credential $domainAdminCredential -ScriptBlock {
+                $result = Invoke-Command -ComputerName $dcName -ErrorAction Stop -ArgumentList $dnsRecordToCreate, $domainSuffix -Credential $domainAdminCredential -ScriptBlock {
   
                     $dnsRecordToCreate = $args[0]
                     $domainSuffix = $args[1]
@@ -429,7 +443,7 @@ Function Invoke-DomainAdminAction {
             }
                         
             if ($null -ne $dnsRecordCheck) {
-                $result = Invoke-Command -ComputerName $dcName -ArgumentList $dnsRecordToDelete, $domainSuffix -Credential $domainAdminCredential -ScriptBlock {
+                $result = Invoke-Command -ComputerName $dcName -ErrorAction Stop -ArgumentList $dnsRecordToDelete, $domainSuffix -Credential $domainAdminCredential -ScriptBlock {
                     
                     $dnsRecordToDelete = $args[0]
                     $domainSuffix = $args[1]                                        
@@ -479,7 +493,7 @@ Function Invoke-DomainAdminAction {
   
                 $result = @()
                 
-                $result = Invoke-Command -ComputerName $dcName -Credential $domainAdminCredential -ArgumentList $ouServers, $gpoServerNL -ScriptBlock {
+                $result = Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $domainAdminCredential -ArgumentList $ouServers, $gpoServerNL -ScriptBlock {
                     $ouServers = $args[0]
                     $gpoServerNL = $args[1]
   
@@ -522,7 +536,7 @@ Function Invoke-DomainAdminAction {
               
                 if ($null -eq $gpoCheck) {    
                     $result = $null
-                    $result = Invoke-Command -ComputerName $dcName -ArgumentList $gpoName -Credential $domainAdminCredential -ScriptBlock {
+                    $result = Invoke-Command -ComputerName $dcName -ErrorAction Stop -ArgumentList $gpoName -Credential $domainAdminCredential -ScriptBlock {
                         try {
                             $gpoName = $args[0]
                             New-GPO -Name $gpoName -Comment $gpoName | Out-Null       
@@ -561,7 +575,7 @@ Function Invoke-DomainAdminAction {
                 }
                               
                 $result = $null
-                $result = Invoke-Command -ComputerName $dcName -Credential $domainAdminCredential -ArgumentList $ouServers, $gpoServerLinked -ScriptBlock {
+                $result = Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $domainAdminCredential -ArgumentList $ouServers, $gpoServerLinked -ScriptBlock {
                     $ouServers = $args[0]
                     $gpoServerLinked = $args[1]
   
@@ -590,13 +604,12 @@ Function Invoke-DomainAdminAction {
                 (Get-Random -Minimum 0 -Maximum 255),
                 (Get-Random -Minimum 0 -Maximum 255),
                 (Get-Random -Minimum 1 -Maximum 254)
-  
                 $randomIpNetmask = $randomIP -replace "\d{1,3}$", "0/24"
-                
                 $randomIpNetmaskLocation = "Subnet: $randomIpNetmask"
-  
-                New-ADReplicationSubnet -Name $randomIpNetmask -Location $randomIpNetmaskLocation -Credential $domainAdminCredential
-                
+                Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $domainAdminCredential -ArgumentList $randomIpNetmask, $randomIpNetmaskLocation -ScriptBlock {
+                    param($subnet, $location)
+                    New-ADReplicationSubnet -Name $subnet -Location $location
+                }
                 if ($showAllActions -eq $true) {
                     Write-Host "      + created subnet: $randomIPNetMask"
                 }
@@ -618,8 +631,12 @@ Function Invoke-DomainAdminAction {
                     $computerToAction = $computerToAction | Get-Random
                 }   
                 try {
-                    $servicePrincipalName = $servicePrincipalName + '/' + $computerToAction.DNSHostName
-                    Set-ADComputer -Identity $computerToAction -ServicePrincipalNames @{Add = "$servicePrincipalName" } -Credential $domainAdminCredential
+                    $dnsHostName = if ($computerToAction.DNSHostName) { $computerToAction.DNSHostName } else { "$($computerToAction.Name).$domainSuffix" }
+                    $servicePrincipalName = $servicePrincipalName + '/' + $dnsHostName
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $domainAdminCredential -ArgumentList $computerToAction.DistinguishedName, $servicePrincipalName -ScriptBlock {
+                        param($dn, $spn)
+                        Set-ADComputer -Identity $dn -ServicePrincipalNames @{Add = $spn}
+                    }
                     
                     Write-Host "      + set SPN: $servicePrincipalName on $($computerToAction.Name)"                    
                 }
@@ -651,15 +668,17 @@ Function Invoke-HelpdeskAction {
                 }
                                 
                 try {
-                    Set-ADUser -Identity $userToAction -Enabled $False -Credential $helpdeskCredential 
-                    
-                    if ($showAllActions -eq $True) {    
-                        Write-Host "      + disabled user: $($userToAction.SamAccountName)"       
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName -ScriptBlock {
+                        param($dn)
+                        Set-ADUser -Identity $dn -Enabled $False
+                    }
+                    if ($showAllActions -eq $True) {
+                        Write-Host "      + disabled user: $($userToAction.SamAccountName)"
                     }
                 }
                 catch {
                     #not worth exiting
-                    Write-Host "      - could not disable user: $($userToAction.SamAccountName)" -ForegroundColor Red  
+                    Write-Host "      - could not disable user: $($userToAction.SamAccountName)" -ForegroundColor Red
                 }
             }
             else {
@@ -676,15 +695,17 @@ Function Invoke-HelpdeskAction {
                     $userToAction = $userToAction | Get-Random
                 }
                 try {
-                    Set-ADUser -identity $userToAction -Enabled $True -Credential $helpdeskCredential      
-                    
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName -ScriptBlock {
+                        param($dn)
+                        Set-ADUser -Identity $dn -Enabled $True
+                    }
                     if ($showAllActions -eq $True) {
-                        Write-Host "      + enabled user: $($userToAction.SamAccountName)"  
+                        Write-Host "      + enabled user: $($userToAction.SamAccountName)"
                     }
                 }
                 catch {
                     #not worth exiting
-                    Write-Host "      - could not enable user: $($userToAction.SamAccountName)" -ForegroundColor Red 
+                    Write-Host "      - could not enable user: $($userToAction.SamAccountName)" -ForegroundColor Red
                 }
             }
             else {
@@ -702,15 +723,17 @@ Function Invoke-HelpdeskAction {
                 }
   
                 try {
-                    Set-ADComputer -Identity $computerToAction -Enabled $False -Credential $helpdeskCredential 
-  
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $computerToAction.DistinguishedName -ScriptBlock {
+                        param($dn)
+                        Set-ADComputer -Identity $dn -Enabled $False
+                    }
                     if ($showAllActions -eq $True) {
-                        Write-Host "      + disabled computer: $($computerToAction.Name)"  
+                        Write-Host "      + disabled computer: $($computerToAction.Name)"
                     }
                 }
                 catch {
                     #not worth exiting
-                    Write-Host "      - could not disable computer: $($computerToAction.Name)" -ForegroundColor Red 
+                    Write-Host "      - could not disable computer: $($computerToAction.Name)" -ForegroundColor Red
                 }
             }
             else {
@@ -728,15 +751,17 @@ Function Invoke-HelpdeskAction {
                 }
   
                 try {
-                    Set-ADComputer -Identity $computerToAction -Enabled $True -Credential $helpdeskCredential 
-  
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $computerToAction.DistinguishedName -ScriptBlock {
+                        param($dn)
+                        Set-ADComputer -Identity $dn -Enabled $True
+                    }
                     if ($showAllActions -eq $True) {
-                        Write-Host "      + enabled computer: $($computerToAction.Name)"  
+                        Write-Host "      + enabled computer: $($computerToAction.Name)"
                     }
                 }
                 catch {
                     #not worth exiting
-                    Write-Host "      - could not enable computer: $($computerToAction.Name)" -ForegroundColor Red 
+                    Write-Host "      - could not enable computer: $($computerToAction.Name)" -ForegroundColor Red
                 }
             }
             else {
@@ -754,17 +779,17 @@ Function Invoke-HelpdeskAction {
                 }                
                 
                 try {
-                    $userToAction | Set-ADUser -ChangePasswordAtLogon $True -Credential $helpdeskCredential     
-                    
-                    Start-Sleep -Seconds 10
-  
-                    $userToAction | Set-ADUser -ChangePasswordAtLogon $False -Credential $helpdeskCredential    
-                     
-                    Write-Host "      + abnormaly refreshed password: $($userToAction.SamAccountName)"                                   
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName -ScriptBlock {
+                        param($dn)
+                        Set-ADUser -Identity $dn -ChangePasswordAtLogon $True
+                        Start-Sleep -Seconds 10
+                        Set-ADUser -Identity $dn -ChangePasswordAtLogon $False
+                    }
+                    Write-Host "      + abnormaly refreshed password: $($userToAction.SamAccountName)"
                 }
                 catch {
                     #not worth exiting
-                    Write-Host "      - could not abnormaly refresh password: $($userToAction.SamAccountName)" -ForegroundColor Red    
+                    Write-Host "      - could not abnormaly refresh password: $($userToAction.SamAccountName)" -ForegroundColor Red
                 }
             }
             else {
@@ -782,15 +807,17 @@ Function Invoke-HelpdeskAction {
                 }                
                 
                 try {
-                    $userToAction | Set-ADUser -ChangePasswordAtLogon $True -Credential $helpdeskCredential     
-                    
-                    if ($showAllActions -eq $True) { 
-                        Write-Host "      + change password at next logon set: $($userToAction.SamAccountName)"               
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName -ScriptBlock {
+                        param($dn)
+                        Set-ADUser -Identity $dn -ChangePasswordAtLogon $True
+                    }
+                    if ($showAllActions -eq $True) {
+                        Write-Host "      + change password at next logon set: $($userToAction.SamAccountName)"
                     }
                 }
                 catch {
                     #not worth exiting
-                    Write-Host "      - could not set change password at next logon: $($userToAction.SamAccountName)" -ForegroundColor Red    
+                    Write-Host "      - could not set change password at next logon: $($userToAction.SamAccountName)" -ForegroundColor Red
                 }
             }
             else {
@@ -809,15 +836,17 @@ Function Invoke-HelpdeskAction {
                 }              
   
                 try {
-                    Set-ADAccountPassword -Identity $userToAction -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "$userPassword" -Force) -Credential $helpdeskCredential  
-                    
-                    if ($showAllActions -eq $True) { 
-                        Write-Host "      + changed password: $($userToAction.SamAccountName)"        
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName, $userPassword -ScriptBlock {
+                        param($dn, $pwd)
+                        Set-ADAccountPassword -Identity $dn -Reset -NewPassword (ConvertTo-SecureString -AsPlainText $pwd -Force)
+                    }
+                    if ($showAllActions -eq $True) {
+                        Write-Host "      + changed password: $($userToAction.SamAccountName)"
                     }
                 }
                 catch {
                     #not worth exiting
-                    Write-Host "      - could not change password: $($userToAction.SamAccountName)" -ForegroundColor Red   
+                    Write-Host "      - could not change password: $($userToAction.SamAccountName)" -ForegroundColor Red
                 }
             }
             else {
@@ -837,16 +866,18 @@ Function Invoke-HelpdeskAction {
                 }              
   
                 try {
-                    Set-ADAccountPassword -Identity $userToAction -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "$userPassword" -Force) -Credential $helpdeskCredential  
-                    Set-ADUser -Identity $userToAction -Description "Password: $userPassword" -Credential $helpdeskCredential  
-  
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName, $userPassword -ScriptBlock {
+                        param($dn, $pwd)
+                        Set-ADAccountPassword -Identity $dn -Reset -NewPassword (ConvertTo-SecureString -AsPlainText $pwd -Force)
+                        Set-ADUser -Identity $dn -Description "Password: $pwd"
+                    }
                     if ($showAllActions -eq $True) {
-                        Write-Host "      + changed password and updated user description: $($userToAction.SamAccountName)"        
+                        Write-Host "      + changed password and updated user description: $($userToAction.SamAccountName)"
                     }
                 }
                 catch {
                     #not worth exiting
-                    Write-Host "      - could not set password in description: $($userToAction.SamAccountName)" -ForegroundColor Red                     
+                    Write-Host "      - could not set password in description: $($userToAction.SamAccountName)" -ForegroundColor Red
                 }
             }
             else {
@@ -867,14 +898,16 @@ Function Invoke-HelpdeskAction {
             } 
             
             try {
-                Add-ADGroupMember -Identity $pamGroup -Members $userToAction -Credential $helpdeskCredential
-  
-                Write-Host "    + added user: $($userToAction.SamAccountName) to $pamGroup"                          
+                Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $pamGroup, $userToAction.DistinguishedName -ScriptBlock {
+                    param($group, $userDN)
+                    Add-ADGroupMember -Identity $group -Members $userDN
+                }
+                Write-Host "    + added user: $($userToAction.SamAccountName) to $pamGroup"
             }
             catch {
                 #not worth exiting
-                Write-Host "    - could not add user: $($userToAction.SamAccountName) to $pamGroup" -ForegroundColor Red          
-            }                 
+                Write-Host "    - could not add user: $($userToAction.SamAccountName) to $pamGroup" -ForegroundColor Red
+            }
         }   
         #update description
         userUpdateDescription {
@@ -887,10 +920,12 @@ Function Invoke-HelpdeskAction {
                 }   
                 try {
                     $userToActionDescription = $userToAction.Description + ' I'
-                    $userToAction | Set-ADUser -Description $userToActionDescription -Credential $helpdeskCredential   
-  
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName, $userToActionDescription -ScriptBlock {
+                        param($dn, $desc)
+                        Set-ADUser -Identity $dn -Description $desc
+                    }
                     if ($showAllActions -eq $True) {
-                        Write-Host "      + changed description: $($userToAction.SamAccountName)"             
+                        Write-Host "      + changed description: $($userToAction.SamAccountName)"
                     }
                 }
                 catch {
@@ -926,9 +961,11 @@ Function Invoke-ServerAction {
                 }
   
                 try {
-                    Remove-ADComputer -Identity $computerToAction -Confirm:$False -Credential $serverCredential      
-                    
-                    if ($showAllActions -eq $True) {               
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serverCredential -ArgumentList $computerToAction.DistinguishedName -ScriptBlock {
+                        param($dn)
+                        Remove-ADComputer -Identity $dn -Confirm:$False
+                    }
+                    if ($showAllActions -eq $True) {
                         Write-Host "      + server deleted: $($computerToAction.Name)"
                     }
                 }
@@ -953,10 +990,12 @@ Function Invoke-ServerAction {
                 }
   
                 try {
-                    Set-ADComputer -Identity $computerToAction -Enabled $False -Credential $serverCredential 
-  
-                    if ($showAllActions -eq $True) { 
-                        Write-Host "      + server disabled: $($computerToAction.Name)"  
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serverCredential -ArgumentList $computerToAction.DistinguishedName -ScriptBlock {
+                        param($dn)
+                        Set-ADComputer -Identity $dn -Enabled $False
+                    }
+                    if ($showAllActions -eq $True) {
+                        Write-Host "      + server disabled: $($computerToAction.Name)"
                     }
                 }
                 catch {
@@ -980,10 +1019,12 @@ Function Invoke-ServerAction {
                 }
   
                 try {
-                    Set-ADComputer -Identity $computerToAction -Enabled $True -Credential $serverCredential 
-  
-                    if ($showAllActions -eq $True) { 
-                        Write-Host "      + server enabled: $($computerToAction.Name)"  
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serverCredential -ArgumentList $computerToAction.DistinguishedName -ScriptBlock {
+                        param($dn)
+                        Set-ADComputer -Identity $dn -Enabled $True
+                    }
+                    if ($showAllActions -eq $True) {
+                        Write-Host "      + server enabled: $($computerToAction.Name)"
                     }
                 }
                 catch {
@@ -1009,7 +1050,10 @@ Function Invoke-ServerAction {
             }
             catch {
                 try {
-                    New-ADOrganizationalUnit -Name $appName -Path $ouServers -Credential $serverCredential
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serverCredential -ArgumentList $appName, $ouServers -ScriptBlock {
+                        param($name, $path)
+                        New-ADOrganizationalUnit -Name $name -Path $path
+                    }
                 }
                 catch {
                     # OU may already exist or other error
@@ -1045,30 +1089,31 @@ Function Invoke-ServerAction {
             $computerDNS = "$computerName.$domainSuffix"
             
             try {
-                New-ADComputer -Name $computerName -SAMAccountName $computerName -DNSHostName $computerDNS -Path $ouAppPath -OperatingSystem $osVersion -Description "$appName $appEnvserver"                                                         
-                
+                Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serverCredential -ArgumentList $computerName, $computerDNS, $ouAppPath, $osVersion, "$appName $appEnvserver" -ScriptBlock {
+                    param($name, $dns, $path, $os, $desc)
+                    New-ADComputer -Name $name -SAMAccountName $name -DNSHostName $dns -Path $path -OperatingSystem $os -Description $desc
+                }
                 $serverGroup = "$appName-$appEnv-Servers"
-                
-                #sleep error
                 Start-Sleep -Milliseconds 500
-  
                 Write-Host "          + created server: $computerName"
             }
             catch {
-                Write-Host "          - server could not be created: $computerName" -ForegroundColor Red 
-  
+                Write-Host "          - server could not be created: $computerName" -ForegroundColor Red
                 if ($continueOnError -eq $false) {
-                    Write-Host "          - continue on error set to false, exiting" -ForegroundColor Red                    
-                    Exit         
+                    Write-Host "          - continue on error set to false, exiting" -ForegroundColor Red
+                    Exit
                 }
-            }            
+            }
 			
 			try {
 				Get-ADGroup -Identity $serverGroup -ErrorAction Stop | Out-Null
 			}
 			catch {
 				try {
-					New-ADGroup -Name $serverGroup -GroupScope Global -GroupCategory Security -Path $ouGroups -Credential $serverCredential
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serverCredential -ArgumentList $serverGroup, $ouGroups -ScriptBlock {
+                        param($groupName, $path)
+                        New-ADGroup -Name $groupName -GroupScope Global -GroupCategory Security -Path $path
+                    }
 				}
 				catch {
 					# Group may already exist or other error
@@ -1076,7 +1121,10 @@ Function Invoke-ServerAction {
 			}
 			
             try {
-                Add-ADGroupMember -Identity $serverGroup -Members "$computerName$"  
+                Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serverCredential -ArgumentList $serverGroup, $computerName -ScriptBlock {
+                    param($group, $name)
+                    Add-ADGroupMember -Identity $group -Members "$name$"
+                }
             }
             catch {
                 Write-Host "            - server could not be added to server group" -ForegroundColor Red
@@ -1084,35 +1132,37 @@ Function Invoke-ServerAction {
         }
         #add a member to a group
         groupNewMember {        
-            $groupToUpdate = Get-ADGroup -Filter { Name -like "*-Users" } -SearchBase $ouGroups
+            $groupToUpdate = Get-ADGroup -Filter { Name -like "*-Servers" } -SearchBase $ouGroups
   
   
             if ($null -ne $groupToUpdate) {
                 
                 $groupToUpdate = $GroupToUpdate | Get-Random 
   
-                $userToAction = $null
-                $userToAction = Get-ADUser -Filter * -SearchBase $ouEmployees #-SearchScope OneLevel
+                $serverToAction = $null
+                $serverToAction = Get-ADComputer -Filter * -SearchBase $ouServers
   
-                if ($null -ne $userToAction) {
-                    if ($userToAction.Count -gt 1) {
-                        $userToAction = $userToAction | Get-Random      
+                if ($null -ne $serverToAction) {
+                    if ($serverToAction.Count -gt 1) {
+                        $serverToAction = $serverToAction | Get-Random
                     }
                 
                     try {
-                        Add-ADGroupMember -Identity $groupToUpdate -Members $userToAction -Credential $serverCredential 
-  
+                        Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serverCredential -ArgumentList $groupToUpdate.DistinguishedName, $serverToAction.DistinguishedName -ScriptBlock {
+                            param($groupDN, $serverDN)
+                            Add-ADGroupMember -Identity $groupDN -Members $serverDN
+                        }
                         if ($showAllActions -eq $True) {
-                            Write-Host "      + added user: $($userToAction.SamAccountName) to $($groupToUpdate.Name)"
+                            Write-Host "      + added server: $($serverToAction.Name) to $($groupToUpdate.Name)"
                         }
                     }
                     catch {
                         #not worth exiting
-                        Write-Host "      - could not add:  $($userToAction.SamAccountName) to $($groupToUpdate.Name)" -ForegroundColor Red
+                        Write-Host "      - could not add:  $($serverToAction.Name) to $($groupToUpdate.Name)" -ForegroundColor Red
                     }
                 }
                 else {
-                    Write-Host "      ~ no users found" -ForegroundColor Yellow
+                    Write-Host "      ~ no servers found" -ForegroundColor Yellow
                 }                            
             }
             else {
@@ -1143,8 +1193,10 @@ Function Invoke-ServiceAccountAction {
                 $userIPPhone = "+" + (Get-Random -Minimum 123456789012 -Maximum 923456789012).ToString('00000')
   
                 try {
-                    $userToAction | Set-ADuser -Replace @{ipPhone = $userIPPhone } -Credential $serviceAccountCredential 
-  
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serviceAccountCredential -ArgumentList $userToAction.DistinguishedName, $userIPPhone -ScriptBlock {
+                        param($userDN, $phone)
+                        Set-ADUser -Identity $userDN -Replace @{ipPhone = $phone}
+                    }
                     if ($showAllActions -eq $True) {
                         Write-Host "    + svc-callmanager updated: $($userToAction.SamAccountName)"
                     }
@@ -1174,9 +1226,11 @@ Function Invoke-ServiceAccountAction {
                 $userToAction = $userToAction | Get-Random
   
                 try {
-                    $userToAction | Set-ADUser -Enabled $False -Credential $serviceAccountCredential 
-                    Move-ADObject -Identity $userToAction -TargetPath $ouEmployeesExpired -Credential $serviceAccountCredential
-                    
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serviceAccountCredential -ArgumentList $userToAction.DistinguishedName, $ouEmployeesExpired -ScriptBlock {
+                        param($userDN, $targetPath)
+                        Set-ADUser -Identity $userDN -Enabled $False
+                        Move-ADObject -Identity $userDN -TargetPath $targetPath
+                    }
                     if ($showAllActions -eq $True) {
                         Write-Host "    + svc-offboarding disabled: $($userToAction.SamAccountName)"
                     }
@@ -1206,14 +1260,16 @@ Function Invoke-ServiceAccountAction {
             } 
             
             try {
-                Add-ADGroupMember -Identity $pamGroup -Members $userToAction -Credential $serviceAccountCredential 
-  
-                Write-Host "    + svc-pam added user: $($userToAction.SamAccountName) to $pamGroup"                          
+                Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serviceAccountCredential -ArgumentList $pamGroup, $userToAction.DistinguishedName -ScriptBlock {
+                    param($group, $userDN)
+                    Add-ADGroupMember -Identity $group -Members $userDN
+                }
+                Write-Host "    + svc-pam added user: $($userToAction.SamAccountName) to $pamGroup"
             }
             catch {
                 #not worth exiting
-                Write-Host "    - svc-pam could not add user: $($userToAction.SamAccountName) to $pamGroup" -ForegroundColor Red          
-            }            
+                Write-Host "    - svc-pam could not add user: $($userToAction.SamAccountName) to $pamGroup" -ForegroundColor Red
+            }
         }          
     }
 }
@@ -1648,8 +1704,8 @@ $serviceAccounts.GetEnumerator() | ForEach-Object {
 $serviceAccountsWeighted = $serviceAccountsWeighted | Sort-Object {Get-Random}
   
 #start transript
-Start-Transcript -Path $fLogFile | Out-Null
-  
+if (-not $TestOnly) { Start-Transcript -Path $fLogFile | Out-Null }
+
 try {
     $domain = Get-ADDomain
     $domainDN = $domain.DistinguishedName
@@ -1659,25 +1715,27 @@ try {
 catch {
     Write-Host " - could not contain domain" -ForegroundColor Red
     Write-Host "Error: $($_.Exception.Message)"
-    Stop-Transcript
+    if (-not $TestOnly) { Stop-Transcript }
    # Exit
 }
-  
-Write-Host "=============================================================="
-Write-Host "                   Automated Lab Changer                      "
-Write-Host "                        $logFileDate                          "
-Write-Host "=============================================================="
-Write-Host "+ domain:   $domainSuffix"
-Write-Host "+ password: $passwordDefault"
-Write-Host ""
-Write-Host "+ max actions: $actionsMax"
-Write-Host "+ action wait: $actionsWait"
-Write-Host ""
-Write-Host "+ user data file: $offlineUserData"
-Write-Host "--------------------------------------------------------------"
-Write-Host "=============================================================="
-Write-Host "+ logfile:  $fLogFile"
-Write-Host "=============================================================="
+
+if (-not $TestOnly) {
+    Write-Host "=============================================================="
+    Write-Host "                   Automated Lab Changer                      "
+    Write-Host "                        $logFileDate                          "
+    Write-Host "=============================================================="
+    Write-Host "+ domain:   $domainSuffix"
+    Write-Host "+ password: $passwordDefault"
+    Write-Host ""
+    Write-Host "+ max actions: $actionsMax"
+    Write-Host "+ action wait: $actionsWait"
+    Write-Host ""
+    Write-Host "+ user data file: $offlineUserData"
+    Write-Host "--------------------------------------------------------------"
+    Write-Host "=============================================================="
+    Write-Host "+ logfile:  $fLogFile"
+    Write-Host "=============================================================="
+}
   
   
 if ($offlineUserData -ne "") {
@@ -1932,8 +1990,9 @@ $selectedDepartments = $departments
   
 $selectedEnterpriseApps = $enterpriseApps
   
-#loop through all changes and wait 
-1..$actionsMax| ForEach-Object {
+#loop through all changes and wait
+#set $TestOnly = $true before dot-sourcing to load functions/variables without running
+if (-not $TestOnly) { 1..$actionsMax| ForEach-Object {
   
     $actionDate = Get-Date -Format "yyyy-MM-dd_HH:MM:ss"
   
@@ -1973,6 +2032,6 @@ $selectedEnterpriseApps = $enterpriseApps
     Write-Host "--------------------------------------------------------------"
   
     Start-Sleep -Seconds $actionsWait
-}
-  
-Stop-Transcript
+} } #end if (-not $TestOnly)
+
+if (-not $TestOnly) { Stop-Transcript }
