@@ -251,6 +251,13 @@
       "weight": 1,
       "enabled": true,
       "description": "Set SPN on a server"
+    },
+    {
+      "role": "domainadmin",
+      "name": "gpoRegistryValue",
+      "weight": 1,
+      "enabled": true,
+      "description": "Modify a registry-based policy value in a designated lab GPO"
     }
   ]
 }

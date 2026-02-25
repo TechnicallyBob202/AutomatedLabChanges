@@ -644,10 +644,84 @@ Function Invoke-DomainAdminAction {
                     Write-Host "      - could not set SPN: $servicePrincipalName on $($computerToAction.Name)" -ForegroundColor Red
                 }
             }
-        }                
+        }
+        #gpo registry value - modifies a benign registry-based policy setting in a designated lab GPO
+        gpoRegistryValue {
+            $gpoSafeTargets = @("Servers - ALL - Blank", "Servers - ALL - Temporary")
+
+            # Harmless, cosmetic/UI-only registry settings - no security or stability impact
+            $safeRegistrySettings = @(
+                @{
+                    Key    = "HKLM\Software\Policies\Microsoft\Windows NT\Reliability"
+                    Name   = "ShutdownReasonUI"
+                    Type   = "DWord"
+                    Values = @(0, 1)
+                },
+                @{
+                    Key    = "HKLM\Software\Policies\Microsoft\Windows\Explorer"
+                    Name   = "ShowRunAsDifferentUserInStart"
+                    Type   = "DWord"
+                    Values = @(0, 1)
+                },
+                @{
+                    Key    = "HKLM\Software\Policies\Microsoft\Windows\System"
+                    Name   = "DisplayLastLogonInfo"
+                    Type   = "DWord"
+                    Values = @(0, 1)
+                },
+                @{
+                    Key    = "HKLM\Software\Policies\Microsoft\Windows\CredUI"
+                    Name   = "EnumerateAdministrators"
+                    Type   = "DWord"
+                    Values = @(0, 1)
+                }
+            )
+
+            $gpoTarget = $null
+            foreach ($gpoName in ($gpoSafeTargets | Sort-Object { Get-Random })) {
+                try {
+                    $gpoCheck = Get-GPO -Name $gpoName -ErrorAction SilentlyContinue
+                    if ($null -ne $gpoCheck) {
+                        $gpoTarget = $gpoCheck
+                        break
+                    }
+                }
+                catch { }
+            }
+
+            if ($null -ne $gpoTarget) {
+                $setting = $safeRegistrySettings | Get-Random
+                $value = $setting.Values | Get-Random
+
+                $result = $null
+                $result = Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $domainAdminCredential `
+                    -ArgumentList $gpoTarget.DisplayName, $setting.Key, $setting.Name, $setting.Type, $value -ScriptBlock {
+                        param($gpoName, $regKey, $regName, $regType, $regValue)
+                        try {
+                            Set-GPRegistryValue -Name $gpoName -Key $regKey -ValueName $regName -Type $regType -Value $regValue | Out-Null
+                            return $true
+                        }
+                        catch {
+                            return $false
+                        }
+                    }
+
+                if ($result -eq $true) {
+                    if ($showAllActions -eq $true) {
+                        Write-Host "      + modified gpo registry value: $($gpoTarget.DisplayName) [$($setting.Name) = $value]"
+                    }
+                }
+                elseif ($result -eq $false) {
+                    Write-Host "      - could not modify gpo registry value: $($gpoTarget.DisplayName)" -ForegroundColor Red
+                }
+            }
+            else {
+                Write-Host "      ~ no target GPO found for registry modification" -ForegroundColor Yellow
+            }
+        }
     }
 }
-  
+
 Function Invoke-HelpdeskAction {
     param(
         [string]$helpdeskAction
@@ -1635,6 +1709,7 @@ $domainAdminActions.Add('gpoLinkRemove','2')
 $domainAdminActions.Add('gpoNew','1')
 $domainAdminActions.Add('newSubnet','1')
 $domainAdminActions.Add('setServerSPN','1')
+$domainAdminActions.Add('gpoRegistryValue','1')
   
   
 #assign weights to roles and actions
