@@ -2,7 +2,9 @@
 # Dot-sources the script to load all functions and variables, without running the main loop.
 # Uncomment the action(s) you want to test and run this script.
 
+Write-Host "DEBUG: starting dot-source..."
 . "$PSScriptRoot\Invoke-AutomatedLabChanges.ps1" -TestOnly
+Write-Host "DEBUG: dot-source complete, running actions..."
 
 # ---------------------------------------------------------------------------
 # Invoke-ServiceAccountAction
