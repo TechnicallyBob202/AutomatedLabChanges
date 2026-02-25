@@ -1,0 +1,35 @@
+{
+  "logging": {
+    "logFilePath": "./logs",
+    "logFileName": "AutomatedLab-Changes-{date}.log",
+    "showAllActions": true
+  },
+  "domain": {
+    "baseName": "_SemperisDSP"
+  },
+  "credentials": {
+    "passwordDefault": "superSECURE!",
+    "continueOnError": false
+  },
+  "userData": {
+    "offlineDataPath": "C:\\ProgramData\\Semperis_Community\\AutomatedLabChanges\\Real-ADUser-Data-5000.json",
+    "countryCode": "GB,IE,NZ,US"
+  },
+  "features": {
+    "validateRequired": [
+      "GPMC",
+      "RSAT-DNS-Server"
+    ],
+    "performFeatureCheck": false
+  },
+  "normalMode": {
+    "enabled": true,
+    "maxActions": 240,
+    "delayBetweenActions": 150
+  },
+  "testMode": {
+    "enabled": false,
+    "actionCount": 1,
+    "delayBetweenActions": 2
+  }
+}

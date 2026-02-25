@@ -1,0 +1,256 @@
+{
+  "actions": [
+    {
+      "role": "desktop",
+      "name": "computerNew",
+      "weight": 5,
+      "enabled": true,
+      "description": "Create new workstation of random type"
+    },
+    {
+      "role": "desktop",
+      "name": "updateDepartmentGroup",
+      "weight": 4,
+      "enabled": true,
+      "description": "Move user to different department and update attributes"
+    },
+    {
+      "role": "desktop",
+      "name": "computerDisable",
+      "weight": 3,
+      "enabled": true,
+      "description": "Disable a workstation and move to expired OU"
+    },
+    {
+      "role": "desktop",
+      "name": "computerEnable",
+      "weight": 3,
+      "enabled": true,
+      "description": "Re-enable a disabled workstation"
+    },
+    {
+      "role": "desktop",
+      "name": "computerDelete",
+      "weight": 1,
+      "enabled": true,
+      "description": "Delete a workstation from AD"
+    },
+    {
+      "role": "desktop",
+      "name": "userDisable",
+      "weight": 2,
+      "enabled": true,
+      "description": "Disable a user and move to expired OU"
+    },
+    {
+      "role": "desktop",
+      "name": "userNew",
+      "weight": 1,
+      "enabled": true,
+      "description": "Create new user account"
+    },
+    {
+      "role": "desktop",
+      "name": "userNewDesEncryption",
+      "weight": 1,
+      "enabled": true,
+      "description": "Create user with DES encryption enabled"
+    },
+    {
+      "role": "desktop",
+      "name": "userNewReversibleEncryption",
+      "weight": 1,
+      "enabled": true,
+      "description": "Create user with reversible encryption enabled"
+    },
+    {
+      "role": "desktop",
+      "name": "userNewPasswordNotRequired",
+      "weight": 1,
+      "enabled": true,
+      "description": "Create user with password not required flag"
+    },
+    {
+      "role": "helpdesk",
+      "name": "passwordReset",
+      "weight": 5,
+      "enabled": true,
+      "description": "Reset user password"
+    },
+    {
+      "role": "helpdesk",
+      "name": "passwordResetInDescription",
+      "weight": 1,
+      "enabled": true,
+      "description": "Reset password and store in user description (risky!)"
+    },
+    {
+      "role": "helpdesk",
+      "name": "userEnable",
+      "weight": 1,
+      "enabled": true,
+      "description": "Re-enable a disabled user"
+    },
+    {
+      "role": "helpdesk",
+      "name": "userDisable",
+      "weight": 3,
+      "enabled": true,
+      "description": "Disable a user"
+    },
+    {
+      "role": "helpdesk",
+      "name": "computerEnable",
+      "weight": 2,
+      "enabled": true,
+      "description": "Re-enable a disabled workstation"
+    },
+    {
+      "role": "helpdesk",
+      "name": "computerDisable",
+      "weight": 3,
+      "enabled": true,
+      "description": "Disable a workstation"
+    },
+    {
+      "role": "helpdesk",
+      "name": "passwordAbnormalRefresh",
+      "weight": 1,
+      "enabled": true,
+      "description": "Set and immediately unset force password change flag"
+    },
+    {
+      "role": "helpdesk",
+      "name": "passwordAtNextLogon",
+      "weight": 2,
+      "enabled": true,
+      "description": "Force user to change password at next logon"
+    },
+    {
+      "role": "helpdesk",
+      "name": "updateConfidentialGroup",
+      "weight": 1,
+      "enabled": true,
+      "description": "Add user to random TLP classification group"
+    },
+    {
+      "role": "helpdesk",
+      "name": "userUpdateDescription",
+      "weight": 1,
+      "enabled": true,
+      "description": "Append character to user description"
+    },
+    {
+      "role": "server",
+      "name": "computerNew",
+      "weight": 5,
+      "enabled": true,
+      "description": "Create new server based on enterprise app"
+    },
+    {
+      "role": "server",
+      "name": "groupNewMember",
+      "weight": 4,
+      "enabled": true,
+      "description": "Add user to application group"
+    },
+    {
+      "role": "server",
+      "name": "computerEnable",
+      "weight": 3,
+      "enabled": true,
+      "description": "Re-enable a disabled server"
+    },
+    {
+      "role": "server",
+      "name": "computerDisable",
+      "weight": 3,
+      "enabled": true,
+      "description": "Disable a server"
+    },
+    {
+      "role": "server",
+      "name": "computerDelete",
+      "weight": 1,
+      "enabled": true,
+      "description": "Delete a server from AD"
+    },
+    {
+      "role": "service",
+      "name": "svc-onboarding",
+      "weight": 4,
+      "enabled": true,
+      "description": "Create new user account (via service account)"
+    },
+    {
+      "role": "service",
+      "name": "svc-callmanager",
+      "weight": 3,
+      "enabled": true,
+      "description": "Update user phone field"
+    },
+    {
+      "role": "service",
+      "name": "svc-offboarding",
+      "weight": 2,
+      "enabled": true,
+      "description": "Disable user and move to expired OU"
+    },
+    {
+      "role": "service",
+      "name": "svc-pam",
+      "weight": 2,
+      "enabled": true,
+      "description": "Add user to PAM/TLP classification group"
+    },
+    {
+      "role": "domainadmin",
+      "name": "dnsRecordAdd",
+      "weight": 3,
+      "enabled": true,
+      "description": "Create random DNS A record"
+    },
+    {
+      "role": "domainadmin",
+      "name": "dnsRecordDelete",
+      "weight": 2,
+      "enabled": true,
+      "description": "Delete a DNS A record"
+    },
+    {
+      "role": "domainadmin",
+      "name": "gpoLink",
+      "weight": 2,
+      "enabled": true,
+      "description": "Link GPO to OU"
+    },
+    {
+      "role": "domainadmin",
+      "name": "gpoLinkRemove",
+      "weight": 2,
+      "enabled": true,
+      "description": "Remove GPO link from OU"
+    },
+    {
+      "role": "domainadmin",
+      "name": "gpoNew",
+      "weight": 1,
+      "enabled": true,
+      "description": "Create new GPO"
+    },
+    {
+      "role": "domainadmin",
+      "name": "newSubnet",
+      "weight": 1,
+      "enabled": true,
+      "description": "Create new AD replication subnet"
+    },
+    {
+      "role": "domainadmin",
+      "name": "setServerSPN",
+      "weight": 1,
+      "enabled": true,
+      "description": "Set SPN on a server"
+    }
+  ]
+}
