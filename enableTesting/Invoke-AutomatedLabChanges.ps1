@@ -1050,11 +1050,11 @@ Function Invoke-ServerAction {
             }
             catch {
                 try {
-                    New-ADOrganizationalUnit -Name $appName -Path $ouServers -Credential $serverCredential
                     Invoke-Command -ComputerName $dcName -Credential $serverCredential -ArgumentList $appName, $ouServers -ScriptBlock {
                         param($name, $path)
                         New-ADOrganizationalUnit -Name $name -Path $path
                     }
+                }
                 catch {
                     # OU may already exist or other error
                 }
@@ -1110,11 +1110,11 @@ Function Invoke-ServerAction {
 			}
 			catch {
 				try {
-					New-ADGroup -Name $serverGroup -GroupScope Global -GroupCategory Security -Path $ouGroups -Credential $serverCredential
                     Invoke-Command -ComputerName $dcName -Credential $serverCredential -ArgumentList $serverGroup, $ouGroups -ScriptBlock {
                         param($groupName, $path)
                         New-ADGroup -Name $groupName -GroupScope Global -GroupCategory Security -Path $path
                     }
+				}
 				catch {
 					# Group may already exist or other error
 				}
