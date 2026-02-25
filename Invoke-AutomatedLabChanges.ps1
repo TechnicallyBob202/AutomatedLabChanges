@@ -346,12 +346,10 @@ Function Invoke-DomainAdminAction {
             }
             
             $dnsRecordCheck = $null
-  
-            try {    
-                $dnsRecordCheck = Get-DnsServerResourceRecord -Name $dnsRecordToCreate -ZoneName $domainSuffix -WarningAction SilentlyContinue -ErrorAction SilentlyContinue                    
-            }
-            catch {
-                $dnsRecordCheck = $null
+
+            $dnsRecordCheck = Invoke-Command -ComputerName $dcName -Credential $domainAdminCredential -ArgumentList $dnsRecordToCreate, $domainSuffix -ScriptBlock {
+                param($name, $zone)
+                Get-DnsServerResourceRecord -Name $name -ZoneName $zone -RRType A -ErrorAction SilentlyContinue
             }
   
             #create the dns record
@@ -1149,14 +1147,13 @@ Function Invoke-ServerAction {
             while ($match) {
                 $suffix = "{0:D3}" -f $i
                 $computerName = "$appCode$appEnv$suffix"
-  
-                try {
-                    Get-ADComputer -Identity $computerName | Out-Null
-                    $match = $true
+
+                $existing = Get-ADComputer -Filter "Name -eq '$computerName'" -ErrorAction SilentlyContinue
+                if ($null -ne $existing) {
                     $i++
                 }
-                catch {
-                    $match = $false   
+                else {
+                    $match = $false
                 }
             }
   
