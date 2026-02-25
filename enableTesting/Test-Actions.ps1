@@ -2,8 +2,7 @@
 # Dot-sources the script to load all functions and variables, without running the main loop.
 # Uncomment the action(s) you want to test and run this script.
 
-$TestOnly = $true
-. "$PSScriptRoot\Invoke-AutomatedLabChanges.ps1"
+. "$PSScriptRoot\Invoke-AutomatedLabChanges.ps1" -TestOnly
 
 # ---------------------------------------------------------------------------
 # Invoke-ServiceAccountAction

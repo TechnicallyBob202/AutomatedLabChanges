@@ -1,3 +1,5 @@
+param([switch]$TestOnly)
+
 $domainBase = "_SemperisDSP"
   
 #only used if online
