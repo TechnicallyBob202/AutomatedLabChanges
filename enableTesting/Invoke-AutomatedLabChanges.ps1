@@ -620,7 +620,8 @@ Function Invoke-DomainAdminAction {
                     $computerToAction = $computerToAction | Get-Random
                 }   
                 try {
-                    $servicePrincipalName = $servicePrincipalName + '/' + $computerToAction.DNSHostName
+                    $dnsHostName = if ($computerToAction.DNSHostName) { $computerToAction.DNSHostName } else { "$($computerToAction.Name).$domainSuffix" }
+                    $servicePrincipalName = $servicePrincipalName + '/' + $dnsHostName
                     Set-ADComputer -Identity $computerToAction -ServicePrincipalNames @{Add = "$servicePrincipalName" } -Credential $domainAdminCredential
                     
                     Write-Host "      + set SPN: $servicePrincipalName on $($computerToAction.Name)"                    

@@ -28,12 +28,12 @@
 # ---------------------------------------------------------------------------
 # Invoke-DomainAdminAction
 # ---------------------------------------------------------------------------
-Invoke-DomainAdminAction -domainAdminAction "dnsRecordAdd"
-Invoke-DomainAdminAction -domainAdminAction "dnsRecordDelete"
-Invoke-DomainAdminAction -domainAdminAction "gpoLink"
-Invoke-DomainAdminAction -domainAdminAction "gpoNew"
-Invoke-DomainAdminAction -domainAdminAction "gpoLinkRemove"
-Invoke-DomainAdminAction -domainAdminAction "newSubnet"
+#Invoke-DomainAdminAction -domainAdminAction "dnsRecordAdd"
+#Invoke-DomainAdminAction -domainAdminAction "dnsRecordDelete"
+#Invoke-DomainAdminAction -domainAdminAction "gpoLink"
+#Invoke-DomainAdminAction -domainAdminAction "gpoNew"
+#Invoke-DomainAdminAction -domainAdminAction "gpoLinkRemove"
+#Invoke-DomainAdminAction -domainAdminAction "newSubnet"
 Invoke-DomainAdminAction -domainAdminAction "setServerSPN"
 
 # ---------------------------------------------------------------------------
