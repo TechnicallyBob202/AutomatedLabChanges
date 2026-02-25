@@ -57,4 +57,4 @@
 #Invoke-ServerAction -serverAction "computerDisable"
 #Invoke-ServerAction -serverAction "computerEnable"
 #Invoke-ServerAction -serverAction "computerNew"
-Invoke-ServerAction -serverAction "groupNewMember"
+#Invoke-ServerAction -serverAction "groupNewMember"
