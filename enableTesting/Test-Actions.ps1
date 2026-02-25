@@ -8,10 +8,10 @@ $TestOnly = $true
 # ---------------------------------------------------------------------------
 # Invoke-ServiceAccountAction
 # ---------------------------------------------------------------------------
-# Invoke-ServiceAccountAction -serviceAccount "svc-callmanager"
-# Invoke-ServiceAccountAction -serviceAccount "svc-offboarding"
-# Invoke-ServiceAccountAction -serviceAccount "svc-onboarding"
-# Invoke-ServiceAccountAction -serviceAccount "svc-pam"
+Invoke-ServiceAccountAction -serviceAccount "svc-callmanager"
+Invoke-ServiceAccountAction -serviceAccount "svc-offboarding"
+Invoke-ServiceAccountAction -serviceAccount "svc-onboarding"
+Invoke-ServiceAccountAction -serviceAccount "svc-pam"
 
 # ---------------------------------------------------------------------------
 # Invoke-DesktopAction
