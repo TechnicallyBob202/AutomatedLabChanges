@@ -1087,7 +1087,7 @@ Function Invoke-ServerAction {
         }
         #add a member to a group
         groupNewMember {        
-            $groupToUpdate = Get-ADGroup -Filter { Name -like "*-Users" } -SearchBase $ouGroups
+            $groupToUpdate = Get-ADGroup -Filter { Name -like "*-Servers" } -SearchBase $ouGroups
   
   
             if ($null -ne $groupToUpdate) {
