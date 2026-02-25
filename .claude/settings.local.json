@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(powershell -Command \"& { $null = [System.Management.Automation.Language.Parser]::ParseFile\\(''c:\\\\GitHub\\\\AutomatedLabChanges\\\\enableTesting\\\\Invoke-AutomatedLabChanges.ps1'', [ref]$null, [ref]$errors\\); if \\($errors.Count -eq 0\\) { ''No parse errors'' } else { $errors | ForEach-Object { $_.ToString\\(\\) } } }\")",
-      "Bash(powershell -File \"c:/GitHub/AutomatedLabChanges/enableTesting/check-parse.ps1\")"
+      "Bash(powershell -File \"c:/GitHub/AutomatedLabChanges/enableTesting/check-parse.ps1\")",
+      "Bash(powershell -File \"c:/GitHub/AutomatedLabChanges/enableTesting/fix-erroraction.ps1\")"
     ]
   }
 }

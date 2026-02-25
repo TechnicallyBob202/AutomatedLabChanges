@@ -48,7 +48,7 @@ param(
                 }
   
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $desktopCredential -ArgumentList $computerToAction.DistinguishedName -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $desktopCredential -ArgumentList $computerToAction.DistinguishedName -ScriptBlock {
                         param($dn)
                         Remove-ADComputer -Identity $dn -Confirm:$false
                     }
@@ -76,7 +76,7 @@ param(
                 }
   
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $desktopCredential -ArgumentList $computerToAction.DistinguishedName, $ouWorkstationsExpired -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $desktopCredential -ArgumentList $computerToAction.DistinguishedName, $ouWorkstationsExpired -ScriptBlock {
                         param($dn, $targetPath)
                         Set-ADComputer -Identity $dn -Enabled $False
                         Move-ADObject -Identity $dn -TargetPath $targetPath
@@ -130,7 +130,7 @@ param(
             $computerOSVersion = "10.0 (22621)"
   
             try {
-                Invoke-Command -ComputerName $dcName -Credential $desktopCredential -ArgumentList $computerName, $computerDNS, $computerOS, $computerOSVersion, $ouWorkstationTarget -ScriptBlock {
+                Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $desktopCredential -ArgumentList $computerName, $computerDNS, $computerOS, $computerOSVersion, $ouWorkstationTarget -ScriptBlock {
                     param($name, $dns, $os, $osVer, $path)
                     New-ADComputer -Name $name -DNSHostName $dns -Description $dns -OperatingSystem $os -OperatingSystemVersion $osVer -Enabled $true -Path $path
                 }
@@ -194,7 +194,7 @@ param(
                 }
   
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $desktopCredential -ArgumentList $userToAction.DistinguishedName, $ouEmployeesExpired -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $desktopCredential -ArgumentList $userToAction.DistinguishedName, $ouEmployeesExpired -ScriptBlock {
                         param($dn, $targetPath)
                         Set-ADUser -Identity $dn -Enabled $False
                         Move-ADObject -Identity $dn -TargetPath $targetPath
@@ -236,7 +236,7 @@ param(
                     if ($group.Name -like "$($uUser.Department)*") {
   
                         try {
-                            Invoke-Command -ComputerName $dcName -Credential $desktopCredential -ArgumentList $group.Name, $uUser.DistinguishedName -ScriptBlock {
+                            Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $desktopCredential -ArgumentList $group.Name, $uUser.DistinguishedName -ScriptBlock {
                                 param($groupName, $userDN)
                                 Remove-ADGroupMember -Identity $groupName -Members $userDN -Confirm:$false
                             }
@@ -253,7 +253,7 @@ param(
                 }
   
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $desktopCredential -ArgumentList $uUser.DistinguishedName, $uJobTitle, $uDepartmentName -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $desktopCredential -ArgumentList $uUser.DistinguishedName, $uJobTitle, $uDepartmentName -ScriptBlock {
                         param($dn, $title, $dept)
                         Set-ADUser -Identity $dn -Title $title -Department $dept -Description $title
                     }
@@ -270,7 +270,7 @@ param(
                 }
   
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $desktopCredential -ArgumentList $deptRoleGroupName, $uUser.DistinguishedName -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $desktopCredential -ArgumentList $deptRoleGroupName, $uUser.DistinguishedName -ScriptBlock {
                         param($group, $userDN)
                         Add-ADGroupMember -Identity $group -Members $userDN
                     }
@@ -359,7 +359,7 @@ Function Invoke-DomainAdminAction {
   
                 Write-Host "      + creating dns record: $dnsRecordToCreate"
   
-                $result = Invoke-Command -ComputerName $dcName -ArgumentList $dnsRecordToCreate, $domainSuffix -Credential $domainAdminCredential -ScriptBlock {
+                $result = Invoke-Command -ComputerName $dcName -ErrorAction Stop -ArgumentList $dnsRecordToCreate, $domainSuffix -Credential $domainAdminCredential -ScriptBlock {
   
                     $dnsRecordToCreate = $args[0]
                     $domainSuffix = $args[1]
@@ -443,7 +443,7 @@ Function Invoke-DomainAdminAction {
             }
                         
             if ($null -ne $dnsRecordCheck) {
-                $result = Invoke-Command -ComputerName $dcName -ArgumentList $dnsRecordToDelete, $domainSuffix -Credential $domainAdminCredential -ScriptBlock {
+                $result = Invoke-Command -ComputerName $dcName -ErrorAction Stop -ArgumentList $dnsRecordToDelete, $domainSuffix -Credential $domainAdminCredential -ScriptBlock {
                     
                     $dnsRecordToDelete = $args[0]
                     $domainSuffix = $args[1]                                        
@@ -493,7 +493,7 @@ Function Invoke-DomainAdminAction {
   
                 $result = @()
                 
-                $result = Invoke-Command -ComputerName $dcName -Credential $domainAdminCredential -ArgumentList $ouServers, $gpoServerNL -ScriptBlock {
+                $result = Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $domainAdminCredential -ArgumentList $ouServers, $gpoServerNL -ScriptBlock {
                     $ouServers = $args[0]
                     $gpoServerNL = $args[1]
   
@@ -536,7 +536,7 @@ Function Invoke-DomainAdminAction {
               
                 if ($null -eq $gpoCheck) {    
                     $result = $null
-                    $result = Invoke-Command -ComputerName $dcName -ArgumentList $gpoName -Credential $domainAdminCredential -ScriptBlock {
+                    $result = Invoke-Command -ComputerName $dcName -ErrorAction Stop -ArgumentList $gpoName -Credential $domainAdminCredential -ScriptBlock {
                         try {
                             $gpoName = $args[0]
                             New-GPO -Name $gpoName -Comment $gpoName | Out-Null       
@@ -575,7 +575,7 @@ Function Invoke-DomainAdminAction {
                 }
                               
                 $result = $null
-                $result = Invoke-Command -ComputerName $dcName -Credential $domainAdminCredential -ArgumentList $ouServers, $gpoServerLinked -ScriptBlock {
+                $result = Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $domainAdminCredential -ArgumentList $ouServers, $gpoServerLinked -ScriptBlock {
                     $ouServers = $args[0]
                     $gpoServerLinked = $args[1]
   
@@ -606,7 +606,7 @@ Function Invoke-DomainAdminAction {
                 (Get-Random -Minimum 1 -Maximum 254)
                 $randomIpNetmask = $randomIP -replace "\d{1,3}$", "0/24"
                 $randomIpNetmaskLocation = "Subnet: $randomIpNetmask"
-                Invoke-Command -ComputerName $dcName -Credential $domainAdminCredential -ArgumentList $randomIpNetmask, $randomIpNetmaskLocation -ScriptBlock {
+                Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $domainAdminCredential -ArgumentList $randomIpNetmask, $randomIpNetmaskLocation -ScriptBlock {
                     param($subnet, $location)
                     New-ADReplicationSubnet -Name $subnet -Location $location
                 }
@@ -633,7 +633,7 @@ Function Invoke-DomainAdminAction {
                 try {
                     $dnsHostName = if ($computerToAction.DNSHostName) { $computerToAction.DNSHostName } else { "$($computerToAction.Name).$domainSuffix" }
                     $servicePrincipalName = $servicePrincipalName + '/' + $dnsHostName
-                    Invoke-Command -ComputerName $dcName -Credential $domainAdminCredential -ArgumentList $computerToAction.DistinguishedName, $servicePrincipalName -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $domainAdminCredential -ArgumentList $computerToAction.DistinguishedName, $servicePrincipalName -ScriptBlock {
                         param($dn, $spn)
                         Set-ADComputer -Identity $dn -ServicePrincipalNames @{Add = $spn}
                     }
@@ -668,7 +668,7 @@ Function Invoke-HelpdeskAction {
                 }
                                 
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName -ScriptBlock {
                         param($dn)
                         Set-ADUser -Identity $dn -Enabled $False
                     }
@@ -695,7 +695,7 @@ Function Invoke-HelpdeskAction {
                     $userToAction = $userToAction | Get-Random
                 }
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName -ScriptBlock {
                         param($dn)
                         Set-ADUser -Identity $dn -Enabled $True
                     }
@@ -723,7 +723,7 @@ Function Invoke-HelpdeskAction {
                 }
   
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $helpdeskCredential -ArgumentList $computerToAction.DistinguishedName -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $computerToAction.DistinguishedName -ScriptBlock {
                         param($dn)
                         Set-ADComputer -Identity $dn -Enabled $False
                     }
@@ -751,7 +751,7 @@ Function Invoke-HelpdeskAction {
                 }
   
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $helpdeskCredential -ArgumentList $computerToAction.DistinguishedName -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $computerToAction.DistinguishedName -ScriptBlock {
                         param($dn)
                         Set-ADComputer -Identity $dn -Enabled $True
                     }
@@ -779,7 +779,7 @@ Function Invoke-HelpdeskAction {
                 }                
                 
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName -ScriptBlock {
                         param($dn)
                         Set-ADUser -Identity $dn -ChangePasswordAtLogon $True
                         Start-Sleep -Seconds 10
@@ -807,7 +807,7 @@ Function Invoke-HelpdeskAction {
                 }                
                 
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName -ScriptBlock {
                         param($dn)
                         Set-ADUser -Identity $dn -ChangePasswordAtLogon $True
                     }
@@ -836,7 +836,7 @@ Function Invoke-HelpdeskAction {
                 }              
   
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName, $userPassword -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName, $userPassword -ScriptBlock {
                         param($dn, $pwd)
                         Set-ADAccountPassword -Identity $dn -Reset -NewPassword (ConvertTo-SecureString -AsPlainText $pwd -Force)
                     }
@@ -866,7 +866,7 @@ Function Invoke-HelpdeskAction {
                 }              
   
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName, $userPassword -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName, $userPassword -ScriptBlock {
                         param($dn, $pwd)
                         Set-ADAccountPassword -Identity $dn -Reset -NewPassword (ConvertTo-SecureString -AsPlainText $pwd -Force)
                         Set-ADUser -Identity $dn -Description "Password: $pwd"
@@ -898,7 +898,7 @@ Function Invoke-HelpdeskAction {
             } 
             
             try {
-                Invoke-Command -ComputerName $dcName -Credential $helpdeskCredential -ArgumentList $pamGroup, $userToAction.DistinguishedName -ScriptBlock {
+                Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $pamGroup, $userToAction.DistinguishedName -ScriptBlock {
                     param($group, $userDN)
                     Add-ADGroupMember -Identity $group -Members $userDN
                 }
@@ -920,7 +920,7 @@ Function Invoke-HelpdeskAction {
                 }   
                 try {
                     $userToActionDescription = $userToAction.Description + ' I'
-                    Invoke-Command -ComputerName $dcName -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName, $userToActionDescription -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $helpdeskCredential -ArgumentList $userToAction.DistinguishedName, $userToActionDescription -ScriptBlock {
                         param($dn, $desc)
                         Set-ADUser -Identity $dn -Description $desc
                     }
@@ -961,7 +961,7 @@ Function Invoke-ServerAction {
                 }
   
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $serverCredential -ArgumentList $computerToAction.DistinguishedName -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serverCredential -ArgumentList $computerToAction.DistinguishedName -ScriptBlock {
                         param($dn)
                         Remove-ADComputer -Identity $dn -Confirm:$False
                     }
@@ -990,7 +990,7 @@ Function Invoke-ServerAction {
                 }
   
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $serverCredential -ArgumentList $computerToAction.DistinguishedName -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serverCredential -ArgumentList $computerToAction.DistinguishedName -ScriptBlock {
                         param($dn)
                         Set-ADComputer -Identity $dn -Enabled $False
                     }
@@ -1019,7 +1019,7 @@ Function Invoke-ServerAction {
                 }
   
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $serverCredential -ArgumentList $computerToAction.DistinguishedName -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serverCredential -ArgumentList $computerToAction.DistinguishedName -ScriptBlock {
                         param($dn)
                         Set-ADComputer -Identity $dn -Enabled $True
                     }
@@ -1050,7 +1050,7 @@ Function Invoke-ServerAction {
             }
             catch {
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $serverCredential -ArgumentList $appName, $ouServers -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serverCredential -ArgumentList $appName, $ouServers -ScriptBlock {
                         param($name, $path)
                         New-ADOrganizationalUnit -Name $name -Path $path
                     }
@@ -1089,7 +1089,7 @@ Function Invoke-ServerAction {
             $computerDNS = "$computerName.$domainSuffix"
             
             try {
-                Invoke-Command -ComputerName $dcName -Credential $serverCredential -ArgumentList $computerName, $computerDNS, $ouAppPath, $osVersion, "$appName $appEnvserver" -ScriptBlock {
+                Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serverCredential -ArgumentList $computerName, $computerDNS, $ouAppPath, $osVersion, "$appName $appEnvserver" -ScriptBlock {
                     param($name, $dns, $path, $os, $desc)
                     New-ADComputer -Name $name -SAMAccountName $name -DNSHostName $dns -Path $path -OperatingSystem $os -Description $desc
                 }
@@ -1110,7 +1110,7 @@ Function Invoke-ServerAction {
 			}
 			catch {
 				try {
-                    Invoke-Command -ComputerName $dcName -Credential $serverCredential -ArgumentList $serverGroup, $ouGroups -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serverCredential -ArgumentList $serverGroup, $ouGroups -ScriptBlock {
                         param($groupName, $path)
                         New-ADGroup -Name $groupName -GroupScope Global -GroupCategory Security -Path $path
                     }
@@ -1121,7 +1121,7 @@ Function Invoke-ServerAction {
 			}
 			
             try {
-                Invoke-Command -ComputerName $dcName -Credential $serverCredential -ArgumentList $serverGroup, $computerName -ScriptBlock {
+                Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serverCredential -ArgumentList $serverGroup, $computerName -ScriptBlock {
                     param($group, $name)
                     Add-ADGroupMember -Identity $group -Members "$name$"
                 }
@@ -1148,7 +1148,7 @@ Function Invoke-ServerAction {
                     }
                 
                     try {
-                        Invoke-Command -ComputerName $dcName -Credential $serverCredential -ArgumentList $groupToUpdate.DistinguishedName, $serverToAction.DistinguishedName -ScriptBlock {
+                        Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serverCredential -ArgumentList $groupToUpdate.DistinguishedName, $serverToAction.DistinguishedName -ScriptBlock {
                             param($groupDN, $serverDN)
                             Add-ADGroupMember -Identity $groupDN -Members $serverDN
                         }
@@ -1193,7 +1193,7 @@ Function Invoke-ServiceAccountAction {
                 $userIPPhone = "+" + (Get-Random -Minimum 123456789012 -Maximum 923456789012).ToString('00000')
   
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $serviceAccountCredential -ArgumentList $userToAction.DistinguishedName, $userIPPhone -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serviceAccountCredential -ArgumentList $userToAction.DistinguishedName, $userIPPhone -ScriptBlock {
                         param($userDN, $phone)
                         Set-ADUser -Identity $userDN -Replace @{ipPhone = $phone}
                     }
@@ -1226,7 +1226,7 @@ Function Invoke-ServiceAccountAction {
                 $userToAction = $userToAction | Get-Random
   
                 try {
-                    Invoke-Command -ComputerName $dcName -Credential $serviceAccountCredential -ArgumentList $userToAction.DistinguishedName, $ouEmployeesExpired -ScriptBlock {
+                    Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serviceAccountCredential -ArgumentList $userToAction.DistinguishedName, $ouEmployeesExpired -ScriptBlock {
                         param($userDN, $targetPath)
                         Set-ADUser -Identity $userDN -Enabled $False
                         Move-ADObject -Identity $userDN -TargetPath $targetPath
@@ -1260,7 +1260,7 @@ Function Invoke-ServiceAccountAction {
             } 
             
             try {
-                Invoke-Command -ComputerName $dcName -Credential $serviceAccountCredential -ArgumentList $pamGroup, $userToAction.DistinguishedName -ScriptBlock {
+                Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $serviceAccountCredential -ArgumentList $pamGroup, $userToAction.DistinguishedName -ScriptBlock {
                     param($group, $userDN)
                     Add-ADGroupMember -Identity $group -Members $userDN
                 }
