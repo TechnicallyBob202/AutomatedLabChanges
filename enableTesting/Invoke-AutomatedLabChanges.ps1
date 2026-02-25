@@ -1980,4 +1980,4 @@ if (-not $TestOnly) { 1..$actionsMax| ForEach-Object {
     Start-Sleep -Seconds $actionsWait
 } } #end if (-not $TestOnly)
 
-Stop-Transcript
+if (-not $TestOnly) { Stop-Transcript }
