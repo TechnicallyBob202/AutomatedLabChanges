@@ -1648,8 +1648,8 @@ $serviceAccounts.GetEnumerator() | ForEach-Object {
 $serviceAccountsWeighted = $serviceAccountsWeighted | Sort-Object {Get-Random}
   
 #start transript
-Start-Transcript -Path $fLogFile | Out-Null
-  
+if (-not $TestOnly) { Start-Transcript -Path $fLogFile | Out-Null }
+
 try {
     $domain = Get-ADDomain
     $domainDN = $domain.DistinguishedName
@@ -1659,25 +1659,27 @@ try {
 catch {
     Write-Host " - could not contain domain" -ForegroundColor Red
     Write-Host "Error: $($_.Exception.Message)"
-    Stop-Transcript
+    if (-not $TestOnly) { Stop-Transcript }
    # Exit
 }
-  
-Write-Host "=============================================================="
-Write-Host "                   Automated Lab Changer                      "
-Write-Host "                        $logFileDate                          "
-Write-Host "=============================================================="
-Write-Host "+ domain:   $domainSuffix"
-Write-Host "+ password: $passwordDefault"
-Write-Host ""
-Write-Host "+ max actions: $actionsMax"
-Write-Host "+ action wait: $actionsWait"
-Write-Host ""
-Write-Host "+ user data file: $offlineUserData"
-Write-Host "--------------------------------------------------------------"
-Write-Host "=============================================================="
-Write-Host "+ logfile:  $fLogFile"
-Write-Host "=============================================================="
+
+if (-not $TestOnly) {
+    Write-Host "=============================================================="
+    Write-Host "                   Automated Lab Changer                      "
+    Write-Host "                        $logFileDate                          "
+    Write-Host "=============================================================="
+    Write-Host "+ domain:   $domainSuffix"
+    Write-Host "+ password: $passwordDefault"
+    Write-Host ""
+    Write-Host "+ max actions: $actionsMax"
+    Write-Host "+ action wait: $actionsWait"
+    Write-Host ""
+    Write-Host "+ user data file: $offlineUserData"
+    Write-Host "--------------------------------------------------------------"
+    Write-Host "=============================================================="
+    Write-Host "+ logfile:  $fLogFile"
+    Write-Host "=============================================================="
+}
   
   
 if ($offlineUserData -ne "") {
