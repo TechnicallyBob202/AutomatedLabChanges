@@ -17,7 +17,7 @@ $actionsMax = 240
 #log file details path 
 $logFileDate = Get-Date -Format "yyyy-MM-dd"
 $scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
-$fLogFile = "$scriptPath\AutomatedLab-Changes-$logFileDate.log"
+$fLogFile = "$scriptPath\Logs\AutomatedLab-Changes-$logFileDate.log"
   
 #extended action display
 $showAllActions = $true
