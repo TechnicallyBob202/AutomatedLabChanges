@@ -905,9 +905,7 @@ Function Invoke-AttackAction {
             Write-Host "      ! bruteForce: targeting $targetUser with 50 bad-password attempts"
 
             1..50 | ForEach-Object {
-                Invoke-Command -ScriptBlock {
-                    net use \\$using:domainSuffix\netlogon /user:"$using:domainSuffix\$using:targetUser" "WrongPassword!$using:_" > $null 2>&1
-                } -ErrorAction SilentlyContinue
+                net use \\$domainSuffix\netlogon /user:"$domainSuffix\$targetUser" "WrongPassword!$_" > $null 2>&1
             }
 
             $status = Get-ADUser -Identity $targetUser -Properties LockedOut, BadLogonCount, LastBadPasswordAttempt -ErrorAction SilentlyContinue
@@ -989,24 +987,13 @@ Function Invoke-AttackAction {
             $newVal = if ($currentVal -eq 3) { 1 } else { 3 }
             $label  = if ($newVal -eq 1) { "INSECURE (LM+NTLM responses)" } else { "less insecure (NTLMv2 only)" }
 
-            $result = $null
-            $result = Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $domainAdminCredential `
-                -ArgumentList $gpoTarget.DisplayName, $regKey, $regName, $newVal -ScriptBlock {
-                    param($gpo, $key, $name, $val)
-                    try {
-                        Set-GPRegistryValue -Name $gpo -Key $key -ValueName $name -Type DWord -Value $val | Out-Null
-                        return $true
-                    } catch {
-                        return $false
-                    }
-                }
-
-            if ($result -eq $true) {
+            try {
+                Set-GPRegistryValue -Name $gpoTarget.DisplayName -Key $regKey -ValueName $regName -Type DWord -Value $newVal | Out-Null
                 if ($showAllActions) {
                     Write-Host "      ! lmCompatLevel: set $regName = $newVal ($label) in GPO '$($gpoTarget.DisplayName)'"
                 }
             }
-            else {
+            catch {
                 Write-Host "      - lmCompatLevel: could not set $regName in GPO '$($gpoTarget.DisplayName)'" -ForegroundColor Red
             }
         }

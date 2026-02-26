@@ -36,10 +36,10 @@
 #Invoke-DomainAdminAction -domainAdminAction "newSubnet"
 #Invoke-DomainAdminAction -domainAdminAction "setServerSPN"
 #Invoke-DomainAdminAction -domainAdminAction "gpoRegistryValue"
-Invoke-DomainAdminAction -domainAdminAction "wmiFilterNew"
-Invoke-DomainAdminAction -domainAdminAction "wmiFilterModify"
-Invoke-DomainAdminAction -domainAdminAction "adSiteModify"
-Invoke-DomainAdminAction -domainAdminAction "adSiteLinkModify"
+#Invoke-DomainAdminAction -domainAdminAction "wmiFilterNew"
+#Invoke-DomainAdminAction -domainAdminAction "wmiFilterModify"
+#Invoke-DomainAdminAction -domainAdminAction "adSiteModify"
+#Invoke-DomainAdminAction -domainAdminAction "adSiteLinkModify"
 
 # ---------------------------------------------------------------------------
 # Invoke-HelpdeskAction
