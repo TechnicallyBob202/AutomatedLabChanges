@@ -1,30 +1,24 @@
 # Test-BruteForce.ps1
-# Run this manually on the server to verify bad-password attempts generate lockout + security events.
-# Tweak $targetUser and $domain to match your environment.
+# Run this manually on the member server to verify bad-password attempts generate
+# 4625 events and trigger DSP brute force detection.
+# Tweak variables to match your environment.
 
-$targetUser = "E304974"        # sAMAccountName of the account to hammer
-$domain     = "d3.lab"         # domain DNS name
-$attempts   = 50               # should exceed lockout threshold
+$targetUser  = "E304974"        # sAMAccountName of the account to hammer
+$domain      = "d3.lab"         # domain DNS name
+$netbios     = "D3"             # NetBIOS domain name (forces NTLM, generates 4625 not 4771)
+$dcName      = "dc1.d3.lab"     # DC hostname for the UNC path
+$attempts    = 50               # should exceed lockout threshold
 
-# Use UPN format (user@domain) so the DC can fully resolve the account identity
-# and populate Account Domain in the 4625 event - bare sAMAccountName leaves it blank
-$targetUPN  = "$targetUser@$domain"
-
-Add-Type -AssemblyName System.DirectoryServices.AccountManagement
-
-$ctx = New-Object System.DirectoryServices.AccountManagement.PrincipalContext(
-    [System.DirectoryServices.AccountManagement.ContextType]::Domain, $domain
-)
-
-Write-Host "Starting $attempts bad-password attempts against '$targetUPN'..."
+Write-Host "Starting $attempts bad-password attempts against '$netbios\$targetUser'..."
+Write-Host "(using net use to force NTLM -> 4625 events)"
+Write-Host ""
 
 1..$attempts | ForEach-Object {
-    $result = $false
-    try { $result = $ctx.ValidateCredentials($targetUPN, "WrongPassword!$_") } catch { }
-    Write-Host "  attempt $_  : $result"
+    Write-Host "  attempt $_ "  -NoNewline
+    net use \\$dcName\netlogon /user:"$netbios\$targetUser" "WrongPassword!$_" > $null 2>&1
+    net use \\$dcName\netlogon /delete > $null 2>&1
+    Write-Host "done"
 }
-
-$ctx.Dispose()
 
 Write-Host ""
 Write-Host "Done. Checking AD status..."
