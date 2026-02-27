@@ -3,41 +3,38 @@
 # 4625 events and trigger DSP brute force detection.
 # Tweak variables to match your environment.
 
-$targetUser  = "E304974"        # sAMAccountName of the account to hammer
-$domain      = "d3.lab"         # domain DNS name
-$netbios     = "D3"             # NetBIOS domain name (forces NTLM, generates 4625 not 4771)
-$dcName      = "dc1.d3.lab"     # DC hostname for the UNC path
-$attempts    = 50               # should exceed lockout threshold
+$targetUser = "E304974"     # sAMAccountName of the account to hammer
+$netbios    = "D3"          # NetBIOS domain name - NETBIOS\user format forces NTLM (4625) not Kerberos (4771)
+$domain     = "d3.lab"      # domain DNS name for PrincipalContext
+$dcName     = "dc1.d3.lab"  # explicit DC - ensures auth goes to a specific DC, not random
+$attempts   = 50            # should exceed lockout threshold
 
-Write-Host "Starting $attempts bad-password attempts against '$netbios\$targetUser'..."
-Write-Host "(using net use to force NTLM -> 4625 events)"
+# NETBIOS\user format is the key:
+#   bare sAMAccountName  -> Account Domain blank in 4625, may not trigger DSP
+#   user@domain (UPN)    -> Kerberos, generates 4771 not 4625
+#   NETBIOS\user         -> forces NTLM, generates 4625 with populated Account Domain
+$targetFQN = "$netbios\$targetUser"
+
+Add-Type -AssemblyName System.DirectoryServices.AccountManagement
+
+# specify DC explicitly so all attempts hit the same DC and events are co-located
+$ctx = New-Object System.DirectoryServices.AccountManagement.PrincipalContext(
+    [System.DirectoryServices.AccountManagement.ContextType]::Domain, $domain, $dcName
+)
+
+Write-Host "Starting $attempts bad-password attempts against '$targetFQN' via '$dcName'..."
 Write-Host ""
 
-# clean up any existing connection first
-net use \\$dcName\netlogon /delete > $null 2>&1
-
 1..$attempts | ForEach-Object {
-    Write-Host "  attempt $_ " -NoNewline
-    net use \\$dcName\netlogon /user:"$netbios\$targetUser" "WrongPassword!$_" > $null 2>&1
-    Write-Host "done"
+    $result = $false
+    try { $result = $ctx.ValidateCredentials($targetFQN, "WrongPassword!$_") } catch { }
+    Write-Host "  attempt $_  : $result"
 }
 
-# clean up
-net use \\$dcName\netlogon /delete > $null 2>&1
+$ctx.Dispose()
 
 Write-Host ""
 Write-Host "Done. Checking AD status..."
 Get-ADUser -Identity $targetUser -Properties LockedOut, BadLogonCount, LastBadPasswordAttempt |
     Select-Object SamAccountName, LockedOut, BadLogonCount, LastBadPasswordAttempt |
-    Format-List
-
-Write-Host "Checking Security log for 4625 events targeting $targetUser (last 2 minutes)..."
-$since = (Get-Date).AddMinutes(-2)
-Get-WinEvent -ComputerName $dcName -FilterHashtable @{
-    LogName   = 'Security'
-    Id        = 4625
-    StartTime = $since
-} -ErrorAction SilentlyContinue |
-    Where-Object { $_.Message -match $targetUser } |
-    Select-Object TimeCreated, Message |
     Format-List
