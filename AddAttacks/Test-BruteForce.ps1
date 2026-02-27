@@ -1,40 +1,51 @@
 # Test-BruteForce.ps1
-# Run this manually on the member server to verify bad-password attempts generate
-# 4625 events and trigger DSP brute force detection.
+# Run this manually on the member server.
+# Uses Start-Process with -Credential to run each net use in an isolated session
+# that has no cached Kerberos tickets, forcing a fresh NTLM auth attempt each time.
 # Tweak variables to match your environment.
 
-$targetUser = "E304974"     # sAMAccountName of the account to hammer
-$netbios    = "D3"          # NetBIOS domain name - NETBIOS\user format forces NTLM (4625) not Kerberos (4771)
-$domain     = "d3.lab"      # domain DNS name for PrincipalContext
-$dcName     = "dc1.d3.lab"  # explicit DC - ensures auth goes to a specific DC, not random
-$attempts   = 50            # should exceed lockout threshold
+$targetUser    = "E304974"      # sAMAccountName to hammer
+$netbios       = "D3"           # NetBIOS domain name
+$dcName        = "dc1.d3.lab"   # DC to target
+$attempts      = 50             # should exceed lockout threshold
 
-# NETBIOS\user format is the key:
-#   bare sAMAccountName  -> Account Domain blank in 4625, may not trigger DSP
-#   user@domain (UPN)    -> Kerberos, generates 4771 not 4625
-#   NETBIOS\user         -> forces NTLM, generates 4625 with populated Account Domain
-$targetFQN = "$netbios\$targetUser"
+# The script runs net use as a low-privilege local account with no domain tickets.
+# This forces each attempt to authenticate via NTLM against the DC.
+# Use any local account - even a freshly created one with no permissions.
+# The account just needs to exist locally so Start-Process can impersonate it.
+$localUser     = ".\brutetest"          # local account to run net use as (no domain tickets)
+$localPass     = "LocalPass123!"        # password for that local account
 
-Add-Type -AssemblyName System.DirectoryServices.AccountManagement
+# Create the local account if it doesn't exist
+if (-not (Get-LocalUser -Name "brutetest" -ErrorAction SilentlyContinue)) {
+    $lp = ConvertTo-SecureString $localPass -AsPlainText -Force
+    New-LocalUser -Name "brutetest" -Password $lp -PasswordNeverExpires -Description "Temp brute force test account"
+    Write-Host "  + created local account 'brutetest'"
+}
 
-# specify DC explicitly so all attempts hit the same DC and events are co-located
-$ctx = New-Object System.DirectoryServices.AccountManagement.PrincipalContext(
-    [System.DirectoryServices.AccountManagement.ContextType]::Domain, $domain, $dcName
-)
+$localCred = New-Object System.Management.Automation.PSCredential($localUser, (ConvertTo-SecureString $localPass -AsPlainText -Force))
 
-Write-Host "Starting $attempts bad-password attempts against '$targetFQN' via '$dcName'..."
+Write-Host "Starting $attempts bad-password attempts against '$netbios\$targetUser' via '$dcName'..."
 Write-Host ""
 
 1..$attempts | ForEach-Object {
-    $result = $false
-    try { $result = $ctx.ValidateCredentials($targetFQN, "WrongPassword!$_") } catch { }
-    Write-Host "  attempt $_  : $result"
+    $badPass = "WrongPassword!$_"
+    # run net use in isolated process with no domain tickets
+    $proc = Start-Process -FilePath "cmd.exe" `
+        -ArgumentList "/c net use \\$dcName\netlogon /user:$netbios\$targetUser $badPass > nul 2>&1" `
+        -Credential $localCred `
+        -WindowStyle Hidden `
+        -PassThru `
+        -Wait
+    Write-Host "  attempt $_  : exit=$($proc.ExitCode)"
 }
-
-$ctx.Dispose()
 
 Write-Host ""
 Write-Host "Done. Checking AD status..."
 Get-ADUser -Identity $targetUser -Properties LockedOut, BadLogonCount, LastBadPasswordAttempt |
     Select-Object SamAccountName, LockedOut, BadLogonCount, LastBadPasswordAttempt |
     Format-List
+
+# Clean up local test account
+Remove-LocalUser -Name "brutetest" -ErrorAction SilentlyContinue
+Write-Host "  + removed local account 'brutetest'"
