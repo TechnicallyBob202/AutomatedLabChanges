@@ -1,51 +1,32 @@
 # Test-BruteForce.ps1
-# Run this manually on the member server.
-# Uses Start-Process with -Credential to run each net use in an isolated session
-# that has no cached Kerberos tickets, forcing a fresh NTLM auth attempt each time.
-# Tweak variables to match your environment.
+# Single attempt - get this working first, then we'll loop it.
+# runas /netonly creates a fresh logon session with no Kerberos tickets,
+# forcing net use to authenticate via NTLM against the DC.
 
-$targetUser    = "E304974"      # sAMAccountName to hammer
-$netbios       = "D3"           # NetBIOS domain name
-$dcName        = "dc1.d3.lab"   # DC to target
-$attempts      = 50             # should exceed lockout threshold
+$targetUser = "E304974"
+$netbios    = "D3"
+$dcName     = "dc1.d3.lab"
 
-# The script runs net use as a low-privilege local account with no domain tickets.
-# This forces each attempt to authenticate via NTLM against the DC.
-# Use any local account - even a freshly created one with no permissions.
-# The account just needs to exist locally so Start-Process can impersonate it.
-$localUser     = ".\brutetest"          # local account to run net use as (no domain tickets)
-$localPass     = "LocalPass123!"        # password for that local account
+# A real domain account to spawn the process as - just needs to exist and be able to log on
+# /netonly means local execution uses YOUR current creds, but network auth uses these creds
+# The password here doesn't matter for the net use attempt - it's the target user's password that fails
+$runasUser  = "D3\domain-admin"
+$runasPass  = "superSECURE!"
 
-# Create the local account if it doesn't exist
-if (-not (Get-LocalUser -Name "brutetest" -ErrorAction SilentlyContinue)) {
-    $lp = ConvertTo-SecureString $localPass -AsPlainText -Force
-    New-LocalUser -Name "brutetest" -Password $lp -PasswordNeverExpires -Description "Temp brute force test account"
-    Write-Host "  + created local account 'brutetest'"
-}
-
-$localCred = New-Object System.Management.Automation.PSCredential($localUser, (ConvertTo-SecureString $localPass -AsPlainText -Force))
-
-Write-Host "Starting $attempts bad-password attempts against '$netbios\$targetUser' via '$dcName'..."
+Write-Host "Single bad-password attempt against '$netbios\$targetUser' via '$dcName'..."
 Write-Host ""
 
-1..$attempts | ForEach-Object {
-    $badPass = "WrongPassword!$_"
-    # run net use in isolated process with no domain tickets
-    $proc = Start-Process -FilePath "cmd.exe" `
-        -ArgumentList "/c net use \\$dcName\netlogon /user:$netbios\$targetUser $badPass > nul 2>&1" `
-        -Credential $localCred `
-        -WindowStyle Hidden `
-        -PassThru `
-        -Wait
-    Write-Host "  attempt $_  : exit=$($proc.ExitCode)"
-}
+$runasPassSecure = ConvertTo-SecureString $runasPass -AsPlainText -Force
+$runasCred = New-Object System.Management.Automation.PSCredential($runasUser, $runasPassSecure)
+
+Start-Process -FilePath "cmd.exe" `
+    -ArgumentList "/c net use \\$dcName\netlogon /user:$netbios\$targetUser WrongPassword123" `
+    -Credential $runasCred `
+    -WindowStyle Hidden `
+    -Wait
 
 Write-Host ""
-Write-Host "Done. Checking AD status..."
+Write-Host "Checking AD status..."
 Get-ADUser -Identity $targetUser -Properties LockedOut, BadLogonCount, LastBadPasswordAttempt |
     Select-Object SamAccountName, LockedOut, BadLogonCount, LastBadPasswordAttempt |
     Format-List
-
-# Clean up local test account
-Remove-LocalUser -Name "brutetest" -ErrorAction SilentlyContinue
-Write-Host "  + removed local account 'brutetest'"
