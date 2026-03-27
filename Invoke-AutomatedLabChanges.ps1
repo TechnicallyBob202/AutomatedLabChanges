@@ -1779,7 +1779,8 @@ $serviceAccountsWeighted = $serviceAccountsWeighted | Sort-Object {Get-Random}
 if (-not $TestOnly) { Start-Transcript -Path $fLogFile | Out-Null }
 
 try {
-    $dcName = (Get-ADDomainController -Discover).HostName
+    $dcObj = Get-ADDomainController -Discover
+    $dcName = [string]$dcObj.HostName[0]
     $domain = Get-ADDomain -Server $dcName
     $domainDN = $domain.DistinguishedName
     $domainSuffix = $domain.DNSRoot
