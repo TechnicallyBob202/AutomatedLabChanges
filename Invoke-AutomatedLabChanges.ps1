@@ -481,7 +481,7 @@ Function Invoke-DomainAdminAction {
             $gpoServer = $gpoAll | Where-Object { ($_.DisplayName -like "$gpoToLink") } 
   
             $gpoServerNL = $gpoServer | Where-Object {
-                $_ | Get-GPOReport -ReportType XML | Select-String -NotMatch "<LinksTo>"
+                $_ | Get-GPOReport -ReportType XML -Domain $domainSuffix -Server $dcName | Select-String -NotMatch "<LinksTo>"
             }
   
             
