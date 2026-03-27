@@ -861,7 +861,7 @@ Function Invoke-HelpdeskAction {
                 }
                 catch {
                     #not worth exiting
-                    Write-Host "      - could not abnormaly refresh password: $($userToAction.SamAccountName)" -ForegroundColor Red
+                    Write-Host "      - could not abnormaly refresh password: $($userToAction.SamAccountName) [$($_.Exception.Message)]" -ForegroundColor Red
                 }
             }
             else {
@@ -889,7 +889,7 @@ Function Invoke-HelpdeskAction {
                 }
                 catch {
                     #not worth exiting
-                    Write-Host "      - could not set change password at next logon: $($userToAction.SamAccountName)" -ForegroundColor Red
+                    Write-Host "      - could not set change password at next logon: $($userToAction.SamAccountName) [$($_.Exception.Message)]" -ForegroundColor Red
                 }
             }
             else {
