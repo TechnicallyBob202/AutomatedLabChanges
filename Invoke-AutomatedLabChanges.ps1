@@ -843,7 +843,7 @@ Function Invoke-HelpdeskAction {
         #abnormal password reset with 30 second delay
         passwordAbnormalRefresh {
             $userToAction = $null
-            $userToAction = Get-ADUser -Filter { Enabled -eq $True } -Properties Enabled -SearchBase $ouEmployees -SearchScope OneLevel
+            $userToAction = Get-ADUser -Filter { Enabled -eq $True -and PasswordNeverExpires -eq $False } -Properties Enabled -SearchBase $ouEmployees -SearchScope OneLevel
   
             if ($null -ne $userToAction) {
                 if ($userToAction.count -gt 1) { 
@@ -861,7 +861,7 @@ Function Invoke-HelpdeskAction {
                 }
                 catch {
                     #not worth exiting
-                    Write-Host "      - could not abnormaly refresh password: $($userToAction.SamAccountName) [$($_.Exception.Message)]" -ForegroundColor Red
+                    Write-Host "      - could not abnormaly refresh password: $($userToAction.SamAccountName)" -ForegroundColor Red
                 }
             }
             else {
@@ -871,7 +871,7 @@ Function Invoke-HelpdeskAction {
         #set password at next logon
         passwordAtNextLogon {
             $userToAction = $null
-            $userToAction = Get-ADUser -Filter { Enabled -eq $True } -Properties Enabled -SearchBase $ouEmployees -SearchScope OneLevel
+            $userToAction = Get-ADUser -Filter { Enabled -eq $True -and PasswordNeverExpires -eq $False } -Properties Enabled -SearchBase $ouEmployees -SearchScope OneLevel
   
             if ($null -ne $userToAction) {
                 if ($userToAction.count -gt 1) { 
@@ -889,7 +889,7 @@ Function Invoke-HelpdeskAction {
                 }
                 catch {
                     #not worth exiting
-                    Write-Host "      - could not set change password at next logon: $($userToAction.SamAccountName) [$($_.Exception.Message)]" -ForegroundColor Red
+                    Write-Host "      - could not set change password at next logon: $($userToAction.SamAccountName)" -ForegroundColor Red
                 }
             }
             else {
