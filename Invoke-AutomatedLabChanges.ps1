@@ -1779,16 +1779,22 @@ $serviceAccountsWeighted = $serviceAccountsWeighted | Sort-Object {Get-Random}
 if (-not $TestOnly) { Start-Transcript -Path $fLogFile | Out-Null }
 
 try {
-    $domain = Get-ADDomain
+    $dcName = (Get-ADDomainController -Discover).HostName
+    $domain = Get-ADDomain -Server $dcName
     $domainDN = $domain.DistinguishedName
     $domainSuffix = $domain.DNSRoot
-    $dcName = (Get-ADDomainController -Discover).HostName
 }
 catch {
-    Write-Host " - could not contain domain" -ForegroundColor Red
+    Write-Host " - could not contact domain" -ForegroundColor Red
     Write-Host "Error: $($_.Exception.Message)"
     if (-not $TestOnly) { Stop-Transcript }
-   # Exit
+    Exit
+}
+
+if ([string]::IsNullOrEmpty($domainDN)) {
+    Write-Host " - domainDN is empty, cannot continue" -ForegroundColor Red
+    if (-not $TestOnly) { Stop-Transcript }
+    Exit
 }
 
 if (-not $TestOnly) {
