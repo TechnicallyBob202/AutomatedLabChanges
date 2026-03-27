@@ -472,7 +472,7 @@ Function Invoke-DomainAdminAction {
         gpoLink {
             $ouServers = "OU=servers,$domainBaseLocation"      
   
-            $gpoAll = Get-GPO -All
+            $gpoAll = Get-GPO -All -Server $dcName
   
             $gposToLink = @("Servers - ALL - Windows Update", "Servers - ALL - Temporary", "Servers - ALL - Legacy", "Servers - ALL - Blank")
             $gpoToLink = $gposToLink | Get-Random
@@ -526,18 +526,18 @@ Function Invoke-DomainAdminAction {
                 $gpoCheck = $null
   
                 try {
-                    $gpoCheck = Get-GPO -Name $gpoName -ErrorAction SilentlyContinue
+                    $gpoCheck = Get-GPO -Name $gpoName -Server $dcName -ErrorAction SilentlyContinue
                 }
                 catch {
                     $gpoCheck = $null
                 }
-              
-                if ($null -eq $gpoCheck) {    
+
+                if ($null -eq $gpoCheck) {
                     $result = $null
                     $result = Invoke-Command -ComputerName $dcName -ErrorAction Stop -ArgumentList $gpoName -Credential $domainAdminCredential -ScriptBlock {
                         try {
                             $gpoName = $args[0]
-                            New-GPO -Name $gpoName -Comment $gpoName | Out-Null       
+                            New-GPO -Name $gpoName -Comment $gpoName | Out-Null
                             Return $True
                         }
                         catch {
@@ -562,7 +562,7 @@ Function Invoke-DomainAdminAction {
         #gpo link remove
         gpoLinkRemove {
             $gposLinked = $null
-            $gposLinked = (Get-GPInheritance -Target $ouServers).GpoLinks | Where-Object { $_.DisplayName -like "Servers - ALL - Temporary" }            
+            $gposLinked = (Get-GPInheritance -Target $ouServers -Server $dcName).GpoLinks | Where-Object { $_.DisplayName -like "Servers - ALL - Temporary" }            
   
             if ($null -ne $gposLinked) {
                 if ($gposLinked.Count -gt 1) {
@@ -678,7 +678,7 @@ Function Invoke-DomainAdminAction {
             $gpoTarget = $null
             foreach ($gpoName in ($gpoSafeTargets | Sort-Object { Get-Random })) {
                 try {
-                    $gpoCheck = Get-GPO -Name $gpoName -ErrorAction SilentlyContinue
+                    $gpoCheck = Get-GPO -Name $gpoName -Server $dcName -ErrorAction SilentlyContinue
                     if ($null -ne $gpoCheck) {
                         $gpoTarget = $gpoCheck
                         break
