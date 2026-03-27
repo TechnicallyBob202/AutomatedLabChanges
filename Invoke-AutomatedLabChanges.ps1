@@ -1,6 +1,6 @@
 param([switch]$TestOnly)
 
-$domainBase = "_SemperisDSP"
+$domainBase = "_DUMPSTERFIRE"
   
 #only used if online
 $userCountryCodes = "GB,IE,NZ,US"
