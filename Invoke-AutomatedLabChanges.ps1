@@ -31,7 +31,7 @@ param(
         [string]$desktopAction
     )
     $accountDesktop = ($actionAccounts | Where-Object { $_.ID -eq "desktop" }).AccountName
-    $desktopCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $accountDesktop, $passwordSecure
+    $desktopCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList "$domainNetBIOS\$accountDesktop", $passwordSecure
         
     $desktopAction = $desktopAction
   
@@ -298,7 +298,7 @@ Function Invoke-DomainAdminAction {
     )
   
     $accountDomainAdmin = ($actionAccounts | Where-Object { $_.ID -eq "domainadmin" }).AccountName
-    $domainAdminCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $accountDomainAdmin, $passwordSecure
+    $domainAdminCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList "$domainNetBIOS\$accountDomainAdmin", $passwordSecure
         
     switch ($domainAdminAction) {      
           
@@ -726,7 +726,7 @@ Function Invoke-HelpdeskAction {
     )
   
     $accountHelpdesk = ($actionAccounts | Where-Object { $_.ID -eq "helpdesk" }).AccountName
-    $helpdeskCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $accountHelpdesk, $passwordSecure
+    $helpdeskCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList "$domainNetBIOS\$accountHelpdesk", $passwordSecure
   
     switch ($helpdeskAction) {
         #disable a user
@@ -1018,7 +1018,7 @@ Function Invoke-ServerAction {
     )
   
     $accountServer = ($actionAccounts | Where-Object { $_.ID -eq "server" }).AccountName
-    $serverCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $accountServer, $passwordSecure
+    $serverCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList "$domainNetBIOS\$accountServer", $passwordSecure
   
     switch ($serverAction) {
         #delete computer/server
@@ -1248,7 +1248,7 @@ Function Invoke-ServiceAccountAction {
         [string]$serviceAccount 
     )
    
-    $serviceAccountCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $serviceAccount, $passwordSecure
+    $serviceAccountCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList "$domainNetBIOS\$serviceAccount", $passwordSecure
   
     switch ($serviceAccount) {
         #updates the iphone field for users
@@ -1784,6 +1784,7 @@ try {
     $domain = Get-ADDomain -Server $dcName
     $domainDN = $domain.DistinguishedName
     $domainSuffix = $domain.DNSRoot
+    $domainNetBIOS = $domain.NetBIOSName
 }
 catch {
     Write-Host " - could not contact domain" -ForegroundColor Red
