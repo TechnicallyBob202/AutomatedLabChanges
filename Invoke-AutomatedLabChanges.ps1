@@ -1379,9 +1379,7 @@ Function Invoke-AttackAction {
                         param($gpoName, $regKey, $regName, $regValue)
                         Set-GPRegistryValue -Name $gpoName -Key $regKey -ValueName $regName -Type DWord -Value $regValue | Out-Null
                     }
-                if ($showAllActions) {
-                    Write-Host "      ! lmCompatLevel: set $regName = $newVal ($label) in GPO '$($gpoTarget.DisplayName)'"
-                }
+                Write-Host "      ! lmCompatLevel: set $regName = $newVal ($label) in GPO '$($gpoTarget.DisplayName)'"
             }
             catch {
                 Write-Host "      - lmCompatLevel: could not set $regName in GPO '$($gpoTarget.DisplayName)'" -ForegroundColor Red
