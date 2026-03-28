@@ -1,4 +1,7 @@
-param([switch]$TestOnly)
+param(
+    [switch]$TestOnly,
+    [switch]$EnableAttacks
+)
 
 $domainBase = "_DUMPSTERFIRE"
   
@@ -1243,9 +1246,153 @@ Function Invoke-ServerAction {
     }
 }
   
-Function Invoke-ServiceAccountAction {  
+################################################################################
+# Invoke-AttackAction
+# Simulates attack patterns to generate security-relevant AD events.
+# Target accounts are drawn from OU=Employees under $domainBaseLocation.
+# Only runs when -EnableAttacks is passed to the script.
+################################################################################
+Function Invoke-AttackAction {
     param(
-        [string]$serviceAccount 
+        [string]$attackAction
+    )
+
+    $accountDomainAdmin = ($actionAccounts | Where-Object { $_.ID -eq "domainadmin" }).AccountName
+    $domainAdminCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList "$domainNetBIOS\$accountDomainAdmin", $passwordSecure
+
+    switch ($attackAction) {
+
+        #bruteForce - hammers 1 random employee with repeated bad-password auth attempts
+        bruteForce {
+            $targetUser = $null
+            try {
+                $candidates = Get-ADUser -Filter { Enabled -eq $True } -SearchBase $ouEmployees -ErrorAction Stop
+                if ($null -eq $candidates) {
+                    Write-Host "      ~ bruteForce: no enabled users found in $ouEmployees" -ForegroundColor Yellow
+                    return
+                }
+                $targetUser = ($candidates | Get-Random).SamAccountName
+            }
+            catch {
+                Write-Host "      - bruteForce: could not query employees OU" -ForegroundColor Red
+                return
+            }
+
+            Write-Host "      ! bruteForce: targeting $targetUser with 50 bad-password attempts"
+
+            Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $domainAdminCredential `
+                -ArgumentList $targetUser, $domainSuffix -ScriptBlock {
+                    param($user, $domain)
+                    Add-Type -AssemblyName System.DirectoryServices.AccountManagement
+                    $ctx = New-Object System.DirectoryServices.AccountManagement.PrincipalContext(
+                        [System.DirectoryServices.AccountManagement.ContextType]::Domain, $domain
+                    )
+                    1..50 | ForEach-Object {
+                        try { $ctx.ValidateCredentials($user, "WrongPassword!$_") | Out-Null } catch { }
+                    }
+                    $ctx.Dispose()
+                }
+
+            $status = Get-ADUser -Identity $targetUser -Properties LockedOut, BadLogonCount, LastBadPasswordAttempt -ErrorAction SilentlyContinue
+            if ($null -ne $status) {
+                Write-Host "      ! bruteForce result: lockedOut=$($status.LockedOut), badLogonCount=$($status.BadLogonCount)"
+            }
+        }
+
+        #passwordSpray - attempts several common passwords across 5 random employees
+        passwordSpray {
+            $targetUsers = $null
+            try {
+                $candidates = Get-ADUser -Filter { Enabled -eq $True } -SearchBase $ouEmployees -ErrorAction Stop
+                if ($null -eq $candidates) {
+                    Write-Host "      ~ passwordSpray: no enabled users found in $ouEmployees" -ForegroundColor Yellow
+                    return
+                }
+                $targetUsers = $candidates | Get-Random -Count 5
+            }
+            catch {
+                Write-Host "      - passwordSpray: could not query employees OU" -ForegroundColor Red
+                return
+            }
+
+            $sprayPasswords = @("Summer2024!", "Welcome1!", "Password1!", "Spring2024!")
+            $targetSAMs = $targetUsers.SamAccountName
+
+            Write-Host "      ! passwordSpray: spraying $($targetSAMs.Count) accounts with $($sprayPasswords.Count) passwords"
+            Write-Host "        ~ targets: $($targetSAMs -join ', ')"
+
+            Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $domainAdminCredential `
+                -ArgumentList $targetSAMs, $sprayPasswords, $domainSuffix -ScriptBlock {
+                    param($users, $passwords, $domain)
+                    Add-Type -AssemblyName System.DirectoryServices.AccountManagement
+                    $ctx = New-Object System.DirectoryServices.AccountManagement.PrincipalContext(
+                        [System.DirectoryServices.AccountManagement.ContextType]::Domain, $domain
+                    )
+                    foreach ($password in $passwords) {
+                        foreach ($user in $users) {
+                            try { $ctx.ValidateCredentials($user, $password) | Out-Null } catch { }
+                        }
+                    }
+                    $ctx.Dispose()
+                }
+
+            Write-Host "      ! passwordSpray: complete"
+        }
+
+        #lmCompatLevel - sets LmCompatibilityLevel to an insecure value in a lab GPO
+        lmCompatLevel {
+            $gpoSafeTargets = @("Servers - ALL - Blank", "Servers - ALL - Temporary")
+            $gpoTarget = $null
+
+            foreach ($gpoName in ($gpoSafeTargets | Sort-Object { Get-Random })) {
+                try {
+                    $gpoCheck = Get-GPO -Name $gpoName -Domain $domainSuffix -Server $dcName -ErrorAction SilentlyContinue
+                    if ($null -ne $gpoCheck) {
+                        $gpoTarget = $gpoCheck
+                        break
+                    }
+                }
+                catch { }
+            }
+
+            if ($null -eq $gpoTarget) {
+                Write-Host "      ~ lmCompatLevel: no target GPO found" -ForegroundColor Yellow
+                return
+            }
+
+            $regKey  = "HKLM\System\CurrentControlSet\Control\Lsa"
+            $regName = "LmCompatibilityLevel"
+
+            $currentVal = $null
+            try {
+                $currentVal = (Get-GPRegistryValue -Name $gpoTarget.DisplayName -Key $regKey -ValueName $regName -Domain $domainSuffix -Server $dcName -ErrorAction SilentlyContinue).Value
+            }
+            catch { }
+
+            # Toggle: insecure (1 = LM+NTLM) <-> less insecure (3 = NTLMv2 only)
+            $newVal = if ($currentVal -eq 3) { 1 } else { 3 }
+            $label  = if ($newVal -eq 1) { "INSECURE (LM+NTLM responses)" } else { "less insecure (NTLMv2 only)" }
+
+            try {
+                Invoke-Command -ComputerName $dcName -ErrorAction Stop -Credential $domainAdminCredential `
+                    -ArgumentList $gpoTarget.DisplayName, $regKey, $regName, $newVal -ScriptBlock {
+                        param($gpoName, $regKey, $regName, $regValue)
+                        Set-GPRegistryValue -Name $gpoName -Key $regKey -ValueName $regName -Type DWord -Value $regValue | Out-Null
+                    }
+                if ($showAllActions) {
+                    Write-Host "      ! lmCompatLevel: set $regName = $newVal ($label) in GPO '$($gpoTarget.DisplayName)'"
+                }
+            }
+            catch {
+                Write-Host "      - lmCompatLevel: could not set $regName in GPO '$($gpoTarget.DisplayName)'" -ForegroundColor Red
+            }
+        }
+    }
+}
+
+Function Invoke-ServiceAccountAction {
+    param(
+        [string]$serviceAccount
     )
    
     $serviceAccountCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList "$domainNetBIOS\$serviceAccount", $passwordSecure
@@ -1651,8 +1798,9 @@ $rolesList.Add('service',4)
 $rolesList.Add('desktop',3)
 $rolesList.Add('server',2)
 $rolesList.Add('domainadmin',1)
-  
-  
+if ($EnableAttacks) { $rolesList.Add('attack',1) }
+
+
 #helpdesk admin actions
 $helpdeskActions = @{}
 $helpdeskActions.Add('passwordReset','5')
@@ -1707,8 +1855,14 @@ $domainAdminActions.Add('gpoNew','1')
 $domainAdminActions.Add('newSubnet','1')
 $domainAdminActions.Add('setServerSPN','1')
 $domainAdminActions.Add('gpoRegistryValue','1')
-  
-  
+
+#attack actions (only used when -EnableAttacks is set)
+$attackActions = @{}
+$attackActions.Add('bruteForce','2')
+$attackActions.Add('passwordSpray','3')
+$attackActions.Add('lmCompatLevel','1')
+
+
 #assign weights to roles and actions
 $rolesListWeighted = @()
 $rolesList.GetEnumerator() | ForEach-Object {   
@@ -1774,7 +1928,19 @@ $serviceAccounts.GetEnumerator() | ForEach-Object {
     }        
 }
 $serviceAccountsWeighted = $serviceAccountsWeighted | Sort-Object {Get-Random}
-  
+
+#attack actions weighted
+$attackActionsWeighted = @()
+if ($EnableAttacks) {
+    $attackActions.GetEnumerator() | ForEach-Object {
+        $weight = $_.value -as [int]
+        for ($i = 1; $i -le $weight; $i++) {
+            $attackActionsWeighted += $_.key
+        }
+    }
+    $attackActionsWeighted = $attackActionsWeighted | Sort-Object {Get-Random}
+}
+
 #start transript
 if (-not $TestOnly) { Start-Transcript -Path $fLogFile | Out-Null }
 
@@ -1809,6 +1975,7 @@ if (-not $TestOnly) {
     Write-Host ""
     Write-Host "+ max actions: $actionsMax"
     Write-Host "+ action wait: $actionsWait"
+    Write-Host "+ attacks:    $(if ($EnableAttacks) { 'ENABLED' } else { 'disabled' })"
     Write-Host ""
     Write-Host "+ user data file: $offlineUserData"
     Write-Host "--------------------------------------------------------------"
@@ -2107,8 +2274,13 @@ if (-not $TestOnly) { 1..$actionsMax| ForEach-Object {
             Write-Host "Invoke-ServiceAccountAction -serviceAccount $serviceAccount"
             Invoke-ServiceAccountAction -serviceAccount $serviceAccount
         }
+        attack {
+            $attackAction = $attackActionsWeighted | Get-Random -Count 1
+            Write-Host "Invoke-AttackAction -attackAction $attackAction"
+            Invoke-AttackAction -attackAction $attackAction
+        }
     }
-  
+
     Write-Host "--------------------------------------------------------------"
   
     Start-Sleep -Seconds $actionsWait

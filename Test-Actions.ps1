@@ -2,7 +2,7 @@
 # Dot-sources the script to load all functions and variables, without running the main loop.
 # Uncomment the action(s) you want to test and run this script.
 
-. "$PSScriptRoot\Invoke-AutomatedLabChanges.ps1" -TestOnly
+. "$PSScriptRoot\Invoke-AutomatedLabChanges.ps1" -TestOnly -EnableAttacks
 
 # ---------------------------------------------------------------------------
 # Invoke-ServiceAccountAction
@@ -35,7 +35,7 @@
 #Invoke-DomainAdminAction -domainAdminAction "gpoLinkRemove"
 #Invoke-DomainAdminAction -domainAdminAction "newSubnet"
 #Invoke-DomainAdminAction -domainAdminAction "setServerSPN"
-Invoke-DomainAdminAction -domainAdminAction "gpoRegistryValue"
+#Invoke-DomainAdminAction -domainAdminAction "gpoRegistryValue"
 
 # ---------------------------------------------------------------------------
 # Invoke-HelpdeskAction
@@ -59,3 +59,10 @@ Invoke-DomainAdminAction -domainAdminAction "gpoRegistryValue"
 #Invoke-ServerAction -serverAction "computerEnable"
 #Invoke-ServerAction -serverAction "computerNew"
 #Invoke-ServerAction -serverAction "groupNewMember"
+
+# ---------------------------------------------------------------------------
+# Invoke-AttackAction (requires -EnableAttacks on dot-source line above)
+# ---------------------------------------------------------------------------
+Invoke-AttackAction -attackAction "bruteForce"
+Invoke-AttackAction -attackAction "passwordSpray"
+Invoke-AttackAction -attackAction "lmCompatLevel"
